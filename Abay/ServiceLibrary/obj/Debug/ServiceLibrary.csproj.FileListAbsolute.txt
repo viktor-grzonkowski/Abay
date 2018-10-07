@@ -1,0 +1,25 @@
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\3SemesterProjekt\bin\Debug\3SemesterProjekt.dll.config
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\3SemesterProjekt\bin\Debug\3SemesterProjekt.dll
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\3SemesterProjekt\bin\Debug\3SemesterProjekt.pdb
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\3SemesterProjekt\obj\Debug\ServiceLibrary.csprojResolveAssemblyReference.cache
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\3SemesterProjekt\obj\Debug\3SemesterProjekt.dll
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\3SemesterProjekt\obj\Debug\3SemesterProjekt.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\bin\Debug\ServiceLibrary.dll.config
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\obj\Debug\ServiceLibrary.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\obj\Debug\ServiceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\obj\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\3SemesterProjekt\obj\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.dll.config
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceLibrary\bin\Debug\Database.exe

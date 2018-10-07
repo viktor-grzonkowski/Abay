@@ -1,0 +1,35 @@
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\bin\Debug\ServiceHost.exe.config
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\bin\Debug\ServiceHost.exe
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\bin\Debug\ServiceHost.pdb
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\bin\Debug\3SemesterProjekt.dll
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\bin\Debug\3SemesterProjekt.pdb
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\bin\Debug\3SemesterProjekt.dll.config
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\obj\Debug\HostConsole.csprojResolveAssemblyReference.cache
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\obj\Debug\ServiceHost.exe
+c:\users\tollo\documents\visual studio 2017\Projects\3SemesterProjekt\ServiceHost\obj\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\bin\Debug\ServiceHost.exe.config
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\bin\Debug\ServiceHost.exe
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\bin\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\bin\Debug\ServiceLibrary.dll.config
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\obj\Debug\HostConsole.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\obj\Debug\HostConsole.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\obj\Debug\HostConsole.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\obj\Debug\ServiceHost.exe
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\ServiceHost\obj\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\ServiceHost.exe.config
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\ServiceHost.exe
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\ServiceLibrary.dll.config
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\obj\Debug\HostConsole.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\obj\Debug\HostConsole.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\obj\Debug\HostConsole.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\obj\Debug\ServiceHost.exe
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\obj\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\HostConsole\bin\Debug\Database.exe

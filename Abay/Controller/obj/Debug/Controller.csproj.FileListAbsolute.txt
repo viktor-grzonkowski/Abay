@@ -1,0 +1,9 @@
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\bin\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\obj\Debug\Controller.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\obj\Debug\Controller.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\obj\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\obj\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\3rdSemester\Abay\Controller\bin\Debug\Database.exe
