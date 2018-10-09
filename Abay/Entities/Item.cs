@@ -8,24 +8,33 @@ namespace Entities
 {
     public class Item
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public double InitialPrice { get; set; }
-        public double FinalPrice { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int State { get; set; }
-        public User Seller_Username { get; set; }
-        public User Buyer_Username { get; set; }
-
+        private string _name;
+        private string _description;
+        private double _initialPrice;
+        private double _finalPrice;
+        private DateTime _startDate;
+        private DateTime _endDate;
+        private int _state;
+        private User _sellerUsername;
+        private User _buyerUsername; 
 
         public Item(string name, double initialPrice, int state, User seller)
         {
-            this.Name = name;
-            this.InitialPrice = initialPrice;
-            this.State = state;
-            this.Seller_Username = seller;
+            Name = name;
+            InitialPrice = initialPrice;
+            State = state;
+            SellerUsername = seller;
         }
+
+        public string Name { get => _name; set => _name = value; }
+        public string Description { get => _description; set => _description = value; }
+        public double InitialPrice { get => _initialPrice; set => _initialPrice = value; }
+        public double FinalPrice { get => _finalPrice; set => _finalPrice = value; }
+        public DateTime StartDate { get => _startDate; set => _startDate = value; }
+        public DateTime EndDate { get => _endDate; set => _endDate = value; }
+        public int State { get => _state; set => _state = value; }
+        public User SellerUsername { get => _sellerUsername; set => _sellerUsername = value; }
+        public User BuyerUsername { get => _buyerUsername; set => _buyerUsername = value; }
     }
 
     public enum Category
