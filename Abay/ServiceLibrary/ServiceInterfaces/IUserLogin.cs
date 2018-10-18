@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,6 +13,8 @@ namespace ServiceLibrary.ServiceInterfaces
     public interface IUserLogin
     {
         [OperationContract]
-        string Login(string userName, string password);
+        bool Login(string userName, string password);
+        [OperationContract]
+        User GetUserByToken(string token);
     }
 }

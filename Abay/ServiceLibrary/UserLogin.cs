@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Controller;
+using Entities;
 using ServiceLibrary.ServiceInterfaces;
 
 namespace ServiceLibrary
@@ -15,10 +16,14 @@ namespace ServiceLibrary
     {
         UserController userCtrl = new UserController();
 
-        public string Login(string userName, string password)
+        public User GetUserByToken(string token)
         {
+            return userCtrl.GetUserByToken(token);
+        }
 
-            return "";
+        public bool Login(string userName, string password)
+        {
+            return userCtrl.Login(userName, password);
         }
     }
 }
