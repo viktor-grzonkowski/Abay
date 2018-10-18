@@ -8,6 +8,7 @@ namespace Entities
 {
     public class Item
     {
+        private int _id;
         private string _name;
         private string _description;
         private double _initialPrice;
@@ -16,16 +17,22 @@ namespace Entities
         private DateTime _endDate;
         private int _state;
         private User _sellerUsername;
-        private User _buyerUsername; 
+        private User _buyerUsername;
+        private ItemCategory _categoryId;
 
-        public Item(string name, double initialPrice, int state, User seller)
+        public Item()
+        { 
+        }
+        public Item(string name, double initialPrice, int state, User seller, ItemCategory categoryId)
         {
             Name = name;
             InitialPrice = initialPrice;
             State = state;
             SellerUsername = seller;
+            CategoryId = categoryId;
         }
 
+        public int Id { get => _id; set => _id = value; }
         public string Name { get => _name; set => _name = value; }
         public string Description { get => _description; set => _description = value; }
         public double InitialPrice { get => _initialPrice; set => _initialPrice = value; }
@@ -35,15 +42,7 @@ namespace Entities
         public int State { get => _state; set => _state = value; }
         public User SellerUsername { get => _sellerUsername; set => _sellerUsername = value; }
         public User BuyerUsername { get => _buyerUsername; set => _buyerUsername = value; }
-    }
-
-    public enum Category
-    {
-        electronics,
-        fashion,
-        collectiblesArt,
-        homeGarden,
-        sportingGoods,
-        motors
+        public ItemCategory CategoryId { get => _categoryId; set => _categoryId = value; }
+        
     }
 }

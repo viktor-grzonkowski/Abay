@@ -12,6 +12,6 @@ namespace ServiceLibrary.ServiceInterfaces
     public interface IUserLogin
     {
         [OperationContract]
-        void TestInsert();
+        string Login(string userName, string password);
     }
 }

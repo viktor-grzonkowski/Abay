@@ -8,15 +8,23 @@ namespace Entities
 {
     public class User
     {
-        public string Username { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public bool Admin { get; set; }
+        private string _userName;
+        private string _firstName;
+        private string _lastName;
+        private string _password;
+        private string _email;
+        private bool _admin;
+
         public User()
         {
 
         }
+
+        public string UserName { get => _userName; set => _userName = value; }
+        public string FirstName { get => _firstName; set => _firstName = value; }
+        public string LastName { get => _lastName; set => _lastName = value; }
+        public string Password { get => _password; set => _password = value; }
+        public string Email { get => _email; set => _email = value; }
+        public bool Admin { get => _admin; set => _admin = value; }
     }
 }

@@ -13,11 +13,12 @@ namespace ServiceLibrary
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserLogin" in both code and config file together.
     public class UserLogin : IUserLogin
     {
-        InsertTesting insertDatShit = new InsertTesting();
+        UserController userCtrl = new UserController();
 
-        public void TestInsert()
+        public string Login(string userName, string password)
         {
-            insertDatShit.InsertData();
+
+            return "";
         }
     }
 }

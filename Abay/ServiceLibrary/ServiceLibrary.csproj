@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceInterfaces\IItemService.cs" />
+    <Compile Include="ItemService.cs" />
     <Compile Include="ServiceInterfaces\IUserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserLogin.cs" />
@@ -55,6 +57,10 @@
     <ProjectReference Include="..\Controller\Controller.csproj">
       <Project>{06d0359a-8267-4d5e-aace-31be2fd4c9f2}</Project>
       <Name>Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{dd2a39c5-84df-42e2-a1a5-0d0e4ae807da}</Project>
+      <Name>Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

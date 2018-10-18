@@ -15,12 +15,15 @@ namespace HostConsole
             ServiceHost SUserLogin = new ServiceHost(typeof(UserLogin));
             SUserLogin.Open();
             Console.WriteLine("UserLogin service started.");
-
+            ServiceHost SItemService = new ServiceHost(typeof(ItemService));
+            SItemService.Open();
+            Console.WriteLine("Item service started.");
 
             Console.WriteLine("Press any key to close the services");
             Console.ReadLine();
 
             SUserLogin.Close();
+            SItemService.Close();
         }
     }
 }

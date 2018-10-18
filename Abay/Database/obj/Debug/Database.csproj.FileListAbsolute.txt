@@ -4,3 +4,12 @@ C:\Users\VGrzo\Desktop\3rdSemester\Abay\Database\obj\Debug\Database.csproj.CoreC
 C:\Users\VGrzo\Desktop\3rdSemester\Abay\Database\obj\Debug\Database.pdb
 C:\Users\VGrzo\Desktop\3rdSemester\Abay\Database\bin\Debug\Database.exe
 C:\Users\VGrzo\Desktop\3rdSemester\Abay\Database\obj\Debug\Database.exe
+D:\VisualStudio_Projects\Abay\Abay\Database\bin\Debug\Database.dll
+D:\VisualStudio_Projects\Abay\Abay\Database\bin\Debug\Database.pdb
+D:\VisualStudio_Projects\Abay\Abay\Database\bin\Debug\Entities.dll
+D:\VisualStudio_Projects\Abay\Abay\Database\bin\Debug\Entities.pdb
+D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.csprojAssemblyReference.cache
+D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
+D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.csproj.CopyComplete
+D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.dll
+D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.pdb
