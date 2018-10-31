@@ -18,3 +18,14 @@ D:\VisualStudio_Projects\Abay\Abay\Controller\obj\Debug\Controller.csproj.CoreCo
 D:\VisualStudio_Projects\Abay\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
 D:\VisualStudio_Projects\Abay\Abay\Controller\obj\Debug\Controller.dll
 D:\VisualStudio_Projects\Abay\Abay\Controller\obj\Debug\Controller.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\bin\Debug\Controller.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\bin\Debug\Database.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\bin\Debug\Entities.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\bin\Debug\Database.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\obj\Debug\Controller.csprojAssemblyReference.cache
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\obj\Debug\Controller.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\obj\Debug\Controller.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Controller\obj\Debug\Controller.pdb

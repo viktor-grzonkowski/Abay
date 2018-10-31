@@ -46,25 +46,27 @@ namespace Database
                 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT username, firstName, lastName, email" +
-                                        "FROM [User]" +
+                    cmd.CommandText = "SELECT username, firstName, lastName, email " +
+                                        "FROM [User] " +
                                         "WHERE username = @token";
                     cmd.Parameters.AddWithValue("@token", token);
 
-                    using (SqlDataReader result = cmd.ExecuteReader())
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    
+                    if (reader.HasRows)
                     {
-                        while (result.Read())
+                        while (reader.Read())
                         {
                             user = new User
                             {
-                                UserName = result["username"].ToString(),
-                                FirstName = result["firstName"].ToString(),
-                                LastName = result["lastName"].ToString(),
-                                Email = result["email"].ToString()
+                                UserName = reader.GetString(0),
+                                FirstName = reader.GetString(1),
+                                LastName = reader.GetString(2),
+                                Email = reader.GetString(3)
                             };
                         }
-                        return user;
                     }
+                    return user;
                 }
             }
         }

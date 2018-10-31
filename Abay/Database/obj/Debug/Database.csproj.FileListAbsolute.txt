@@ -13,3 +13,12 @@ D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.csproj.CoreCompil
 D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.csproj.CopyComplete
 D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.dll
 D:\VisualStudio_Projects\Abay\Abay\Database\obj\Debug\Database.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\bin\Debug\Database.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\bin\Debug\Database.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\bin\Debug\Entities.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\obj\Debug\Database.csprojAssemblyReference.cache
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\obj\Debug\Database.csproj.CopyComplete
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\obj\Debug\Database.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\Database\obj\Debug\Database.pdb

@@ -13,28 +13,33 @@ namespace Database
 
         public static ItemCategory GetItemCategory(int categoryId)
         {
-            ItemCategory build;
+            ItemCategory build = null;
 
             using (SqlConnection connection = DBConnection.GetConnection())
             {
                 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText =   "SELECT *" +
-                                        "FROM [Category]" +
+                    cmd.CommandText =   "SELECT id, name " +
+                                        "FROM [Category] " +
                                         "WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", categoryId);
 
-                    using (SqlDataReader result = cmd.ExecuteReader())
-                    {
-                        build = new ItemCategory
-                        {
-                            Id = result.GetInt32(0),
-                            Name = result.GetString(1)
-                        };
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-                        return build;
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            build = new ItemCategory
+                            {
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1)
+                            };
+                        }
                     }
+
+                    return build;
                 }
             }
         }

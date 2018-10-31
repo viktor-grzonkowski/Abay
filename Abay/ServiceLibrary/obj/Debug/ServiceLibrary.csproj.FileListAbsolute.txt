@@ -37,3 +37,17 @@ D:\VisualStudio_Projects\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.cspro
 D:\VisualStudio_Projects\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
 D:\VisualStudio_Projects\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
 D:\VisualStudio_Projects\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.dll.config
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\Controller.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\Entities.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\Database.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\bin\Debug\Database.pdb
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csprojAssemblyReference.cache
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Source\Repos\Abay2\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb
