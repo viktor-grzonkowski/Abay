@@ -23,7 +23,8 @@ namespace Controller
         {
             User user = userCtrl.GetUserByToken(token);
             Item item = GetItemById(id);
-            if (String.Equals(user.UserName, item.SellerUsername))
+
+            if (string.Equals(user.UserName , item.SellerUser.UserName))
                 return itemDB.DeleteItem(id);
             else
                 return "Ooops something went wrong.";
@@ -33,7 +34,7 @@ namespace Controller
         {
             User user = userCtrl.GetUserByToken(token);
             Item item = GetItemById(itemId);
-            if (String.Equals(user.UserName, item.SellerUsername))
+            if (string.Equals(user.UserName, item.SellerUser.UserName))
             {
                 item.Name = name;
                 item.Description = description;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,11 @@ namespace Database
             Item item = null;
             int from;
 
-            if (page == 0)
+            if (page == 1)
                 from = 0;
             else
                 from = page * quantity;
+
             int to = from + quantity;
 
             using (SqlConnection connection = DBConnection.GetConnection())
@@ -45,12 +47,12 @@ namespace Database
 
                         item = new Item
                         {
-                            Id = reader.GetInt32(2),
-                            Name = reader.GetString(3),
-                            InitialPrice = reader.GetDouble(5),
-                            State = reader.GetInt32(7),
-                            SellerUsername = seller,
-                            CategoryId = DBCategory.GetItemCategory(reader.GetInt32(8))
+                            Id = int.Parse(checkValue(reader["id"]).ToString()),
+                            Name = checkValue(reader["name"]).ToString(),
+                            InitialPrice = (double)reader["initialPrice"],
+                            State = (int)reader["state"],
+                            SellerUser = seller,
+                            Category = DBCategory.GetItemCategory(reader.GetInt32(8))
                         };
 
                         items.Add(item);
@@ -66,41 +68,52 @@ namespace Database
         {
             Item item = null;
 
-            using (SqlConnection connection = DBConnection.GetConnection())
-            {
-
-                using (SqlCommand cmd = connection.CreateCommand())
+            try { 
+                using (SqlConnection connection = DBConnection.GetConnection())
                 {
-                    cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, startDate, state, category_id " +
-                                        "FROM [Item] " +
-                                        "WHERE id = @id";
-                    cmd.Parameters.AddWithValue("@id", id);
 
-                    using (SqlDataReader result = cmd.ExecuteReader())
+                    using (SqlCommand cmd = connection.CreateCommand())
                     {
-                        while (result.Read())
-                        {
-                            User seller = new User
-                            {
-                                UserName = result.GetString(0)
-                            };
+                        cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, startDate, state, category_id " +
+                                            "FROM [Item] " +
+                                            "WHERE id = @id";
+                        cmd.Parameters.AddWithValue("@id", id);
 
-                            item = new Item
+                        using (SqlDataReader result = cmd.ExecuteReader())
+                        {
+                            while (result.Read())
                             {
-                                Id = result.GetInt32(1),
-                                Name = result.GetString(2),
-                                Description = result.GetString(3),
-                                InitialPrice = result.GetDouble(4),
-                                StartDate = result.GetDateTime(5),
-                                State = result.GetInt32(6),
-                                SellerUsername = seller,
-                                CategoryId = DBCategory.GetItemCategory(result.GetInt32(7))
-                            };
+                                User seller = new User
+                                {
+                                    UserName = result.GetString(0)
+                                };
+
+                                item = new Item
+                                {
+                                    Id = result.GetInt32(1),
+                                    Name = result.GetString(2),
+                                    Description = checkValue(result["description"]).ToString(),
+                                    InitialPrice = result.GetDouble(4),
+                                    StartDate = (DateTime)result["startDate"],
+                                    State = result.GetInt32(6),
+                                    SellerUser = seller,
+                                    Category = DBCategory.GetItemCategory((int)result["category_id"])
+                                };
+                            }
+                            
                         }
-                        return item;
                     }
                 }
+
             }
+            catch (Exception e)
+            {
+                Debug.Write("#### ERROR MESSAGE IN GetItemById START #### \n");
+                Debug.Write(e+"\n");
+                Debug.Write("#### ERROR MESSAGE FOR GetItemById END ####");
+            }
+
+            return item;
         }
         #endregion
 
@@ -108,75 +121,66 @@ namespace Database
         public List<Item> SearchItems(string value, int categoryId)
         {
             List<Item> items = new List<Item>();
-            Item item = null;
+            User seller = new User();
+            User buyer = new User();
+            Item item = new Item();
 
-            using (SqlConnection connection = DBConnection.GetConnection())
+            try
             {
-
-                using (SqlCommand cmd = connection.CreateCommand())
+                using (SqlConnection connection = DBConnection.GetConnection())
                 {
-                    cmd.CommandText = "SELECT id, name, description, initialPrice, finalPrice, startDate, endDate,state, seller_username, buyer_username,category_id " +
-                                        "FROM [Item] ";
-                    if(categoryId != -1)
-                        cmd.CommandText += "WHERE(id = @id OR name like @value OR description LIKE @value OR seller_username LIKE @value) AND category_id = @id";
-                    else
-                        cmd.CommandText += "WHERE(id = @id OR name like @value OR description LIKE @value OR seller_username LIKE @value)";
-                    cmd.Parameters.AddWithValue("@id", categoryId);
-                    cmd.Parameters.AddWithValue("@value", value);
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.HasRows)
+                    using (SqlCommand cmd = connection.CreateCommand())
                     {
-                        while (reader.Read())
+                        cmd.CommandText = "SELECT id, name, description, initialPrice, finalPrice, startDate, endDate,state, seller_username, buyer_username,category_id " +
+                                            "FROM [Item] ";
+                        if(categoryId != -1)
+                            cmd.CommandText += "WHERE(id = @id OR name like @value OR description LIKE @value OR seller_username LIKE @value) AND category_id = @id";
+                        else
+                            cmd.CommandText += "WHERE(id = @id OR name like @value OR description LIKE @value OR seller_username LIKE @value)";
+                        cmd.Parameters.AddWithValue("@id", categoryId);
+                        cmd.Parameters.AddWithValue("@value", value);
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
                         {
-                            User seller = new User
+                            while (reader.Read())
                             {
-                                UserName = reader.GetString(8)
-                            };
 
-                            /*
-                            User buyer = new User
-                            {
-                                UserName = reader.GetString(9)
-                            };
-                            */
+                            
+                                seller.UserName = (string)reader["seller_username"];
 
-                            item = new Item
-                            {
-                                Id = reader.GetInt32(0),
-                                Name = reader.GetString(1),
-                                Description = reader.GetString(2),
-                                InitialPrice = reader.GetDouble(3),
-                                FinalPrice = reader.GetDouble(4),
-                                //StartDate = reader.GetDateTime(5),
-                                //EndDate = reader.GetDateTime(6),
-                                State = reader.GetInt32(7),
-                                SellerUsername = seller,
-                                //BuyerUsername = buyer,
-                                CategoryId = DBCategory.GetItemCategory(reader.GetInt32(10))
-                            };
-
-                            items.Add(item);
+                                buyer.UserName = checkValue(reader["buyer_username"]).ToString();
+                            
+                                item.Id = int.Parse(checkValue(reader["id"]).ToString());
+                                item.Name = checkValue(reader["name"]).ToString();
+                                item.Description = checkValue(reader["description"]).ToString();
+                                item.InitialPrice = (double)reader["initialPrice"];
+                                item.FinalPrice = reader["finalPrice"] == System.DBNull.Value ? 0 : (double)reader["finalPrice"];
+                                item.StartDate = (DateTime)reader["startDate"];
+                                item.EndDate = (DateTime)reader["endDate"];
+                                item.State = (int)reader["state"];
+                                item.SellerUser = seller;
+                                item.BuyerUser = buyer;
+                                item.Category = DBCategory.GetItemCategory((int)reader["category_id"]);
+                            
+                                items.Add(item);
+                            }
                         }
+                        
                     }
-                    return items;
                 }
             }
+            catch (Exception e)
+            {
+                Debug.Write("#### ERROR MESSAGE IN SearchItems START #### \n");
+                Debug.Write(e);
+                Debug.Write("#### ERROR MESSAGE FOR SearchItems END #### \n" + e);
+            }
+
+            return items;
         }
-        #endregion
-
-
-
-        //SELECT*
-        //FROM[dbo].[Item]
-        //WHERE(id = '1' OR name like '1' OR description LIKE '1' OR seller_username LIKE '1') AND category_id = '1'
-
-
-
-
-
-        #region SelectItem(int id)
         #endregion
 
         #region InsertItem(Item item)
@@ -197,14 +201,14 @@ namespace Database
                 {
                     // Execute one commands.
                     cmd.CommandText = "INSERT INTO [Item] " +
-                                       "(name ,initialPrice ,state ,seller_username ,category_name) " +
+                                       "(name ,initialPrice ,state ,seller_username ,category_id) " +
                                        "VALUES " +
-                                       "(@name ,@initialPrice ,@state ,@seller_username ,@category_name)";
+                                       "(@name ,@initialPrice ,@state ,@seller_username ,@category_id)";
                     cmd.Parameters.AddWithValue("@name", item.Name);
                     cmd.Parameters.AddWithValue("@initialPrice", item.InitialPrice);
                     cmd.Parameters.AddWithValue("@state", item.State);
-                    cmd.Parameters.AddWithValue("@seller_username", item.SellerUsername);
-                    cmd.Parameters.AddWithValue("@category_id", item.CategoryId);
+                    cmd.Parameters.AddWithValue("@seller_username", item.SellerUser.UserName);
+                    cmd.Parameters.AddWithValue("@category_id", item.Category.Id);
                     cmd.ExecuteNonQuery();
 
                     // Commit the transaction.
@@ -216,6 +220,7 @@ namespace Database
                 {
                     // Handle the exception if the transaction fails to commit.
                     message = ex.Message;
+                    Debug.Write(ex);
 
                     try
                     {
@@ -305,5 +310,10 @@ namespace Database
             }
         }
         #endregion
+
+        public object checkValue(object value)
+        {
+            return value == DBNull.Value ? "" : value;
+        }
     }
 }

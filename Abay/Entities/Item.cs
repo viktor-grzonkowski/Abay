@@ -16,20 +16,22 @@ namespace Entities
         private DateTime _startDate;
         private DateTime _endDate;
         private int _state;
-        private User _sellerUsername;
-        private User _buyerUsername;
-        private ItemCategory _categoryId;
+        private User _sellerUser;
+        private User _buyerUser;
+        private ItemCategory _category;
 
         public Item()
         { 
+
         }
+
         public Item(string name, double initialPrice, int state, User seller, ItemCategory categoryId)
         {
             Name = name;
             InitialPrice = initialPrice;
             State = state;
-            SellerUsername = seller;
-            CategoryId = categoryId;
+            SellerUser = seller;
+            Category = categoryId;
         }
 
         public int Id { get => _id; set => _id = value; }
@@ -40,9 +42,9 @@ namespace Entities
         public DateTime StartDate { get => _startDate; set => _startDate = value; }
         public DateTime EndDate { get => _endDate; set => _endDate = value; }
         public int State { get => _state; set => _state = value; }
-        public User SellerUsername { get => _sellerUsername; set => _sellerUsername = value; }
-        public User BuyerUsername { get => _buyerUsername; set => _buyerUsername = value; }
-        public ItemCategory CategoryId { get => _categoryId; set => _categoryId = value; }
+        public User SellerUser { get => _sellerUser; set => _sellerUser = value; }
+        public User BuyerUser { get => _buyerUser; set => _buyerUser = value; }
+        public ItemCategory Category { get => _category; set => _category = value; }
         
     }
 }
