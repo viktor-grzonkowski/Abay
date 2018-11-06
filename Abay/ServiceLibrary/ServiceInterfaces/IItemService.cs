@@ -13,7 +13,7 @@ namespace ServiceLibrary.ServiceInterfaces
     public interface IItemService
     {
         [OperationContract]
-        List<Item> GetAllItems(int page, int quantity);
+        List<Item> GetAllItems(int catId);
 
         [OperationContract]
         List<Item> SearchItems(string value, int categoryId);

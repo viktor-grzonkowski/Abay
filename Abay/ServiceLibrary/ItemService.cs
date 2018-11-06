@@ -35,9 +35,9 @@ namespace ServiceLibrary
             return ItemCtrl.SearchItems(value, categoryId);
         }
 
-        public List<Item> GetAllItems(int page, int quantity)
+        public List<Item> GetAllItems(int catId)
         {
-            return ItemCtrl.GetAllItems(page, quantity);
+            return ItemCtrl.GetAllItems(catId);
         }
 
         public List<ItemCategory> GetCategories()

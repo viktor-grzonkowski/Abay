@@ -47,9 +47,9 @@ namespace Controller
             return itemDB.SearchItems(value, categoryId);
         }
 
-        public List<Item> GetAllItems(int page, int quantity)
+        public List<Item> GetAllItems(int catId)
         {
-            return itemDB.GetAllItems(page, quantity);
+            return itemDB.GetAllItems(catId);
         }
 
         public Item GetItemById(int id)

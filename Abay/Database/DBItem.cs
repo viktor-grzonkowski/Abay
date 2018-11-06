@@ -11,38 +11,31 @@ namespace Database
 {
     public class DBItem
     {
-        #region GetAllItems(int page, int quantity)
-        public List<Item> GetAllItems(int page, int quantity)
+        #region GetAllItems(int CatId)
+        public List<Item> GetAllItems(int CatId)
         {
             List<Item> items = new List<Item>();
             Item item = null;
-            int from;
-
-            if (page == 1)
-                from = 0;
-            else
-                from = page * quantity;
-
-            int to = from + quantity;
 
             using (SqlConnection connection = DBConnection.GetConnection())
             {
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT ROW_NUMBER() OVER(ORDER BY id ASC) AS RowNumber, seller_username, id, name, description, initialPrice, startDate, state, category_id " +
-                                        "FROM [Item] "+
-                                        "WHERE id < @to And id > @from";
-                    cmd.Parameters.AddWithValue("@to", to);
-                    cmd.Parameters.AddWithValue("@from", from);
+                    cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, startDate, state, category_id " +
+                                      "FROM [Item] ";
+                    if (CatId != -1)
+                        cmd.CommandText += "WHERE category_id = @catId";
 
+                    cmd.Parameters.AddWithValue("@catId", CatId);
+                    
                     SqlDataReader reader = cmd.ExecuteReader();
-
+                    
                     while (reader.Read())
                     {
                         User seller = new User
                         {
-                            UserName = reader.GetString(1)
+                            UserName = reader.GetString(0)
                         };
 
                         item = new Item
@@ -52,7 +45,7 @@ namespace Database
                             InitialPrice = (double)reader["initialPrice"],
                             State = (int)reader["state"],
                             SellerUser = seller,
-                            Category = DBCategory.GetItemCategory(reader.GetInt32(8))
+                            Category = DBCategory.GetItemCategory(reader.GetInt32(7))
                         };
 
                         items.Add(item);
@@ -61,6 +54,9 @@ namespace Database
                 }
             }
         }
+        #endregion
+
+        #region GetAllItemsByCat(int catId)
         #endregion
 
         #region GetItemById(int id)
