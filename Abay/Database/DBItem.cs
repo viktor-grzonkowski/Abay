@@ -56,9 +56,6 @@ namespace Database
         }
         #endregion
 
-        #region GetAllItemsByCat(int catId)
-        #endregion
-
         #region GetItemById(int id)
         public Item GetItemById(int id)
         {
@@ -195,7 +192,7 @@ namespace Database
 
                 try
                 {
-                    // Execute one commands.
+                    // Execute one command.
                     cmd.CommandText = "INSERT INTO [Item] " +
                                        "(name ,initialPrice ,state ,seller_username ,category_id) " +
                                        "VALUES " +
@@ -238,20 +235,32 @@ namespace Database
         #endregion
 
         #region UpdateItem(Item item)
-        public void UpdateItem(Item item)
+        public bool UpdateItem(Item item)
         {
             using (SqlConnection connection = DBConnection.GetConnection())
             {
-                using (SqlCommand cmd = connection.CreateCommand())
+                try
                 {
-                    cmd.CommandText =   "UPDATE [Item] " +
-                                        "SET name = @name, description = @description " +
-                                        "WHERE id = @id";
-                    cmd.Parameters.AddWithValue("@id", item.Id);
-                    cmd.Parameters.AddWithValue("@name", item.Name);
-                    cmd.Parameters.AddWithValue("@description", item.Description);
-                    cmd.ExecuteScalar();
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "UPDATE [Item] " +
+                                            "SET name = @name, description = @description, finalPrice = @finalPrice " +
+                                            "WHERE id = @id";
+                        cmd.Parameters.AddWithValue("@id", item.Id);
+                        cmd.Parameters.AddWithValue("@name", item.Name);
+                        cmd.Parameters.AddWithValue("@description", item.Description);
+                        cmd.Parameters.AddWithValue("@finalPrice", item.FinalPrice);
+                        cmd.ExecuteScalar();
+                        return true;
+                    }
                 }
+                catch (Exception e)
+                {
+                    Debug.Write("#### ERROR IN Bid START #### \n");
+                    Debug.Write(e + "\n");
+                    Debug.Write("#### ERROR FOR Bid END ####");
+                }
+                return false;
             }
         }
         #endregion

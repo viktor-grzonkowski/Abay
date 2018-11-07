@@ -42,6 +42,13 @@ namespace Controller
             }
         }
 
+        public bool UpdateItem(int itemId, double finalPrice)
+        {
+            Item item = GetItemById(itemId);
+            item.FinalPrice = finalPrice;
+            return itemDB.UpdateItem(item);
+        }
+
         public List<Item> SearchItems(string value, int categoryId)
         {
             return itemDB.SearchItems(value, categoryId);

@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    class Bid
+    public class Bid
     {
-        public User Username { get; set; }
-        public Item Item { get; set; }
-        public double Amount { get; set; }
-        public DateTime Timestamp { get; set; }
+        private string _userName;
+        private int _itemId;
+        private double _amount;
+        private DateTime _timestamp;
 
         public Bid()
         {
 
         }
+
+        public string UserName { get => _userName; set => _userName = value; }
+        public int ItemId { get => _itemId; set => _itemId = value; }
+        public double Amount { get => _amount; set => _amount = value; }
+        public DateTime Timestamp { get => _timestamp; set => _timestamp = value; }
     }
 }

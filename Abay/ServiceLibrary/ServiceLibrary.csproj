@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidService.cs" />
+    <Compile Include="ServiceInterfaces\IBidService.cs" />
     <Compile Include="ServiceInterfaces\IItemService.cs" />
     <Compile Include="ItemService.cs" />
     <Compile Include="ServiceInterfaces\IUserLogin.cs" />

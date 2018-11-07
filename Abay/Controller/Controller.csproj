@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidController.cs" />
     <Compile Include="CategoryController.cs" />
     <Compile Include="ItemController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

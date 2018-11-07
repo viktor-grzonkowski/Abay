@@ -12,18 +12,24 @@ namespace HostConsole
     {
         static void Main()
         {
-            ServiceHost SUserLogin = new ServiceHost(typeof(UserLogin));
-            SUserLogin.Open();
+            ServiceHost sUserLogin = new ServiceHost(typeof(UserLogin));
+            sUserLogin.Open();
             Console.WriteLine("UserLogin service started.");
-            ServiceHost SItemService = new ServiceHost(typeof(ItemService));
-            SItemService.Open();
+
+            ServiceHost sItemService = new ServiceHost(typeof(ItemService));
+            sItemService.Open();
             Console.WriteLine("Item service started.");
+
+            ServiceHost sBidService = new ServiceHost(typeof(BidService));
+            sBidService.Open();
+            Console.WriteLine("Bid service started.");
 
             Console.WriteLine("Press any key to close the services");
             Console.ReadLine();
 
-            SUserLogin.Close();
-            SItemService.Close();
+            sUserLogin.Close();
+            sItemService.Close();
+            sBidService.Close();
         }
     }
 }
