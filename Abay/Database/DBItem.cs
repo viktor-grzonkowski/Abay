@@ -22,10 +22,10 @@ namespace Database
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, startDate, state, category_id " +
+                    cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, startDate, endDate, state, category_id " +
                                       "FROM [Item] ";
                     if (CatId != -1)
-                        cmd.CommandText += "WHERE category_id = @catId";
+                        cmd.CommandText += "WHERE category_id = @catId AND state = 0";
 
                     cmd.Parameters.AddWithValue("@catId", CatId);
                     
@@ -40,12 +40,15 @@ namespace Database
 
                         item = new Item
                         {
-                            Id = int.Parse(checkValue(reader["id"]).ToString()),
-                            Name = checkValue(reader["name"]).ToString(),
+                            Id = int.Parse(CheckValue(reader["id"]).ToString()),
+                            Name = CheckValue(reader["name"]).ToString(),
+                            Description = CheckValue(reader["description"]).ToString(),
                             InitialPrice = (double)reader["initialPrice"],
+                            StartDate = (DateTime)reader["startDate"],
+                            EndDate = (DateTime)reader["endDate"],
                             State = (int)reader["state"],
                             SellerUser = seller,
-                            Category = DBCategory.GetItemCategory(reader.GetInt32(7))
+                            Category = DBCategory.GetItemCategory((int)reader["category_id"])
                         };
 
                         items.Add(item);
@@ -67,7 +70,7 @@ namespace Database
 
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, startDate, state, category_id " +
+                        cmd.CommandText = "SELECT seller_username, id, name, description, initialPrice, finalPrice, startDate, endDate, state, category_id " +
                                             "FROM [Item] " +
                                             "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", id);
@@ -85,10 +88,12 @@ namespace Database
                                 {
                                     Id = result.GetInt32(1),
                                     Name = result.GetString(2),
-                                    Description = checkValue(result["description"]).ToString(),
+                                    Description = CheckValue(result["description"]).ToString(),
                                     InitialPrice = result.GetDouble(4),
+                                    FinalPrice = double.Parse(CheckValue(result["finalPrice"]).ToString()),
                                     StartDate = (DateTime)result["startDate"],
-                                    State = result.GetInt32(6),
+                                    EndDate = (DateTime)result["endDate"],
+                                    State = result.GetInt32(8),
                                     SellerUser = seller,
                                     Category = DBCategory.GetItemCategory((int)result["category_id"])
                                 };
@@ -101,11 +106,10 @@ namespace Database
             }
             catch (Exception e)
             {
-                Debug.Write("#### ERROR MESSAGE IN GetItemById START #### \n");
-                Debug.Write(e+"\n");
-                Debug.Write("#### ERROR MESSAGE FOR GetItemById END ####");
+                Debug.Write("\n #### ERROR IN GetItemById START #### \n");
+                Debug.Write("\n" + e + "\n");
+                Debug.Write("\n #### ERROR FOR GetItemById END #### \n");
             }
-
             return item;
         }
         #endregion
@@ -144,11 +148,11 @@ namespace Database
                             
                                 seller.UserName = (string)reader["seller_username"];
 
-                                buyer.UserName = checkValue(reader["buyer_username"]).ToString();
+                                buyer.UserName = CheckValue(reader["buyer_username"]).ToString();
                             
-                                item.Id = int.Parse(checkValue(reader["id"]).ToString());
-                                item.Name = checkValue(reader["name"]).ToString();
-                                item.Description = checkValue(reader["description"]).ToString();
+                                item.Id = int.Parse(CheckValue(reader["id"]).ToString());
+                                item.Name = CheckValue(reader["name"]).ToString();
+                                item.Description = CheckValue(reader["description"]).ToString();
                                 item.InitialPrice = (double)reader["initialPrice"];
                                 item.FinalPrice = reader["finalPrice"] == System.DBNull.Value ? 0 : (double)reader["finalPrice"];
                                 item.StartDate = (DateTime)reader["startDate"];
@@ -167,9 +171,9 @@ namespace Database
             }
             catch (Exception e)
             {
-                Debug.Write("#### ERROR MESSAGE IN SearchItems START #### \n");
-                Debug.Write(e);
-                Debug.Write("#### ERROR MESSAGE FOR SearchItems END #### \n" + e);
+                Debug.Write("\n #### ERROR IN SearchItems START #### \n");
+                Debug.Write("\n" + e + "\n");
+                Debug.Write("\n #### ERROR FOR SearchItems END #### \n");
             }
 
             return items;
@@ -244,21 +248,22 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [Item] " +
-                                            "SET name = @name, description = @description, finalPrice = @finalPrice " +
+                                            "SET name = @name, description = @description, finalPrice = @finalPrice, state = @state " +
                                             "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", item.Id);
                         cmd.Parameters.AddWithValue("@name", item.Name);
                         cmd.Parameters.AddWithValue("@description", item.Description);
                         cmd.Parameters.AddWithValue("@finalPrice", item.FinalPrice);
+                        cmd.Parameters.AddWithValue("@state", item.State);
                         cmd.ExecuteScalar();
                         return true;
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.Write("#### ERROR IN Bid START #### \n");
-                    Debug.Write(e + "\n");
-                    Debug.Write("#### ERROR FOR Bid END ####");
+                    Debug.Write("\n #### ERROR IN UpdateItem START #### \n");
+                    Debug.Write("\n"+ e + "\n");
+                    Debug.Write("\n #### ERROR FOR UpdateItem END #### \n");
                 }
                 return false;
             }
@@ -316,7 +321,7 @@ namespace Database
         }
         #endregion
 
-        public object checkValue(object value)
+        public object CheckValue(object value)
         {
             return value == DBNull.Value ? "" : value;
         }

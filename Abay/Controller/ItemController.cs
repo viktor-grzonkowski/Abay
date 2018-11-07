@@ -49,6 +49,11 @@ namespace Controller
             return itemDB.UpdateItem(item);
         }
 
+        public bool UpdateItem(Item item)
+        {
+            return itemDB.UpdateItem(item);
+        }
+
         public List<Item> SearchItems(string value, int categoryId)
         {
             return itemDB.SearchItems(value, categoryId);
@@ -56,12 +61,34 @@ namespace Controller
 
         public List<Item> GetAllItems(int catId)
         {
-            return itemDB.GetAllItems(catId);
+            List<Item> items = new List<Item>();
+            List<Item> newLst = new List<Item>();
+
+            items = itemDB.GetAllItems(catId);
+            foreach (Item item in items)
+            {
+                if (DateTime.Now >= item.EndDate)
+                {
+                    item.State = 1;
+                    UpdateItem(item);
+                }
+                else
+                {
+                    newLst.Add(item);
+                }
+            }
+            return newLst;
         }
 
         public Item GetItemById(int id)
         {
-            return itemDB.GetItemById(id);
+            Item item = itemDB.GetItemById(id);
+            if (DateTime.Now > item.EndDate)
+            {
+                item.State = 1;
+                UpdateItem(item);
+            }
+            return item;
         }
     }
 }
