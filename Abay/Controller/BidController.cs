@@ -25,20 +25,24 @@ namespace Controller
             {
                 if (DateTime.Now < item.EndDate)
                 {
-                    if (bid == null)
+                    if (amount >= item.InitialPrice && amount > item.FinalPrice)
                     {
-                        if (amount >= item.InitialPrice && amount > item.FinalPrice)
-                            if (CreateBid(itemId, amount, token))
-                                return itemCtrl.UpdateItem(itemId, amount);
+                        item.BuyerUser = buyer;
+                        item.FinalPrice = amount;
 
-                        return false;
-                    }
-                    else
-                    {
-                        if (amount > bid.Amount && amount >= item.InitialPrice && amount > item.FinalPrice)
-                            if (bidDb.Bid(itemId, amount, buyer))
-                                return itemCtrl.UpdateItem(itemId, amount);
-                        return false;
+                        if (bid == null)
+                        {
+                            if (CreateBid(item))
+                                return itemCtrl.UpdateItem(item);
+                            return false;
+                        }
+                        else
+                        {
+                            if (amount > bid.Amount)
+                                if (Bid(item))
+                                    return itemCtrl.UpdateItem(item);
+                            return false;
+                        }
                     }
                 }
             }
@@ -50,17 +54,22 @@ namespace Controller
             return bidDb.GetBid(itemId);
         }
 
-        public bool CreateBid(int itemId, double amount, string token)
+        public bool CreateBid(Item item)
         {
             Bid bid = new Bid
             {
-                UserName = userCtrl.GetUserByToken(token).UserName,
-                ItemId = itemId,
-                Amount = amount,
+                UserName = item.BuyerUser.UserName,
+                ItemId = item.Id,
+                Amount = item.FinalPrice,
                 Timestamp = DateTime.Now
             };
 
             return bidDb.InsertBid(bid);
+        }
+
+        public bool Bid(Item item)
+        {
+            return bidDb.Bid(item);
         }
     }
 }

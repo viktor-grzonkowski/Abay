@@ -39,6 +39,10 @@ namespace ServiceLibrary
         {
             return ItemCtrl.GetAllItems(catId);
         }
+        public Item GetItemById(int itemId)
+        {
+            return ItemCtrl.GetItemById(itemId);
+        }
 
         public List<ItemCategory> GetCategories()
         {

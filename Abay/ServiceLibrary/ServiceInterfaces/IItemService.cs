@@ -16,6 +16,9 @@ namespace ServiceLibrary.ServiceInterfaces
         List<Item> GetAllItems(int catId);
 
         [OperationContract]
+        Item GetItemById(int itemId);
+
+        [OperationContract]
         List<Item> SearchItems(string value, int categoryId);
 
         [OperationContract]

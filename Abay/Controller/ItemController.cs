@@ -42,13 +42,6 @@ namespace Controller
             }
         }
 
-        public bool UpdateItem(int itemId, double finalPrice)
-        {
-            Item item = GetItemById(itemId);
-            item.FinalPrice = finalPrice;
-            return itemDB.UpdateItem(item);
-        }
-
         public bool UpdateItem(Item item)
         {
             return itemDB.UpdateItem(item);

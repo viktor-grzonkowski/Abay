@@ -8,8 +8,8 @@ namespace Database
 {
     public class DBBid
     {
-        #region Bid(int itemId, double amount)
-        public bool Bid(int itemId, double amount, User buyer)
+        #region Bid(Item item)
+        public bool Bid(Item item)
         {
             TransactionOptions options = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
 
@@ -30,9 +30,9 @@ namespace Database
                         cmd.CommandText =   "UPDATE [Bid] " +
                                             "SET username = @username, amount = @amount " +
                                             "WHERE item_id = @id";
-                        cmd.Parameters.AddWithValue("@id", itemId);
-                        cmd.Parameters.AddWithValue("@username", buyer.UserName);
-                        cmd.Parameters.AddWithValue("@amount", amount);
+                        cmd.Parameters.AddWithValue("@id", item.Id);
+                        cmd.Parameters.AddWithValue("@username", item.BuyerUser.UserName);
+                        cmd.Parameters.AddWithValue("@amount", item.FinalPrice);
                         cmd.ExecuteNonQuery();
 
                         // Commit the transaction.
@@ -119,7 +119,7 @@ namespace Database
         }
         #endregion
 
-        #region InsertBid(int itemId, double amount, string token)
+        #region InsertBid(Bid bid)
         public bool InsertBid(Bid bid)
         {
             using (SqlConnection connection = DBConnection.GetConnection())
