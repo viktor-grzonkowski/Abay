@@ -1,0 +1,103 @@
+﻿@model WebApp_Abay_MVC.Models.Item
+
+@{
+    ViewBag.Title = "Bid";
+}
+<!--
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+    -->
+@using (Html.BeginForm())
+{
+    @Html.Hidden("itemId", Model.Id)
+    <div class="container" style="padding:0 0 60px;">
+        <h2>@ViewBag.Title</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img style="width:400px;" src="~/Images/s-l500.jpg" />
+            </div>
+            <div class="col-md-6" style="background-color:#fff;padding:0 20px 30px;">
+                <div id="titleSection">
+                    <h2 id="title">
+                        <span id="productTitle">
+                            @Html.DisplayFor(model => model.Name)
+                        </span>
+                    </h2>
+                </div>
+                <div id="bySection">
+                    by <a href="#">@Html.DisplayFor(model => model.SellerUser)</a>
+                </div>
+                <div id="countdownSection">
+                    Auction ends in: <span id="demo"></span>
+                </div>
+                <div id="priceSection">
+                    <p class="color-secondary">Starting price: <span id="startingPriceNumber" class="priceSign">@Html.DisplayFor(model => model.InitialPrice)</span></p>
+                    <p class="color-secondary">Highest offer: <span id="highestOfferNumber" class="priceSign">@Html.DisplayFor(model => model.FinalPrice)</span></p>
+                </div>
+                <div id="descriptionSection">
+                    <ul style="list-style: circle; padding-left: 20px;">
+                        @Html.DisplayFor(model => model.Description)
+                    </ul>
+                </div>
+
+                <div id="bidSection">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">$</div>
+                                <!--<input type="text" class="form-control" id="finalPrice" placeholder="Amount">-->
+                                @Html.TextBox("finalPrice", null, new { @type = "text", @class = "form-control", @id = "finalPrice", @placeholder = "Amount" })
+                                <!--<div class="input-group-addon">.00</div>-->
+                            </div>
+                            </div>
+                            <button type="submit" id="cunt" class="btn btn-primary btn-custom">Make an offer</button>
+                        </form>
+                    </div>
+
+
+                    <div id="buyNowSection">
+                        <form class="form-inline">
+                            <p class="color-secondary">
+                                Buy now price: <span id="buyNowPrice" class="priceSign">30</span>
+                                <button type="submit" class="btn btn-primary btn-custom">Buy It Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <script>
+
+        // Set the date we're counting down to
+        var countDownDate = new Date(@Model.EndDate.Year+"-"+@Model.EndDate.Month+"-"+@Model.EndDate.Day+" "+@Model.EndDate.Hour+":"+@Model.EndDate.Minute+":"+@Model.EndDate.Second).getTime();
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+
+        document.getElementById("demo").innerHTML = endDate;
+
+    </script>

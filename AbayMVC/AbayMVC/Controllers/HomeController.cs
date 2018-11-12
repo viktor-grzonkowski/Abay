@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WebApp_Abay_MVC.Models;
+
+namespace WebApp_Abay_MVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        ItemServiceReference.ItemServiceClient itemClient = new ItemServiceReference.ItemServiceClient("BasicHttpBinding_IItemService");
+        public ActionResult Index()
+        {
+            List<Category> cats = new List<Category>();
+            var categorys = itemClient.GetCategories();
+            foreach (var category in categorys)
+            {
+                Category cat = new Category
+                {
+                    Id = category.Id,
+                    Name = category.Name
+                };
+                cats.Add(cat);
+            }
+            return View(cats);
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+    }
+}

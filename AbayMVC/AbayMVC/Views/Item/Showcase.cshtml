@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebApp_Abay_MVC.Models.Item>
+
+@{
+    ViewBag.Title = "Showcase";
+}
+
+<h2>Showcase</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InitialPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SellerUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuyerUser)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InitialPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellerUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuyerUser)
+        </td>
+        <td>
+            @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id}, null )
+        </td>
+    </tr>
+}
+
+</table>
