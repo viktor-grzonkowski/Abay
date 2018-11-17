@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace WebApp_Abay_MVC
+namespace AbayMVC
 {
     public class MvcApplication : System.Web.HttpApplication
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApp_Abay_MVC.Models
+namespace AbayMVC.Models
 {
     public class Item
     {

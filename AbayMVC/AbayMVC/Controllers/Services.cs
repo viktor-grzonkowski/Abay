@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApp_Abay_MVC.Controllers
+namespace AbayMVC.Controllers
 {
     public class Services
     {
         ItemServiceReference.ItemServiceClient itemClient = null;
         BidServiceReference.BidServiceClient bidClient = null;
+        UserServiceReference.UserServiceClient userClient = null;
 
         private static Services instance = null;
         private Services()
@@ -28,12 +29,17 @@ namespace WebApp_Abay_MVC.Controllers
 
         public ItemServiceReference.ItemServiceClient ItemClient()
         {
-            return itemClient == null ? itemClient = new ItemServiceReference.ItemServiceClient("BasicHttpBinding_IItemService") : itemClient;
+            return itemClient ?? (itemClient = new ItemServiceReference.ItemServiceClient("BasicHttpBinding_IItemService"));
         }
 
         public BidServiceReference.BidServiceClient BidClient()
         {
-            return bidClient == null ? bidClient = new BidServiceReference.BidServiceClient("BasicHttpBinding_IBidService") : bidClient;
+            return bidClient ?? (bidClient = new BidServiceReference.BidServiceClient("BasicHttpBinding_IBidService"));
+        }
+
+        public UserServiceReference.UserServiceClient UserClient()
+        {
+            return userClient ?? (userClient = new UserServiceReference.UserServiceClient("BasicHttpBinding_IUserService"));
         }
     }
 }

@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApp_Abay_MVC.BidServiceReference;
-using WebApp_Abay_MVC.Models;
+using AbayMVC.BidServiceReference;
+using AbayMVC.Models;
 
-namespace WebApp_Abay_MVC.Controllers
+namespace AbayMVC.Controllers
 {
     public class ItemController : Controller
     {

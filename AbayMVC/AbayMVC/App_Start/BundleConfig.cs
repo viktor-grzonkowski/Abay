@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WebApp_Abay_MVC
+namespace AbayMVC
 {
     public class BundleConfig
     {
