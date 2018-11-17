@@ -14,11 +14,12 @@ namespace Controller
         DBBid bidDb = new DBBid();
         UserController userCtrl = new UserController();
         ItemController itemCtrl = new ItemController();
+        TokenController tokenCtrl = new TokenController();
 
         public bool Bid(int itemId, double amount, string token)
         {
             Bid bid = GetBid(itemId);
-            User buyer = userCtrl.GetUserByToken(token);
+            User buyer = tokenCtrl.GetUserByToken(token);
             Item item = itemCtrl.GetItemById(itemId);
 
             if (!string.Equals(buyer.UserName,item.SellerUser.UserName))

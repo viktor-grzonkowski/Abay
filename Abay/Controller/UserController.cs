@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Database;
 using Entities;
 
@@ -10,16 +6,51 @@ namespace Controller
 {
     public class UserController
     {
-        DBUser userDb = new DBUser();
+        // TODO: Set this from a web.config appSettting value
+        public static double DefaultSecondsUntilTokenExpires = 1800;
 
-        public bool Login(string userName, string password)
+        DBUser userDb = new DBUser();
+        TokenController tokenCtrl = new TokenController();
+
+        public Token Login(string userName, string password)
         {
-            return userDb.Login(userName, password);
+            User user = userDb.Login(userName, password);
+            Token token = null;
+
+            if (user != null)
+            {
+                token = new Token
+                {
+                    SecureToken = Security.CreateToken(100),
+                    UserName = user.UserName,
+                    CreateDate = DateTime.Now
+                };
+
+                if (tokenCtrl.InsertToken(token))
+                    return token;
+                
+            }
+
+            return null;
         }
 
-        public User GetUserByToken(string token)
+        public User CreateUser(User user, out string message)
         {
-            return userDb.GetUserByToken(token);
+            if (userDb.CheckUserName(user.UserName))
+            {
+                message = "User name "+ user.UserName +" is already taken";
+                return null;
+            }
+
+
+            if (userDb.InsertUser(user))
+            {
+                message = "User created!";
+                return user;
+            }
+
+            message = "Ooops something bad happened";
+            return null;
         }
     }
 }

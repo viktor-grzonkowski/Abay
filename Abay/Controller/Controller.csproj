@@ -45,6 +45,7 @@
     <Compile Include="CategoryController.cs" />
     <Compile Include="ItemController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenController.cs" />
     <Compile Include="UserController.cs" />
   </ItemGroup>
   <ItemGroup>

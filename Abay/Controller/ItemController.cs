@@ -12,16 +12,17 @@ namespace Controller
     {
         DBItem itemDB = new DBItem();
         UserController userCtrl = new UserController();
-        CategoryController CategoryCtrl = new CategoryController();
+        CategoryController categoryCtrl = new CategoryController();
+        TokenController tokenCtrl = new TokenController();
 
         public string CreateItem(string name, double initialPrice, int state, string token, int categoryId)
         {  
-            return itemDB.InsertItem(new Item(name, initialPrice, state, userCtrl.GetUserByToken(token), CategoryCtrl.GetItemCategory(categoryId)));
+            return itemDB.InsertItem(new Item(name, initialPrice, state, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId)));
         }
 
         public string DeleteItem(int id, string token)
         {
-            User user = userCtrl.GetUserByToken(token);
+            User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(id);
 
             if (string.Equals(user.UserName , item.SellerUser.UserName))
@@ -32,7 +33,7 @@ namespace Controller
 
         public void UpdateItem(int itemId, string token, string name, string description)
         {
-            User user = userCtrl.GetUserByToken(token);
+            User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(itemId);
             if (string.Equals(user.UserName, item.SellerUser.UserName))
             {

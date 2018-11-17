@@ -10,11 +10,14 @@ namespace ServiceLibrary.ServiceInterfaces
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUserLogin" in both code and config file together.
     [ServiceContract]
-    public interface IUserLogin
+    public interface IUserService
     {
         [OperationContract]
-        bool Login(string userName, string password);
+        string Login(string userName, string password);
+        
         [OperationContract]
-        User GetUserByToken(string token);
+        User CreateUser(User user, out string message);
+
+        //string userName, string fName, string lName, string pw, string email, bool admin,
     }
 }

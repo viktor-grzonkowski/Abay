@@ -12,7 +12,7 @@ namespace HostConsole
     {
         static void Main()
         {
-            ServiceHost sUserLogin = new ServiceHost(typeof(UserLogin));
+            ServiceHost sUserLogin = new ServiceHost(typeof(UserService));
             sUserLogin.Open();
             Console.WriteLine("UserLogin service started.");
 
