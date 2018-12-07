@@ -67,3 +67,19 @@ C:\Users\VGrzo\Source\Repos\Abay2\Abay\HostConsole\obj\Debug\HostConsole.csproj.
 C:\Users\VGrzo\Source\Repos\Abay2\Abay\HostConsole\obj\Debug\HostConsole.csproj.CopyComplete
 C:\Users\VGrzo\Source\Repos\Abay2\Abay\HostConsole\obj\Debug\ServiceHost.exe
 C:\Users\VGrzo\Source\Repos\Abay2\Abay\HostConsole\obj\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\ServiceHost.exe.config
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\ServiceHost.exe
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\ServiceHost.pdb
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\Entities.dll
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\Database.dll
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\obj\Debug\HostConsole.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\obj\Debug\HostConsole.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\obj\Debug\HostConsole.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\obj\Debug\ServiceHost.exe
+C:\Users\VGrzo\Desktop\New folder (2)\Abay\HostConsole\obj\Debug\ServiceHost.pdb

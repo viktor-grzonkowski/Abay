@@ -154,6 +154,12 @@ namespace AbayMVC.UserServiceReference {
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CreateUser", ReplyAction="http://tempuri.org/IUserService/CreateUserResponse")]
         System.Threading.Tasks.Task<AbayMVC.UserServiceReference.CreateUserResponse> CreateUserAsync(AbayMVC.UserServiceReference.CreateUserRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
+        AbayMVC.UserServiceReference.User GetUserByToken(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
+        System.Threading.Tasks.Task<AbayMVC.UserServiceReference.User> GetUserByTokenAsync(string token);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -242,6 +248,14 @@ namespace AbayMVC.UserServiceReference {
         
         public System.Threading.Tasks.Task<AbayMVC.UserServiceReference.CreateUserResponse> CreateUserAsync(AbayMVC.UserServiceReference.CreateUserRequest request) {
             return base.Channel.CreateUserAsync(request);
+        }
+        
+        public AbayMVC.UserServiceReference.User GetUserByToken(string token) {
+            return base.Channel.GetUserByToken(token);
+        }
+        
+        public System.Threading.Tasks.Task<AbayMVC.UserServiceReference.User> GetUserByTokenAsync(string token) {
+            return base.Channel.GetUserByTokenAsync(token);
         }
     }
 }

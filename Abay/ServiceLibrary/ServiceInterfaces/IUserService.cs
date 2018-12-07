@@ -19,5 +19,7 @@ namespace ServiceLibrary.ServiceInterfaces
         User CreateUser(User user, out string message);
 
         //string userName, string fName, string lName, string pw, string email, bool admin,
+        [OperationContract]
+        User GetUserByToken(string token);
     }
 }

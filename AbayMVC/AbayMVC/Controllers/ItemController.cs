@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using AbayMVC.BidServiceReference;
 using AbayMVC.Models;
+using AbayMVC.Security;
 
 namespace AbayMVC.Controllers
 {
@@ -13,6 +14,7 @@ namespace AbayMVC.Controllers
     {
         Services services = Services.Instance;
 
+        [AllowAnonymous]
         public ActionResult Showcase()
         {
             string s = Request.QueryString["catId"];
@@ -44,7 +46,8 @@ namespace AbayMVC.Controllers
             }
             return View(lst);
         }
-        
+
+        [CustomAuthAttribute(Roles = "Admin")]
         public ActionResult Bid(int itemId)
         {
             var item = services.ItemClient().GetItemById(itemId);
@@ -61,6 +64,7 @@ namespace AbayMVC.Controllers
             };
             return View(itm);
         }
+
         [HttpPost]
         public ActionResult Bid(FormCollection collection)
         {

@@ -1,4 +1,5 @@
 ﻿using AbayMVC.Models;
+using AbayMVC.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,5 +57,28 @@ namespace AbayMVC.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+
+
+
+        [HttpPost]
+        public ActionResult Login(AccountViewModel avm)
+        {
+            AccountModel am = new AccountModel();
+            Account ac;
+
+            if ((string.IsNullOrEmpty(avm.Account.Username) || string.IsNullOrEmpty(avm.Account.Password)) || (ac = am.Login(avm.Account.Username, avm.Account.Password)) == null)
+            {
+                ViewBag.Error = "Account's Invalid";
+                return View("Login");
+            }
+            SessionPersister.Token = ac.Token;
+
+            return RedirectToAction("Index", "Home");
+        }
+        
+
+
     }
 }

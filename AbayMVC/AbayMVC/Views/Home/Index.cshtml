@@ -4,7 +4,7 @@
     ViewBag.Title = "Welcome on Auction Bay";
 }
 
-
+@using AbayMVC.Security
 <div class="container" style="margin-bottom:20px;">
     <h2>@ViewBag.Title</h2>
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -33,7 +33,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Controls -->
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -45,7 +44,7 @@
         </a>
     </div>
 </div>
-
+WELLCOME @SessionPersister.Token
 <div class="container" style="padding-bottom: 30px;">
     <div class="row">
         <div class="col-sm-3">

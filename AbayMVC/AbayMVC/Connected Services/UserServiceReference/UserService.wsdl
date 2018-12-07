@@ -48,6 +48,12 @@
   <wsdl:message name="IUserService_CreateUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_GetUserByToken_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByToken" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetUserByToken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByTokenResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Login" message="tns:IUserService_Login_InputMessage" />
@@ -56,6 +62,10 @@
     <wsdl:operation name="CreateUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/CreateUser" message="tns:IUserService_CreateUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/CreateUserResponse" message="tns:IUserService_CreateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByToken">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserByToken" message="tns:IUserService_GetUserByToken_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserByTokenResponse" message="tns:IUserService_GetUserByToken_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -71,6 +81,15 @@
     </wsdl:operation>
     <wsdl:operation name="CreateUser">
       <soap:operation soapAction="http://tempuri.org/IUserService/CreateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByToken">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetUserByToken" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -100,6 +119,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserByToken">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/GetUserByToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="UserService">
     <wsdl:port name="BasicHttpBinding_IUserService" binding="tns:BasicHttpBinding_IUserService">
@@ -110,7 +138,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8010/Login</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-ELSJ1KV\Tollo</Upn>
+          <Upn>DESKTOP-GIJJAIK\VGrzo</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

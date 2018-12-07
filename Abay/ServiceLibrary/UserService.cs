@@ -7,6 +7,7 @@ namespace ServiceLibrary
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserLogin" in both code and config file together.
     public class UserService : IUserService
     {
+        TokenController tokenCtrl = new TokenController();
         UserController userCtrl = new UserController();
 
         //Method to validate user
@@ -38,6 +39,16 @@ namespace ServiceLibrary
             message = messa;
 
             return insertedUser;
+        }
+
+        public User GetUserByToken(string token)
+        {
+            return tokenCtrl.GetUserByToken(token);
+        }
+
+        public bool IsValidUser(string token)
+        {
+            return tokenCtrl.IsValidUser(token);
         }
     }
 }

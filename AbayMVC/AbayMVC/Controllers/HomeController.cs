@@ -10,6 +10,7 @@ namespace AbayMVC.Controllers
     public class HomeController : Controller
     {
         ItemServiceReference.ItemServiceClient itemClient = new ItemServiceReference.ItemServiceClient("BasicHttpBinding_IItemService");
+        [AllowAnonymous]
         public ActionResult Index()
         {
             List<Category> cats = new List<Category>();
@@ -25,14 +26,14 @@ namespace AbayMVC.Controllers
             }
             return View(cats);
         }
-
+        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
