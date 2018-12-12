@@ -13,19 +13,15 @@ namespace Test
         private ItemController itemCtrl = new ItemController();
         private BidController bidCtrl = new BidController();
 
+        [TestCleanup]
+        public void TestClean()
+        {
+            CleanUp();
+        }
+
         [TestInitialize]
         public void TestInitialize()
         {
-            //CleanUp();
-        }
-
-        //
-        // USER TEST
-        //
-
-        [TestMethod]
-        public void CreateUser()
-        { 
             User user = new User
             {
                 UserName = "TestUser",
@@ -35,8 +31,12 @@ namespace Test
                 Email = "TestEmail@gmail.com",
                 Admin = false
             };
-            Assert.IsTrue((int)userCtrl.CreateUser(user) == (int)1, "User was not created successfully");
+            userCtrl.CreateUser(user);
         }
+
+        //
+        // USER TEST
+        //
 
         [TestMethod]
         public void UserLogin()
@@ -116,7 +116,7 @@ namespace Test
 
         private void CleanUp()
         {
-            TestHelper.DeleteTest("User","username");
+            //TestHelper.DeleteTest("User","username");
         }
     }
 }

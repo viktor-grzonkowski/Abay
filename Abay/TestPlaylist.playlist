@@ -1,1 +1,0 @@
-<Playlist Version="1.0"><Add Test="Test.WCFTest.CreateUser" /><Add Test="Test.WCFTest.UserLogin" /><Add Test="Test.WCFTest.GetUserInformation" /><Add Test="Test.WCFTest.CreateItem" /><Add Test="Test.WCFTest.SearchForItem" /><Add Test="Test.WCFTest.BidSellerBuyerSame" /><Add Test="Test.WCFTest.BidDifferentBuyer" /></Playlist>
