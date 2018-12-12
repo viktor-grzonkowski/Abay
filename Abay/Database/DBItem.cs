@@ -19,7 +19,6 @@ namespace Database
 
             using (SqlConnection connection = DBConnection.GetConnection())
             {
-
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
@@ -91,6 +90,11 @@ namespace Database
                                     UserName = reader["seller_username"].ToString()
                                 };
 
+                                User buyer = new User
+                                {
+                                    UserName = CheckValue(reader["buyer_username"]).ToString()
+                                };
+
                                 item = new Item
                                 {
                                     Id = (int)reader["id"],
@@ -102,6 +106,7 @@ namespace Database
                                     EndDate = (DateTime)reader["endDate"],
                                     State = (int)reader["state"],
                                     SellerUser = seller,
+                                    BuyerUser = buyer,
                                     Category = DBCategory.GetItemCategory((int)reader["category_id"])
                                 };
                             }
@@ -188,12 +193,11 @@ namespace Database
         #endregion
 
         #region InsertItem(Item item)
-        public string InsertItem(Item item)
+        public int InsertItem(Item item)
         {
-            string message = "";
-
             using (SqlConnection connection = DBConnection.GetConnection())
             {
+                int itemId = -1;
                 // Start a local transaction.
                 SqlTransaction sqlTran = connection.BeginTransaction();
 
@@ -205,40 +209,42 @@ namespace Database
                 {
                     // Execute one command.
                     cmd.CommandText = "INSERT INTO [Item] " +
-                                       "(name ,initialPrice ,state ,seller_username ,category_id) " +
-                                       "VALUES " +
-                                       "(@name ,@initialPrice ,@state ,@seller_username ,@category_id)";
+                                       "(name, description, initialPrice, startDate, endDate, state, seller_username, category_id) " +
+                                       "OUTPUT INSERTED.ID " +
+                                       "VALUES (@name, @description, @initialPrice, @startDate, @endDate, @state, @seller_username, @category_id)";
                     cmd.Parameters.AddWithValue("@name", item.Name);
+                    cmd.Parameters.AddWithValue("@description", item.Description);
                     cmd.Parameters.AddWithValue("@initialPrice", item.InitialPrice);
+                    cmd.Parameters.AddWithValue("@startDate", item.StartDate);
+                    cmd.Parameters.AddWithValue("@endDate", item.EndDate);
                     cmd.Parameters.AddWithValue("@state", item.State);
                     cmd.Parameters.AddWithValue("@seller_username", item.SellerUser.UserName);
                     cmd.Parameters.AddWithValue("@category_id", item.Category.Id);
-                    cmd.ExecuteNonQuery();
+
+                    itemId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     // Commit the transaction.
                     sqlTran.Commit();
-                    message = "Item inserted.";
-                    return message;
+                    return itemId;
                 }
                 catch (Exception ex)
                 {
                     // Handle the exception if the transaction fails to commit.
-                    message = ex.Message;
                     Debug.Write(ex);
 
                     try
                     {
                         // Attempt to roll back the transaction.
                         sqlTran.Rollback();
-                        return message;
+                        return itemId;
                     }
                     catch (Exception exRollback)
                     {
                         // Throws an InvalidOperationException if the connection 
                         // is closed or the transaction has already been rolled 
                         // back on the server.
-                        message += "/n" + exRollback.Message;
-                        return message;
+                        Debug.Write(exRollback);
+                        return itemId;
                     }
                 }
             }

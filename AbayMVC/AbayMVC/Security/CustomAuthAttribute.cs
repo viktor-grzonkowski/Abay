@@ -16,8 +16,8 @@ namespace AbayMVC.Security
             else
             {
                 AccountModel am = new AccountModel();
-                CustomPrincipal mp = new CustomPrincipal(am.Find(SessionPersister.Token));
-                if (!mp.IsInRole(Roles))
+                CustomPrincipal cp = new CustomPrincipal(am.Find(SessionPersister.Token));
+                if (!cp.IsInRole(Roles))
                     filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { Controller = "Home", action = "Index" }));
             }
         }

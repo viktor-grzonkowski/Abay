@@ -149,53 +149,22 @@ namespace AbayMVC.UserServiceReference {
         System.Threading.Tasks.Task<string> LoginAsync(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CreateUser", ReplyAction="http://tempuri.org/IUserService/CreateUserResponse")]
-        AbayMVC.UserServiceReference.CreateUserResponse CreateUser(AbayMVC.UserServiceReference.CreateUserRequest request);
+        int CreateUser(string userName, string firstName, string lastName, string password, string email);
         
-        // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CreateUser", ReplyAction="http://tempuri.org/IUserService/CreateUserResponse")]
-        System.Threading.Tasks.Task<AbayMVC.UserServiceReference.CreateUserResponse> CreateUserAsync(AbayMVC.UserServiceReference.CreateUserRequest request);
+        System.Threading.Tasks.Task<int> CreateUserAsync(string userName, string firstName, string lastName, string password, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
         AbayMVC.UserServiceReference.User GetUserByToken(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
         System.Threading.Tasks.Task<AbayMVC.UserServiceReference.User> GetUserByTokenAsync(string token);
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateUser", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class CreateUserRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public AbayMVC.UserServiceReference.User user;
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckToken", ReplyAction="http://tempuri.org/IUserService/CheckTokenResponse")]
+        bool CheckToken(string token);
         
-        public CreateUserRequest() {
-        }
-        
-        public CreateUserRequest(AbayMVC.UserServiceReference.User user) {
-            this.user = user;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateUserResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class CreateUserResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public AbayMVC.UserServiceReference.User CreateUserResult;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public string message;
-        
-        public CreateUserResponse() {
-        }
-        
-        public CreateUserResponse(AbayMVC.UserServiceReference.User CreateUserResult, string message) {
-            this.CreateUserResult = CreateUserResult;
-            this.message = message;
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckToken", ReplyAction="http://tempuri.org/IUserService/CheckTokenResponse")]
+        System.Threading.Tasks.Task<bool> CheckTokenAsync(string token);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -233,21 +202,12 @@ namespace AbayMVC.UserServiceReference {
             return base.Channel.LoginAsync(userName, password);
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        AbayMVC.UserServiceReference.CreateUserResponse AbayMVC.UserServiceReference.IUserService.CreateUser(AbayMVC.UserServiceReference.CreateUserRequest request) {
-            return base.Channel.CreateUser(request);
+        public int CreateUser(string userName, string firstName, string lastName, string password, string email) {
+            return base.Channel.CreateUser(userName, firstName, lastName, password, email);
         }
         
-        public AbayMVC.UserServiceReference.User CreateUser(AbayMVC.UserServiceReference.User user, out string message) {
-            AbayMVC.UserServiceReference.CreateUserRequest inValue = new AbayMVC.UserServiceReference.CreateUserRequest();
-            inValue.user = user;
-            AbayMVC.UserServiceReference.CreateUserResponse retVal = ((AbayMVC.UserServiceReference.IUserService)(this)).CreateUser(inValue);
-            message = retVal.message;
-            return retVal.CreateUserResult;
-        }
-        
-        public System.Threading.Tasks.Task<AbayMVC.UserServiceReference.CreateUserResponse> CreateUserAsync(AbayMVC.UserServiceReference.CreateUserRequest request) {
-            return base.Channel.CreateUserAsync(request);
+        public System.Threading.Tasks.Task<int> CreateUserAsync(string userName, string firstName, string lastName, string password, string email) {
+            return base.Channel.CreateUserAsync(userName, firstName, lastName, password, email);
         }
         
         public AbayMVC.UserServiceReference.User GetUserByToken(string token) {
@@ -256,6 +216,14 @@ namespace AbayMVC.UserServiceReference {
         
         public System.Threading.Tasks.Task<AbayMVC.UserServiceReference.User> GetUserByTokenAsync(string token) {
             return base.Channel.GetUserByTokenAsync(token);
+        }
+        
+        public bool CheckToken(string token) {
+            return base.Channel.CheckToken(token);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckTokenAsync(string token) {
+            return base.Channel.CheckTokenAsync(token);
         }
     }
 }

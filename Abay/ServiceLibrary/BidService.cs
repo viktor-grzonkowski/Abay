@@ -13,11 +13,12 @@ namespace ServiceLibrary
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "BidService" in both code and config file together.
     public class BidService : IBidService
     {
-        BidController bidCtrl = new BidController();
+        BidController BidCtrl = new BidController();
+        ValidateInput Validate = new ValidateInput();
 
         public bool BidOnItem(int itemId, double amount, string token)
         {
-            return bidCtrl.Bid(itemId, amount, token);
+            return !Validate.CheckDouble(amount) ? false : BidCtrl.Bid(itemId, amount, token);
         }
     }
 }

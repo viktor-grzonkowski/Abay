@@ -11,6 +11,9 @@
 @using (Html.BeginForm())
 {
     @Html.Hidden("itemId", Model.Id)
+    @Html.Hidden("startingPriceNumber", Model.InitialPrice)
+    @Html.Hidden("highestOfferNumber", Model.FinalPrice)
+    @Html.Hidden("sellerName", Model.SellerUser)
     <div class="container" style="padding:0 0 60px;">
         <h2>@ViewBag.Title</h2>
         <div class="row">
@@ -25,7 +28,7 @@
                         </span>
                     </h2>
                 </div>
-                <div id="bySection">
+                <div id="bySection sellerName">
                     by <a href="#">@Html.DisplayFor(model => model.SellerUser)</a>
                 </div>
                 <div id="countdownSection">
@@ -51,24 +54,24 @@
                                 @Html.TextBox("finalPrice", null, new { @type = "text", @class = "form-control", @id = "finalPrice", @placeholder = "Amount" })
                                 <!--<div class="input-group-addon">.00</div>-->
                             </div>
-                            </div>
-                            <button type="submit" id="cunt" class="btn btn-primary btn-custom">Make an offer</button>
-                        </form>
-                    </div>
+                        </div>
+                        <button type="submit" id="cunt" class="btn btn-primary btn-custom">Make an offer</button>
+                    </form>
+                </div>
 
 
-                    <div id="buyNowSection">
-                        <form class="form-inline">
-                            <p class="color-secondary">
-                                Buy now price: <span id="buyNowPrice" class="priceSign">30</span>
-                                <button type="submit" class="btn btn-primary btn-custom">Buy It Now</button>
-                        </form>
-                    </div>
+                <div id="buyNowSection">
+                    <form class="form-inline">
+                        <p class="color-secondary">
+                            Buy now price: <span id="buyNowPrice" class="priceSign">30</span>
+                            <button type="submit" class="btn btn-primary btn-custom">Buy It Now</button>
+                    </form>
                 </div>
             </div>
         </div>
-    }
-    <script>
+    </div>
+}
+<script>
 
         // Set the date we're counting down to
         var countDownDate = new Date(@Model.EndDate.Year+"-"+@Model.EndDate.Month+"-"+@Model.EndDate.Day+" "+@Model.EndDate.Hour+":"+@Model.EndDate.Minute+":"+@Model.EndDate.Second).getTime();
@@ -100,4 +103,4 @@
 
         document.getElementById("demo").innerHTML = endDate;
 
-    </script>
+</script>

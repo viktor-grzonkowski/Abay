@@ -427,10 +427,10 @@ namespace AbayMVC.ItemServiceReference {
         System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
-        void CreateItem(string name, double initialPrice, int state, string token, int CategoryId);
+        int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
-        System.Threading.Tasks.Task CreateItemAsync(string name, double initialPrice, int state, string token, int CategoryId);
+        System.Threading.Tasks.Task<int> CreateItemAsync(string name, double initialPrice, string token, int CategoryId, string description, int duration);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/UpdateItem", ReplyAction="http://tempuri.org/IItemService/UpdateItemResponse")]
         void UpdateItem(int itemId, string userToken, string name, string description);
@@ -502,12 +502,12 @@ namespace AbayMVC.ItemServiceReference {
             return base.Channel.SearchItemsAsync(value, categoryId);
         }
         
-        public void CreateItem(string name, double initialPrice, int state, string token, int CategoryId) {
-            base.Channel.CreateItem(name, initialPrice, state, token, CategoryId);
+        public int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration) {
+            return base.Channel.CreateItem(name, initialPrice, token, CategoryId, description, duration);
         }
         
-        public System.Threading.Tasks.Task CreateItemAsync(string name, double initialPrice, int state, string token, int CategoryId) {
-            return base.Channel.CreateItemAsync(name, initialPrice, state, token, CategoryId);
+        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, double initialPrice, string token, int CategoryId, string description, int duration) {
+            return base.Channel.CreateItemAsync(name, initialPrice, token, CategoryId, description, duration);
         }
         
         public void UpdateItem(int itemId, string userToken, string name, string description) {

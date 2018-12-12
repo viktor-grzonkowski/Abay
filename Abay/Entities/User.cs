@@ -20,6 +20,15 @@ namespace Entities
 
         }
 
+        public User(string username, string firstname, string lastname, string passwrod, string email)
+        {
+            UserName = username;
+            FirstName = firstname;
+            LastName = lastname;
+            Password = passwrod;
+            Email = email;
+        }
+
         public string UserName { get => _userName; set => _userName = value; }
         public string FirstName { get => _firstName; set => _firstName = value; }
         public string LastName { get => _lastName; set => _lastName = value; }

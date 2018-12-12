@@ -35,7 +35,7 @@ namespace Database
                             token = new Token
                             {
                                 SecureToken = (string)reader["token"],
-                                UserName = (string)reader["userName"],
+                                UserName = (string)reader["userId"],
                                 CreateDate = (DateTime)reader["createDate"]
                             };
                         }
@@ -112,6 +112,70 @@ namespace Database
                         }
                     }
                     return user;
+                }
+            }
+        }
+        #endregion
+
+        #region DeleteToken()
+        public bool DeleteToken(string userName)
+        {
+            using (SqlConnection connection = DBConnection.GetConnection())
+            {
+                try
+                {
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "DELETE token " +
+                                               "FROM [Token] " +
+                                               "WHERE userId = @username ";
+                        cmd.Parameters.AddWithValue("@username", userName);
+
+                        cmd.ExecuteReader();
+                        
+                    }
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Debug.Write("\n #### ERROR IN DeleteToken START #### \n");
+                    Debug.Write("\n" + e + "\n");
+                    Debug.Write("\n #### ERROR FOR DeleteToken END #### \n");
+
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region UserExisting()
+        public bool UserExisting(string userName)
+        {
+            using (SqlConnection connection = DBConnection.GetConnection())
+            {
+                try
+                {
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * " +
+                                               "FROM [Token] " +
+                                               "WHERE userId = @username ";
+                        cmd.Parameters.AddWithValue("@username", userName);
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                            return true;
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.Write("\n #### ERROR IN UserExisting START #### \n");
+                    Debug.Write("\n" + e + "\n");
+                    Debug.Write("\n #### ERROR FOR UserExisting END #### \n");
+
+                    return false;
                 }
             }
         }

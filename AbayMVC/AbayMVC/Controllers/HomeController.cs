@@ -9,34 +9,42 @@ namespace AbayMVC.Controllers
 {
     public class HomeController : Controller
     {
-        ItemServiceReference.ItemServiceClient itemClient = new ItemServiceReference.ItemServiceClient("BasicHttpBinding_IItemService");
+        Services services = Services.Instance;
+
         [AllowAnonymous]
         public ActionResult Index()
         {
             List<Category> cats = new List<Category>();
-            var categorys = itemClient.GetCategories();
-            foreach (var category in categorys)
-            {
-                Category cat = new Category
+            try {
+                var categorys = services.ItemClient().GetCategories();
+                foreach (var category in categorys)
                 {
-                    Id = category.Id,
-                    Name = category.Name
-                };
-                cats.Add(cat);
+                    Category cat = new Category
+                    {
+                        Id = category.Id,
+                        Name = category.Name
+                    };
+                    cats.Add(cat);
+                }
             }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Index");
+            }
+
             return View(cats);
         }
         [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Application description page.";
 
             return View();
         }
         [AllowAnonymous]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact page.";
 
             return View();
         }

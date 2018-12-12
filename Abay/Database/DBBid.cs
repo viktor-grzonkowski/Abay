@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Threading;
 using System.Transactions;
 using Entities;
 
@@ -17,12 +18,8 @@ namespace Database
             {
                 using (SqlConnection connection = DBConnection.GetConnection())
                 {
-                    // Start a local transaction.
-                    SqlTransaction sqlTran = connection.BeginTransaction();
-
                     // Enlist a command in the current transaction.
                     SqlCommand cmd = connection.CreateCommand();
-                    cmd.Transaction = sqlTran;
 
                     try
                     {
@@ -35,8 +32,6 @@ namespace Database
                         cmd.Parameters.AddWithValue("@amount", item.FinalPrice);
                         cmd.ExecuteNonQuery();
 
-                        // Commit the transaction.
-                        sqlTran.Commit();
                         scope.Complete();
                         return true;
                     }
@@ -47,27 +42,11 @@ namespace Database
                         Debug.Write(e + "\n");
                         Debug.Write("#### ERROR FOR Bid END ####");
 
-                        try
-                        {
-                            // Attempt to roll back the transaction.
-                            sqlTran.Rollback();
-                        }
-                        catch (Exception exRollback)
-                        {
-                            // Throws an InvalidOperationException if the connection 
-                            // is closed or the transaction has already been rolled 
-                            // back on the server.
-                            Debug.Write("#### ROLLBACK ERROR IN Bid START #### \n");
-                            Debug.Write(exRollback.Message + "\n");
-                            Debug.Write("#### ROLLBACK ERROR FOR Bid END ####");
-                        }
-
                         return false;
                     }
                     finally
                     {
                         cmd.Dispose();
-                        sqlTran.Dispose();
                         scope.Dispose();
                     }
                 }

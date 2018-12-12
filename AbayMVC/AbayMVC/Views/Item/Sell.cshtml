@@ -1,0 +1,104 @@
+﻿@model IEnumerable<AbayMVC.Models.Category>
+
+@{
+    ViewBag.Title = "Sell an item";
+}
+
+<div class="container" style="padding:0 0 60px;">
+    <h2>@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("Sell", "Item", FormMethod.Post, new { role = "form" }))
+    {
+        <div class="container" style="background-color:#fff;padding-left: 25px;">
+            <h3>@ViewBag.Message</h3>
+            <br />
+            <div class="form-inline">
+                <span class="required" id="field"><label>Title</label></span>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" name="item-name">
+            </div>
+
+            <div class="form-inline">
+                <span class="required" id="field"><label>Category</label></span>
+                <select class="form-control" name="item-category">
+                    <!--
+                <option>Women's Clothing</option>
+                <option>Women's Shoes</option>
+                <option>Men's Clothing</option>
+                <option>Men's Shoes</option>
+                <option>Watches</option>
+                <option>Fine Jewelry</option>
+                <option>Jewelry</option>
+                <option>Belts</option>
+                <option>Other</option>
+                -->
+                    @foreach (var cat in Model)
+                    {
+                        <option value="@cat.Id">@cat.Name</option>
+                    }
+                </select>
+            </div>
+            <!-- TODO : Item condition & image
+            <div class="form-inline">
+                <span class="required" id="field"><label>Condition</label></span>
+                <select class="form-control">
+                    <option></option>
+                    <option value="new">New</option>
+                    <option value="refurbished">Manufacturer refurbished</option>
+                    <option value="used">Used</option>
+                    <option value="notworking">For parts or not working</option>
+                </select>
+            </div>
+
+                
+            <div class="form-inline">
+                <span class="required" id="field"><label>Photos</label></span>
+                <input type="file" id="imageInputFile">
+            </div>
+            -->
+
+            <div class="form-inline">
+                <span class="required" id="field"><label>Item description</label></span>
+                <textarea class="form-control" rows="3" name="item-description"></textarea>
+            </div>
+
+            <div class="form-inline">
+                <span class="required" id="field"><label>Duration</label></span>
+                <select class="form-control" name="item-sellduration">
+                    <option value="3">3 days</option>
+                    <option value="5">5 days</option>
+                    <option value="7" selected>7 days</option>
+                    <option value="10">10 days</option>
+                </select>
+            </div>
+
+            <div class="form-inline">
+                <span id="field"><label>Price</label></span>
+
+                <div class="form-group">
+                    <label>Starting Price</label>
+                    <input type="text" class="form-control" aria-describedby="basic-addon7" name="item-startPrice">
+                </div>
+
+                <!-- TODO : add buy now price
+                <div class="form-group">
+                    <label>Buy Now Price</label>
+                    <input type="text" class="form-control" aria-describedby="basic-addon8">
+                </div>
+                    -->
+            </div>
+        </div>
+
+        <div style="padding-top: 20px;">
+            <button type="submit" class="btn btn-default" id="btn_sell_item">Sell item</button>
+            <span><a href="javascript:history.back()" style="cursor: pointer;">Cancel</a></span>
+        </div>
+    }
+</div>
+
+<div style="background-color:#dfdfe1; padding: 30px 0 30px 0;">
+    <div class="container-email">
+        <a href="mailto:1067390@ucn.com" class="email">
+            <img style="width:40px;padding-bottom: 3px;" src="~/Images/email.png" /> &nbsp;&nbsp;&nbsp; Confused? - Email us
+        </a>
+    </div>
+</div>

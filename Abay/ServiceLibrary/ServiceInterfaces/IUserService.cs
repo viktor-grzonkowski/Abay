@@ -16,10 +16,13 @@ namespace ServiceLibrary.ServiceInterfaces
         string Login(string userName, string password);
         
         [OperationContract]
-        User CreateUser(User user, out string message);
+        int CreateUser(string userName, string firstName, string lastName, string password, string email);
 
         //string userName, string fName, string lName, string pw, string email, bool admin,
         [OperationContract]
         User GetUserByToken(string token);
+
+        [OperationContract]
+        bool CheckToken(string token);
     }
 }

@@ -13,7 +13,11 @@ namespace Database
     {
         public static SqlConnection GetConnection()
         {
-            string strCon = ConfigurationManager.ConnectionStrings["DBCS"].ToString();
+            //string strCon = ConfigurationManager.ConnectionStrings["DBCS"].ToString();
+            
+            /* Raw connection string fpr testing */
+            string strCon = "data source= kraka.ucn.dk; database= dmaj0917_1067689; user id= dmaj0917_1067689; password= Password1!;";
+
             SqlConnectionStringBuilder strBuilder = new SqlConnectionStringBuilder(strCon);
 
             SqlConnection connection = new SqlConnection(strBuilder.ToString());

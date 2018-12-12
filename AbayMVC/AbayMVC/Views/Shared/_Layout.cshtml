@@ -1,4 +1,4 @@
-﻿
+﻿@using AbayMVC.Security
 
 <!DOCTYPE html>
 <html>
@@ -9,6 +9,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
 <body>
     <div class="container" id="banner">
         <div class="container" style="text-align:center">
@@ -32,9 +33,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Sell", "Sell_item", "Home")</li>
-                    <li>@Html.ActionLink("Overview", "Showcase", "Item")</li>
+
+                    <li>@Html.ActionLink("Listing", "Listing", "Item")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (!string.IsNullOrEmpty(SessionPersister.Token))
+                    {
+                        <li>@Html.ActionLink("Sell", "Sell", "Item")</li>
+                    }
                     <li class="input-group" style="display: flex;padding: 16px 0 0 10px;">
                         <input type="text" class="form-control" placeholder="Search for anything">
                         <span class="input-group-btn">
@@ -46,10 +51,10 @@
             </div>
 
         </div>
-
     </div>
 
     <div class="container body-content">
+        @{ Html.RenderPartial("_Alerts"); }
         @RenderBody()
     </div>
     <div class="container" style="box-sizing: content-box; background-color: #fff;padding-top:10px;">
@@ -59,8 +64,10 @@
                     <td>
                         <ul class="nav navbar-nav" id="footer_nav">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Bid", "Bid_item", "Home")</li>
-                            <li>@Html.ActionLink("Sell", "Sell_item", "Home")</li>
+                            @if (!string.IsNullOrEmpty(SessionPersister.Token))
+                            {
+                                <li>@Html.ActionLink("Sell", "Sell", "Item")</li>
+                            }
                             <li>@Html.ActionLink("Overview", "Overview", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>

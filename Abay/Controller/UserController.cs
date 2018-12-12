@@ -11,45 +11,54 @@ namespace Controller
 
         DBUser userDb = new DBUser();
         TokenController tokenCtrl = new TokenController();
-
-        public Token Login(string userName, string password)
-        {
-            User user = userDb.Login(userName, password);
-            Token token = null;
-
-            if (user != null)
-            {
-                token = new Token
-                {
-                    SecureToken = Security.CreateToken(100),
-                    UserName = user.UserName,
-                    CreateDate = DateTime.Now
-                };
-
-                if (tokenCtrl.InsertToken(token))
-                    return token;
-                
-            }
-
-            return null;
-        }
-
-        public User CreateUser(User user, out string message)
+        public int CreateUser(User user)
         {
             if (userDb.CheckUserName(user.UserName))
             {
-                message = "User name "+ user.UserName +" is already taken";
-                return null;
+                return -2;
             }
 
 
             if (userDb.InsertUser(user))
             {
-                message = "User created!";
-                return user;
+                return 1;
             }
 
-            message = "Ooops something bad happened";
+            return 0;
+        }
+
+        public Token Login(string userName, string password)
+        {
+            if (userDb.CheckUserName(userName))
+            {
+                string salt = userDb.GetSalt(userName);
+                string hashedPassword = Security.GetHashedPassword(password, salt);
+
+                User user = userDb.Login(userName, hashedPassword);
+
+                Token token = null;
+
+                if (user != null)
+                {
+                    token = new Token
+                    {
+                        SecureToken = Security.CreateToken(100),
+                        UserName = user.UserName,
+                        CreateDate = DateTime.Now
+                    };
+
+                    if (tokenCtrl.InsertToken(token))
+                        return token;
+                }
+            }
+
+            return null;
+        }
+
+        public User GetUserInformation(string userName)
+        {
+            if (userDb.CheckUserName(userName))
+                return userDb.GetUserInformation(userName);
             return null;
         }
     }

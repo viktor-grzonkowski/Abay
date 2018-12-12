@@ -11,16 +11,12 @@ namespace AbayMVC.Security
     {
         private Account Account;
 
+        public IIdentity Identity { get; set; }
+
         public CustomPrincipal(Account account)
         {
             this.Account = account;
             this.Identity = new GenericIdentity(account.Token);
-        }
-
-        public IIdentity Identity
-        {
-            get;
-            set;
         }
 
         public bool IsInRole(string role)

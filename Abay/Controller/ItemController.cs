@@ -15,9 +15,9 @@ namespace Controller
         CategoryController categoryCtrl = new CategoryController();
         TokenController tokenCtrl = new TokenController();
 
-        public string CreateItem(string name, double initialPrice, int state, string token, int categoryId)
+        public int CreateItem(string name, double initialPrice, string token, int categoryId, string description, int duration)
         {  
-            return itemDB.InsertItem(new Item(name, initialPrice, state, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId)));
+            return itemDB.InsertItem(new Item(name, initialPrice, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId), description, duration));
         }
 
         public string DeleteItem(int id, string token)
@@ -61,14 +61,14 @@ namespace Controller
             items = itemDB.GetAllItems(catId);
             foreach (Item item in items)
             {
-                if (DateTime.Now >= item.EndDate)
+                if (DateTime.Now < item.EndDate)
                 {
-                    item.State = 1;
-                    UpdateItem(item);
+                    newLst.Add(item);
                 }
                 else
                 {
-                    newLst.Add(item);
+                    item.State = 1;
+                    UpdateItem(item);
                 }
             }
             return newLst;

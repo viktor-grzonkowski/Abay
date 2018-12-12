@@ -15,12 +15,9 @@ namespace Database
         public User Login(string userName, string password)
         {
             User user = null;
-            string salt = GetSalt(userName);
 
             using (SqlConnection connection = DBConnection.GetConnection())
             {
-                string hashedPassword = Security.CheckPassword(password, salt);
-
                 try
                 {
                     using (SqlCommand cmd = connection.CreateCommand())
@@ -29,7 +26,7 @@ namespace Database
                                             "FROM [User] " +
                                             "WHERE username = @username AND password = @password";
                         cmd.Parameters.AddWithValue("@username", userName);
-                        cmd.Parameters.AddWithValue("@password", hashedPassword);
+                        cmd.Parameters.AddWithValue("@password", password);
 
                         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -165,6 +162,48 @@ namespace Database
                 Debug.Write("\n" + e + "\n");
                 Debug.Write("\n #### ERROR FOR CheckUserName END #### \n");
                 return false;
+            }
+        }
+        #endregion
+
+        #region GetUserInformation()
+        public User GetUserInformation(string userName)
+        {
+            User user = null;
+
+            try
+            {
+                using (SqlConnection connection = DBConnection.GetConnection())
+                {
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * " +
+                                            "FROM [User] " +
+                                            "WHERE username = @username";
+                        cmd.Parameters.AddWithValue("@username", userName);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                user = new User {
+                                    UserName = (string)reader["username"],
+                                    FirstName = (string)reader["firstName"],
+                                    LastName = (string)reader["lastName"],
+                                    Email = (string)reader["email"]
+                                };
+                            }
+                        }
+                    }
+                }
+                return user;
+            }
+            catch (Exception e)
+            {
+                Debug.Write("\n #### ERROR IN GetUserInformation START #### \n");
+                Debug.Write("\n" + e + "\n");
+                Debug.Write("\n #### ERROR FOR GetUserInformation END #### \n");
+                return user;
             }
         }
         #endregion

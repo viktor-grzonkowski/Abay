@@ -7,48 +7,42 @@ namespace ServiceLibrary
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserLogin" in both code and config file together.
     public class UserService : IUserService
     {
-        TokenController tokenCtrl = new TokenController();
-        UserController userCtrl = new UserController();
+        TokenController TokenCtrl = new TokenController();
+        UserController UserCtrl = new UserController();
+        ValidateInput Validate = new ValidateInput();
 
         //Method to validate user
         public string Login(string userName, string password)
         {
-            Token token = userCtrl.Login(userName, password);
-            if(token != null)
-            {
-                return token.SecureToken;
-            }
-
-            return "";
+            Token token = UserCtrl.Login(userName, password);
+            return token != null ? token.SecureToken : "";
         }
 
-        public User CreateUser(User user, out string message)
+        /// <summary>
+        /// CreateUser return type:
+        /// -2 : Username already in use
+        /// -1 : Username to short
+        ///  0 : Account couldn't be created
+        ///  1 : Account created
+        /// </summary>
+        public int CreateUser(string userName, string firstName, string lastName, string password, string email)
         {
-            /*
-            User user = new User()
-            {
-                UserName = userName,
-                FirstName = fName,
-                LastName = lName,
-                Password = pw,
-                Email = email,
-                Admin = admin
-            };
-            */
-            User insertedUser = userCtrl.CreateUser(user, out string messa);
-            message = messa;
-
-            return insertedUser;
+            return !Validate.CheckString(userName,3) ? -1 : UserCtrl.CreateUser(new User(userName, firstName, lastName, password, email));
         }
 
         public User GetUserByToken(string token)
         {
-            return tokenCtrl.GetUserByToken(token);
+            return TokenCtrl.GetUserByToken(token);
         }
 
         public bool IsValidUser(string token)
         {
-            return tokenCtrl.IsValidUser(token);
+            return TokenCtrl.IsValidUser(token);
+        }
+
+        public bool CheckToken(string token)
+        {
+            return TokenCtrl.CheckTokenTime(token);
         }
     }
 }

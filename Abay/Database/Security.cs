@@ -21,7 +21,7 @@ namespace Database
             return hashedPassword;
         }
 
-        public static string CheckPassword(string password, string salt)
+        public static string GetHashedPassword(string password, string salt)
         {
             byte[] saltArray = Convert.FromBase64String(salt);
             return HashPassword(password, saltArray);

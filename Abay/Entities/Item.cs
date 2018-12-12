@@ -25,13 +25,16 @@ namespace Entities
 
         }
 
-        public Item(string name, double initialPrice, int state, User seller, ItemCategory categoryId)
+        public Item(string name, double initialPrice, User seller, ItemCategory categoryId, string description, int duration)
         {
             Name = name;
             InitialPrice = initialPrice;
-            State = state;
+            State = 0;
             SellerUser = seller;
             Category = categoryId;
+            Description = description;
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now.AddDays(duration);
         }
 
         public int Id { get => _id; set => _id = value; }

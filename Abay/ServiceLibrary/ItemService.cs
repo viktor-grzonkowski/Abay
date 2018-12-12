@@ -15,10 +15,16 @@ namespace ServiceLibrary
     {
         ItemController ItemCtrl = new ItemController();
         CategoryController CategoryCtrl = new CategoryController();
+        ValidateInput Validate = new ValidateInput();
 
-        public void CreateItem(string name, double initialPrice, int state, string token, int CategoryId)
+        /// <summary>
+        /// CreateItem returns the itemId from the database or -1 if it failed to create it
+        /// </summary>
+        public int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration)
         {
-            ItemCtrl.CreateItem(name, initialPrice, state, token, CategoryId);
+            return !Validate.CheckDouble(initialPrice) || !Validate.CheckString(name, 3) || !Validate.CheckInt(CategoryId)
+                ? -1
+                : ItemCtrl.CreateItem(name, initialPrice, token, CategoryId, description, duration);
         }
 
         public string DeleteItem(int id, string token)

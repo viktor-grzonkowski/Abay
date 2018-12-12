@@ -4,7 +4,7 @@
     ViewBag.Title = "Welcome on Auction Bay";
 }
 
-@using AbayMVC.Security
+
 <div class="container" style="margin-bottom:20px;">
     <h2>@ViewBag.Title</h2>
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -44,7 +44,7 @@
         </a>
     </div>
 </div>
-WELLCOME @SessionPersister.Token
+
 <div class="container" style="padding-bottom: 30px;">
     <div class="row">
         <div class="col-sm-3">
@@ -52,7 +52,7 @@ WELLCOME @SessionPersister.Token
                 <li style="padding-bottom:10px;"><strong>Shop by Category</strong></li>
                 @foreach (var cat in Model)
                 {
-                    <li><p><a href="~/Item/Showcase?catId=@cat.Id" class="category_item">@cat.Name</a></p></li>
+                    <li><p><a href="~/Item/Listing?catId=@cat.Id" class="category_item">@cat.Name</a></p></li>
                 }
             </ul>
         </div>

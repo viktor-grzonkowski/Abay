@@ -22,7 +22,7 @@ namespace ServiceLibrary.ServiceInterfaces
         List<Item> SearchItems(string value, int categoryId);
 
         [OperationContract]
-        void CreateItem(string name, double initialPrice, int state, string token, int CategoryId);
+        int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration);
 
         [OperationContract]
         void UpdateItem(int itemId, string userToken, string name, string description);

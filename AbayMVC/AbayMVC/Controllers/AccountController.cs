@@ -6,19 +6,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace AbayMVC.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
 
         // GET: Account
+        [AllowAnonymous]
         public ActionResult Login()
         {
 
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
 
@@ -36,49 +39,56 @@ namespace AbayMVC.Controllers
                 string userName = Convert.ToString(model.UserName);
                 string firstName = Convert.ToString(model.FirstName);
                 string lastName = Convert.ToString(model.LastName);
-                string email = Convert.ToString(model.Email);
                 string password = Convert.ToString(model.Password);
+                string email = Convert.ToString(model.Email);
+                
 
-                UserServiceReference.User user = new UserServiceReference.User()
+                switch (Services.Instance.UserClient().CreateUser(userName, firstName, lastName, password, email))
                 {
-                    UserName = userName,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Password = password
-                };
+                    case -2:
+                        Warning("Username is already in use!");
+                        return RedirectToAction("Register", "Account");
+                    case -1:
+                        Warning("Username is to short!");
+                        return RedirectToAction("Register", "Account");
+                    case 1:
+                        Success("Account created!");
+                        return RedirectToAction("Index", "Home");
+                }
 
-                Services.Instance.UserClient().CreateUser(user, out string message);
-
-
-                return RedirectToAction("Index", "Home");
+                Danger("Ooops please try again!");
+                return RedirectToAction("Register", "Account");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-
-
-
-
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(AccountViewModel avm)
         {
             AccountModel am = new AccountModel();
             Account ac;
 
-            if ((string.IsNullOrEmpty(avm.Account.Username) || string.IsNullOrEmpty(avm.Account.Password)) || (ac = am.Login(avm.Account.Username, avm.Account.Password)) == null)
+            if (string.IsNullOrEmpty(avm.Account.Username) || string.IsNullOrEmpty(avm.Account.Password) || (ac = am.Login(avm.Account.Username, avm.Account.Password)) == null)
             {
-                ViewBag.Error = "Account's Invalid";
+                Danger("Account's Invalid");
                 return View("Login");
             }
+
             SessionPersister.Token = ac.Token;
+            SessionPersister.Username = ac.Username;
 
             return RedirectToAction("Index", "Home");
         }
-        
 
-
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            SessionPersister.Logout();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
