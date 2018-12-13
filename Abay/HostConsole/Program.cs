@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-using ServiceLibrary;
+using Controller;
 
 namespace HostConsole
 {

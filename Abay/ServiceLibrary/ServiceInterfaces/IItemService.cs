@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using Entities;
 
-namespace ServiceLibrary.ServiceInterfaces
+namespace Controller.ServiceInterfaces
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IItemService" in both code and config file together.
     [ServiceContract]

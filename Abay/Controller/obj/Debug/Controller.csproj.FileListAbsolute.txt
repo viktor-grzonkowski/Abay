@@ -40,3 +40,14 @@ C:\Users\VGrzo\Desktop\New folder (2)\Abay\Controller\obj\Debug\Controller.cspro
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\Controller\obj\Debug\Controller.dll
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\Controller\obj\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\bin\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\bin\Debug\Database.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\bin\Debug\Entities.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.pdb

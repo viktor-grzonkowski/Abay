@@ -9,7 +9,7 @@ using Controller;
 
 namespace Controller
 {
-    public class BidController
+    public class BidController : ValidateInput
     {
         DBBid bidDb = new DBBid();
         UserController userCtrl = new UserController();
@@ -18,12 +18,20 @@ namespace Controller
 
         public bool Bid(int itemId, double amount, string token)
         {
+            if (!CheckInt(itemId))
+                return false;
+            if (!CheckDouble(amount))
+                return false;
+
             // Get the item on which the bid goes
             Item item = itemCtrl.GetItemById(itemId);
             // Get the buyer with his token
             User buyer = tokenCtrl.GetUserByToken(token);
             // Get the current winning bid
             Bid currentWinning = GetWinningBid(itemId);
+
+            if (item == null)
+                return false;
 
             // The seller can't bid on his own items
             if (!string.Equals(buyer.UserName, item.SellerUser.UserName))
@@ -78,7 +86,7 @@ namespace Controller
             return false;
         }
 
-        public Bid GetWinningBid(int itemId)
+        private Bid GetWinningBid(int itemId)
         {
             List<Bid> currentWinning = bidDb.GetBids(itemId, true);
 
@@ -105,6 +113,8 @@ namespace Controller
 
         public List<Bid> GetAllPrevBids(int itemId)
         {
+            if (!CheckInt(itemId))
+                return null;
             return bidDb.GetBids(itemId, false);
         }
     }

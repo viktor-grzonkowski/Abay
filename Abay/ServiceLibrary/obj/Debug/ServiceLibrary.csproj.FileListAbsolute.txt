@@ -63,3 +63,16 @@ C:\Users\VGrzo\Desktop\New folder (2)\Abay\ServiceLibrary\obj\Debug\ServiceLibra
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\Controller.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\Entities.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\Database.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\Controller.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb

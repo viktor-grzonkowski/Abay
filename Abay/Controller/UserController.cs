@@ -4,7 +4,7 @@ using Entities;
 
 namespace Controller
 {
-    public class UserController
+    public class UserController : ValidateInput
     {
         // TODO: Set this from a web.config appSettting value
         public static double DefaultSecondsUntilTokenExpires = 1800;
@@ -13,16 +13,14 @@ namespace Controller
         TokenController tokenCtrl = new TokenController();
         public int CreateUser(User user)
         {
-            if (userDb.CheckUserName(user.UserName))
-            {
+            if (!CheckString(user.UserName, 3))
+                return -1;
+            if (!CheckString(user.Password, 6))
                 return -2;
-            }
-
-
+            if (userDb.CheckUserName(user.UserName))
+                return -3;
             if (userDb.InsertUser(user))
-            {
                 return 1;
-            }
 
             return 0;
         }

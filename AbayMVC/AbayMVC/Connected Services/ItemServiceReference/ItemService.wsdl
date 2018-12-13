@@ -250,7 +250,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8030/Item</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-ELSJ1KV\Tollo</Upn>
+          <Upn>DESKTOP-GIJJAIK\VGrzo</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

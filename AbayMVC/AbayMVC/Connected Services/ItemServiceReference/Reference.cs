@@ -23,9 +23,6 @@ namespace AbayMVC.ItemServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AbayMVC.ItemServiceReference.User BuyerUserField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AbayMVC.ItemServiceReference.ItemCategory CategoryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -33,9 +30,6 @@ namespace AbayMVC.ItemServiceReference {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime EndDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double FinalPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -47,6 +41,9 @@ namespace AbayMVC.ItemServiceReference {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AbayMVC.ItemServiceReference.Bid[] OldBidsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AbayMVC.ItemServiceReference.User SellerUserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -55,6 +52,9 @@ namespace AbayMVC.ItemServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int StateField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AbayMVC.ItemServiceReference.Bid WinningBidField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -62,19 +62,6 @@ namespace AbayMVC.ItemServiceReference {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public AbayMVC.ItemServiceReference.User BuyerUser {
-            get {
-                return this.BuyerUserField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BuyerUserField, value) != true)) {
-                    this.BuyerUserField = value;
-                    this.RaisePropertyChanged("BuyerUser");
-                }
             }
         }
         
@@ -113,19 +100,6 @@ namespace AbayMVC.ItemServiceReference {
                 if ((this.EndDateField.Equals(value) != true)) {
                     this.EndDateField = value;
                     this.RaisePropertyChanged("EndDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FinalPrice {
-            get {
-                return this.FinalPriceField;
-            }
-            set {
-                if ((this.FinalPriceField.Equals(value) != true)) {
-                    this.FinalPriceField = value;
-                    this.RaisePropertyChanged("FinalPrice");
                 }
             }
         }
@@ -170,6 +144,19 @@ namespace AbayMVC.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public AbayMVC.ItemServiceReference.Bid[] OldBids {
+            get {
+                return this.OldBidsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OldBidsField, value) != true)) {
+                    this.OldBidsField = value;
+                    this.RaisePropertyChanged("OldBids");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public AbayMVC.ItemServiceReference.User SellerUser {
             get {
                 return this.SellerUserField;
@@ -208,6 +195,80 @@ namespace AbayMVC.ItemServiceReference {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AbayMVC.ItemServiceReference.Bid WinningBid {
+            get {
+                return this.WinningBidField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WinningBidField, value) != true)) {
+                    this.WinningBidField = value;
+                    this.RaisePropertyChanged("WinningBid");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ItemCategory", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    [System.SerializableAttribute()]
+    public partial class ItemCategory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -241,6 +302,9 @@ namespace AbayMVC.ItemServiceReference {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaltField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -321,6 +385,19 @@ namespace AbayMVC.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Salt {
+            get {
+                return this.SaltField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaltField, value) != true)) {
+                    this.SaltField = value;
+                    this.RaisePropertyChanged("Salt");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string UserName {
             get {
                 return this.UserNameField;
@@ -345,18 +422,27 @@ namespace AbayMVC.ItemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ItemCategory", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Bid", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
     [System.SerializableAttribute()]
-    public partial class ItemCategory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Bid : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private double AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
+        private string BuyerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ItemIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime TimestampField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool WinningField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -369,27 +455,66 @@ namespace AbayMVC.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public double Amount {
             get {
-                return this.IdField;
+                return this.AmountField;
             }
             set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
+        public string BuyerName {
             get {
-                return this.NameField;
+                return this.BuyerNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((object.ReferenceEquals(this.BuyerNameField, value) != true)) {
+                    this.BuyerNameField = value;
+                    this.RaisePropertyChanged("BuyerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ItemId {
+            get {
+                return this.ItemIdField;
+            }
+            set {
+                if ((this.ItemIdField.Equals(value) != true)) {
+                    this.ItemIdField = value;
+                    this.RaisePropertyChanged("ItemId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Timestamp {
+            get {
+                return this.TimestampField;
+            }
+            set {
+                if ((this.TimestampField.Equals(value) != true)) {
+                    this.TimestampField = value;
+                    this.RaisePropertyChanged("Timestamp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Winning {
+            get {
+                return this.WinningField;
+            }
+            set {
+                if ((this.WinningField.Equals(value) != true)) {
+                    this.WinningField = value;
+                    this.RaisePropertyChanged("Winning");
                 }
             }
         }
@@ -427,10 +552,10 @@ namespace AbayMVC.ItemServiceReference {
         System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
-        int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration);
+        int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
-        System.Threading.Tasks.Task<int> CreateItemAsync(string name, double initialPrice, string token, int CategoryId, string description, int duration);
+        System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/UpdateItem", ReplyAction="http://tempuri.org/IItemService/UpdateItemResponse")]
         void UpdateItem(int itemId, string userToken, string name, string description);
@@ -502,12 +627,12 @@ namespace AbayMVC.ItemServiceReference {
             return base.Channel.SearchItemsAsync(value, categoryId);
         }
         
-        public int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration) {
-            return base.Channel.CreateItem(name, initialPrice, token, CategoryId, description, duration);
+        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
+            return base.Channel.CreateItem(name, description, initialPrice, CategoryId, token, duration);
         }
         
-        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, double initialPrice, string token, int CategoryId, string description, int duration) {
-            return base.Channel.CreateItemAsync(name, initialPrice, token, CategoryId, description, duration);
+        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
+            return base.Channel.CreateItemAsync(name, description, initialPrice, CategoryId, token, duration);
         }
         
         public void UpdateItem(int itemId, string userToken, string name, string description) {

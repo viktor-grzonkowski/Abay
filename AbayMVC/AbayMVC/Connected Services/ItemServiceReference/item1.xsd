@@ -48,10 +48,10 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="initialPrice" type="xs:double" />
-        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
         <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="initialPrice" type="xs:double" />
+        <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="duration" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

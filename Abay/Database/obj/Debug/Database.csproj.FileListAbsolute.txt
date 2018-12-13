@@ -31,3 +31,12 @@ C:\Users\VGrzo\Desktop\New folder (2)\Abay\Database\obj\Debug\Database.csproj.Co
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\Database\obj\Debug\Database.csproj.CopyComplete
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\Database\obj\Debug\Database.dll
 C:\Users\VGrzo\Desktop\New folder (2)\Abay\Database\obj\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\bin\Debug\Database.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\bin\Debug\Database.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\bin\Debug\Entities.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\bin\Debug\Entities.pdb
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.csprojAssemblyReference.cache
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.csproj.CopyComplete
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.dll
+C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.pdb

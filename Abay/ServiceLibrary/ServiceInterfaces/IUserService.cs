@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-namespace ServiceLibrary.ServiceInterfaces
+namespace Controller.ServiceInterfaces
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUserLogin" in both code and config file together.
     [ServiceContract]
@@ -23,6 +23,6 @@ namespace ServiceLibrary.ServiceInterfaces
         User GetUserByToken(string token);
 
         [OperationContract]
-        bool CheckToken(string token);
+        bool CheckTokenTime(string token);
     }
 }
