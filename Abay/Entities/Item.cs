@@ -17,7 +17,8 @@ namespace Entities
         private int _state;
         private User _sellerUser;
         private ItemCategory _category;
-        private Bid _bid;
+        private Bid _winningBid;
+        private List<Bid> _oldBids;
 
         public Item()
         { 
@@ -45,6 +46,7 @@ namespace Entities
         public int State { get => _state; set => _state = value; }
         public User SellerUser { get => _sellerUser; set => _sellerUser = value; }
         public ItemCategory Category { get => _category; set => _category = value; }
-        public Bid Bid { get => _bid; set => _bid = value; }
+        public Bid WinningBid { get => _winningBid; set => _winningBid = value; }
+        public List<Bid> OldBids { get => _oldBids; set => _oldBids = value; }
     }
 }

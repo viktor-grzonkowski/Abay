@@ -8,20 +8,21 @@ namespace Entities
 {
     public class Bid
     {
-        private int _id;
-        private string _userName;
+        private string _buyerName;
+        private int _itemId;
         private double _amount;
         private DateTime _timestamp;
+        private bool _winning;
 
         public Bid()
         {
 
         }
 
-        public int Id { get => _id; set => _id = value; }
-        public string UserName { get => _userName; set => _userName = value; }
+        public string BuyerName { get => _buyerName; set => _buyerName = value; }
+        public int ItemId { get => _itemId; set => _itemId = value; }
         public double Amount { get => _amount; set => _amount = value; }
         public DateTime Timestamp { get => _timestamp; set => _timestamp = value; }
-        
+        public bool Winning { get => _winning; set => _winning = value; }
     }
 }

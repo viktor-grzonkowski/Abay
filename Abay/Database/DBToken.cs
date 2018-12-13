@@ -22,8 +22,8 @@ namespace Database
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
-                                        "FROM [Token] " +
-                                        "WHERE token = @token";
+                                      "FROM [Token] " +
+                                      "WHERE token = @token";
                     cmd.Parameters.AddWithValue("@token", secureToken);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -35,7 +35,7 @@ namespace Database
                             token = new Token
                             {
                                 SecureToken = (string)reader["token"],
-                                UserName = (string)reader["userId"],
+                                UserName = (string)reader["username"],
                                 CreateDate = (DateTime)reader["createDate"]
                             };
                         }
@@ -56,11 +56,11 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "INSERT INTO [Token] " +
-                                           "(token ,userId ,createDate) " +
-                                           "VALUES " +
-                                           "(@token ,@userId ,@createDate)";
+                                          "(token ,username ,createDate) " +
+                                          "VALUES " +
+                                          "(@token ,@username ,@createDate)";
                         cmd.Parameters.AddWithValue("@token", token.SecureToken);
-                        cmd.Parameters.AddWithValue("@userId", token.UserName);
+                        cmd.Parameters.AddWithValue("@username", token.UserName);
                         cmd.Parameters.AddWithValue("@createDate", token.CreateDate);
                         cmd.ExecuteNonQuery();
                     }
@@ -87,11 +87,11 @@ namespace Database
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
-                                           "FROM [User] " +
-                                           "WHERE username IN " +
-                                           "(SELECT userId " +
-                                           "FROM Token " +
-                                           "WHERE token = @token)";
+                                      "FROM [User] " +
+                                      "WHERE username IN " +
+                                      "(SELECT username " +
+                                      "FROM Token " +
+                                      "WHERE token = @token)";
                     cmd.Parameters.AddWithValue("@token", token);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -106,7 +106,6 @@ namespace Database
                                 FirstName = (string)reader["firstName"],
                                 LastName = (string)reader["lastName"],
                                 Email = (string)reader["email"],
-                                Password = (string)reader["password"],
                                 Admin = (bool)reader["admin"]
                             };
                         }
@@ -127,8 +126,8 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "DELETE token " +
-                                               "FROM [Token] " +
-                                               "WHERE userId = @username ";
+                                          "FROM [Token] " +
+                                          "WHERE username = @username ";
                         cmd.Parameters.AddWithValue("@username", userName);
 
                         cmd.ExecuteReader();
@@ -158,8 +157,8 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                               "FROM [Token] " +
-                                               "WHERE userId = @username ";
+                                          "FROM [Token] " +
+                                          "WHERE username = @username ";
                         cmd.Parameters.AddWithValue("@username", userName);
 
                         SqlDataReader reader = cmd.ExecuteReader();

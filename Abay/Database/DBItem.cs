@@ -11,23 +11,82 @@ namespace Database
 {
     public class DBItem
     {
+        #region InsertItem(Item item)
+        public int InsertItem(Item item)
+        {
+            using (SqlConnection connection = DBConnection.GetConnection())
+            {
+                //row id where the item was inserted
+                int itemId = -1;
+
+                // Start a local transaction.
+                SqlTransaction sqlTran = connection.BeginTransaction();
+
+                // Enlist a command in the current transaction.
+                SqlCommand cmd = connection.CreateCommand();
+                cmd.Transaction = sqlTran;
+
+                try
+                {
+                    // Execute one command.
+                    cmd.CommandText = "INSERT INTO [Item] " +
+                                       "(name, description, initialPrice, startDate, endDate, state, sellerUsername, categoryId) " +
+                                       "OUTPUT INSERTED.ID " +
+                                       "VALUES (@name, @description, @initialPrice, @startDate, @endDate, @state, @sellerUsername, @categoryId)";
+                    cmd.Parameters.AddWithValue("@name", item.Name);
+                    cmd.Parameters.AddWithValue("@description", item.Description);
+                    cmd.Parameters.AddWithValue("@initialPrice", item.InitialPrice);
+                    cmd.Parameters.AddWithValue("@startDate", item.StartDate);
+                    cmd.Parameters.AddWithValue("@endDate", item.EndDate);
+                    cmd.Parameters.AddWithValue("@state", item.State);
+                    cmd.Parameters.AddWithValue("@sellerUsername", item.SellerUser.UserName);
+                    cmd.Parameters.AddWithValue("@categoryId", item.Category.Id);
+
+                    itemId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    // Commit the transaction.
+                    sqlTran.Commit();
+                    return itemId;
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception if the transaction fails to commit.
+                    Debug.Write(ex);
+
+                    try
+                    {
+                        // Attempt to roll back the transaction.
+                        sqlTran.Rollback();
+                        return itemId;
+                    }
+                    catch (Exception exRollback)
+                    {
+                        // Throws an InvalidOperationException if the connection 
+                        // is closed or the transaction has already been rolled 
+                        // back on the server.
+                        Debug.Write(exRollback);
+                        return itemId;
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region GetAllItems(int CatId)
-        public List<Item> GetAllItems(int CatId)
+        public List<Item> GetAllItems(int catId)
         {
             List<Item> items = new List<Item>();
             Item item = null;
-
             using (SqlConnection connection = DBConnection.GetConnection())
             {
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
-                                      "FROM Item i " +
-                                      "LEFT JOIN Bid b ON i.bid_id = b.id ";
-                    if (CatId != -1)
-                        cmd.CommandText += "WHERE i.category_id = @catId AND i.state = 0";
+                                      "FROM Item "; 
+                    if (catId != -1)
+                        cmd.CommandText += "WHERE categoryId = @catId AND state = 0";
 
-                    cmd.Parameters.AddWithValue("@catId", CatId);
+                    cmd.Parameters.AddWithValue("@catId", catId);
                     
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
@@ -36,12 +95,14 @@ namespace Database
                         {
                             User seller = new User
                             {
-                                UserName = reader["seller_username"].ToString()
+                                UserName = reader["sellerUsername"].ToString()
                             };
+
+                            
 
                             item = new Item
                             {
-                                Id = int.Parse(CheckValue(reader["id"]).ToString()),
+                                Id = (int)reader["id"],
                                 Name = CheckValue(reader["name"]).ToString(),
                                 Description = CheckValue(reader["description"]).ToString(),
                                 InitialPrice = (double)reader["initialPrice"],
@@ -49,20 +110,11 @@ namespace Database
                                 EndDate = (DateTime)reader["endDate"],
                                 State = (int)reader["state"],
                                 SellerUser = seller,
-                                Category = DBCategory.GetItemCategory((int)reader["category_id"])
-                                //Bid = (int)reader["bid_id"] >= 0 ? DBBid.GetBid((int)reader["bid_id"]) : null
-
+                                Category = DBCategory.GetItemCategory((int)reader["categoryId"])
                             };
 
-                            item.Bid = reader["bid_id"] != DBNull.Value
-                                ? new Bid
-                                {
-                                    Id = (int)reader["bid_id"],
-                                    UserName = (string)reader["username"],
-                                    Amount = double.Parse(reader["amount"].ToString()),
-                                    Timestamp = (DateTime)reader["timestamp"]
-                                }
-                                : null;
+                            List<Bid> winningBid = new DBBid().GetBids((int)reader["id"], true);
+                            item.WinningBid = winningBid.Count != 0 ? winningBid[0] : null;
 
                             items.Add(item);
                         }
@@ -73,7 +125,7 @@ namespace Database
         }
         #endregion
 
-        #region GetItemById(int id)WORKS
+        #region GetItemById(int id)
         public Item GetItemById(int id)
         {
             Item item = null;
@@ -85,10 +137,8 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                          "FROM [Item] i " +
-                                          "LEFT JOIN [Bid] b " +
-                                          "ON i.bid_id = b.id " +
-                                          "WHERE i.id = @id";
+                                          "FROM [Item] " +
+                                          "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", id);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -99,7 +149,7 @@ namespace Database
                                 {
                                     User seller = new User
                                     {
-                                        UserName = reader["seller_username"].ToString()
+                                        UserName = reader["sellerUsername"].ToString()
                                     };
 
                                     item = new Item
@@ -112,18 +162,14 @@ namespace Database
                                         EndDate = (DateTime)reader["endDate"],
                                         State = (int)reader["state"],
                                         SellerUser = seller,
-                                        Category = DBCategory.GetItemCategory((int)reader["category_id"])
+                                        Category = DBCategory.GetItemCategory((int)reader["categoryId"])
                                     };
 
-                                    item.Bid = reader["bid_id"] != DBNull.Value
-                                        ? new Bid
-                                        {
-                                            Id = (int)reader["bid_id"],
-                                            UserName = (string)reader["username"],
-                                            Amount = double.Parse(reader["amount"].ToString()),
-                                            Timestamp = (DateTime)reader["timestamp"]
-                                        }
-                                        : null;
+                                    List<Bid> winningBid = new DBBid().GetBids(item.Id, true);
+                                    List<Bid> prevBids = new DBBid().GetBids(item.Id, false);
+                                    item.WinningBid = winningBid.Count != 0 ? winningBid[0] : null;
+                                    item.OldBids = prevBids.Count != 0 ? prevBids : null;
+
                                 }
                             }
                         }
@@ -157,12 +203,11 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                          "FROM Item i " +
-                                          "LEFT JOIN Bid b ON i.bid_id = b.id ";
+                                          "FROM Item ";
                         if(categoryId != -1)
-                            cmd.CommandText += "WHERE(i.name LIKE @value OR i.description LIKE @value OR i.seller_username LIKE @value) AND i.category_id = @catId";
+                            cmd.CommandText += "WHERE(name LIKE @value OR description LIKE @value OR sellerUsername LIKE @value) AND categoryId = @catId";
                         else
-                            cmd.CommandText += "WHERE(i.name LIKE @value OR i.description LIKE @value OR i.seller_username LIKE @value)";
+                            cmd.CommandText += "WHERE(name LIKE @value OR description LIKE @value OR sellerUsername LIKE @value)";
                         cmd.Parameters.AddWithValue("@catId", categoryId);
                         cmd.Parameters.AddWithValue("@value", "%"+value+"%");
 
@@ -174,8 +219,10 @@ namespace Database
                             {
                                 seller = new User
                                 {
-                                    UserName = (string)reader["seller_username"]
+                                    UserName = (string)reader["sellerUsername"]
                                 };
+
+                                
 
                                 item = new Item
                                 {
@@ -187,20 +234,11 @@ namespace Database
                                     EndDate = (DateTime)reader["endDate"],
                                     State = (int)reader["state"],
                                     SellerUser = seller,
-                                    Category = DBCategory.GetItemCategory((int)reader["category_id"])
+                                    Category = DBCategory.GetItemCategory((int)reader["categoryId"])
                                 };
 
-                                
-
-                                item.Bid = reader["bid_id"] != DBNull.Value
-                                    ? new Bid
-                                    {
-                                        Id = (int)reader["bid_id"],
-                                        UserName = (string)reader["username"],
-                                        Amount = double.Parse(reader["amount"].ToString()),
-                                        Timestamp = (DateTime)reader["timestamp"]
-                                    }
-                                    : null;
+                                List<Bid> winningBid = new DBBid().GetBids((int)reader["id"], true);
+                                item.WinningBid = winningBid.Count != 0 ? winningBid[0] : null;
 
                                 items.Add(item);
                             }
@@ -220,65 +258,6 @@ namespace Database
         }
         #endregion
 
-        #region InsertItem(Item item)
-        public int InsertItem(Item item)
-        {
-            using (SqlConnection connection = DBConnection.GetConnection())
-            {
-                int itemId = -1;
-                // Start a local transaction.
-                SqlTransaction sqlTran = connection.BeginTransaction();
-
-                // Enlist a command in the current transaction.
-                SqlCommand cmd = connection.CreateCommand();
-                cmd.Transaction = sqlTran;
-
-                try
-                {
-                    // Execute one command.
-                    cmd.CommandText = "INSERT INTO [Item] " +
-                                       "(name, description, initialPrice, startDate, endDate, state, seller_username, category_id) " +
-                                       "OUTPUT INSERTED.ID " +
-                                       "VALUES (@name, @description, @initialPrice, @startDate, @endDate, @state, @seller_username, @category_id)";
-                    cmd.Parameters.AddWithValue("@name", item.Name);
-                    cmd.Parameters.AddWithValue("@description", item.Description);
-                    cmd.Parameters.AddWithValue("@initialPrice", item.InitialPrice);
-                    cmd.Parameters.AddWithValue("@startDate", item.StartDate);
-                    cmd.Parameters.AddWithValue("@endDate", item.EndDate);
-                    cmd.Parameters.AddWithValue("@state", item.State);
-                    cmd.Parameters.AddWithValue("@seller_username", item.SellerUser.UserName);
-                    cmd.Parameters.AddWithValue("@category_id", item.Category.Id);
-
-                    itemId = Convert.ToInt32(cmd.ExecuteScalar());
-
-                    // Commit the transaction.
-                    sqlTran.Commit();
-                    return itemId;
-                }
-                catch (Exception ex)
-                {
-                    // Handle the exception if the transaction fails to commit.
-                    Debug.Write(ex);
-
-                    try
-                    {
-                        // Attempt to roll back the transaction.
-                        sqlTran.Rollback();
-                        return itemId;
-                    }
-                    catch (Exception exRollback)
-                    {
-                        // Throws an InvalidOperationException if the connection 
-                        // is closed or the transaction has already been rolled 
-                        // back on the server.
-                        Debug.Write(exRollback);
-                        return itemId;
-                    }
-                }
-            }
-        }
-        #endregion
-
         #region UpdateItem(Item item)
         public bool UpdateItem(Item item)
         {
@@ -289,15 +268,12 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [Item] " +
-                                          "SET name = @name, description = @description, state = @state ";
-                        if (item.Bid != null)
-                            cmd.CommandText += ", bid_id = @bidId ";
-                        cmd.CommandText += "WHERE id = @id";
+                                          "SET name = @name, description = @description, state = @state " +
+                                          "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", item.Id);
                         cmd.Parameters.AddWithValue("@name", item.Name);
                         cmd.Parameters.AddWithValue("@description", item.Description);
                         cmd.Parameters.AddWithValue("@state", item.State);
-                        cmd.Parameters.AddWithValue("@bidId", item.Bid.Id);
                         cmd.ExecuteScalar();
                         return true;
                     }
