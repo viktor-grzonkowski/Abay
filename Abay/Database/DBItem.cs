@@ -72,8 +72,8 @@ namespace Database
         }
         #endregion
 
-        #region GetAllItems(int CatId)
-        public List<Item> GetAllItems(int catId)
+        #region GetAllActiveItemsByCategory(int CatId)
+        public List<Item> GetAllActiveItemsByCategory(int catId)
         {
             List<Item> items = new List<Item>();
             Item item = null;
@@ -82,9 +82,11 @@ namespace Database
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
-                                      "FROM Item "; 
+                                      "FROM Item ";
                     if (catId != -1)
                         cmd.CommandText += "WHERE categoryId = @catId AND state = 0";
+                    else
+                        cmd.CommandText += "WHERE state = 0";
 
                     cmd.Parameters.AddWithValue("@catId", catId);
                     
@@ -115,6 +117,55 @@ namespace Database
 
                             List<Bid> winningBid = new DBBid().GetBids((int)reader["id"], true);
                             item.WinningBid = winningBid.Count != 0 ? winningBid[0] : null;
+
+                            items.Add(item);
+                        }
+                    }
+                    return items;
+                }
+            }
+        }
+        #endregion
+
+        #region GetAllItems()
+        public List<Item> GetAllItems()
+        {
+            List<Item> items = new List<Item>();
+            Item item = null;
+            using (SqlConnection connection = DBConnection.GetConnection())
+            {
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM Item ";
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            User seller = new User
+                            {
+                                UserName = reader["sellerUsername"].ToString()
+                            };
+
+                            item = new Item
+                            {
+                                Id = (int)reader["id"],
+                                Name = CheckValue(reader["name"]).ToString(),
+                                Description = CheckValue(reader["description"]).ToString(),
+                                InitialPrice = (double)reader["initialPrice"],
+                                StartDate = (DateTime)reader["startDate"],
+                                EndDate = (DateTime)reader["endDate"],
+                                State = (int)reader["state"],
+                                SellerUser = seller,
+                                Category = DBCategory.GetItemCategory((int)reader["categoryId"])
+                            };
+
+                            List<Bid> winningBid = new DBBid().GetBids(item.Id, true);
+                            List<Bid> prevBids = new DBBid().GetBids(item.Id, false);
+                            item.WinningBid = winningBid.Count != 0 ? winningBid[0] : null;
+                            item.OldBids = prevBids.Count != 0 ? prevBids : null;
 
                             items.Add(item);
                         }

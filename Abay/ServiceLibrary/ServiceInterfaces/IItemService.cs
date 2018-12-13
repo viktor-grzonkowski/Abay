@@ -13,24 +13,20 @@ namespace Controller.ServiceInterfaces
     public interface IItemService
     {
         [OperationContract]
-        List<Item> GetAllItems(int catId);
-
-        [OperationContract]
-        Item GetItemById(int itemId);
-
-        [OperationContract]
-        List<Item> SearchItems(string value, int categoryId);
-
-        [OperationContract]
         int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration);
-
-        [OperationContract]
-        void UpdateItem(int itemId, string userToken, string name, string description);
-
         [OperationContract]
         string DeleteItem(int id, string token);
-
         [OperationContract]
-        List<ItemCategory> GetCategories();
+        void UpdateItem(int itemId, string userToken, string name, string description, int catId);
+        [OperationContract]
+        List<Item> SearchItems(string value, int categoryId);
+        [OperationContract]
+        Item GetItemById(int itemId);
+        [OperationContract]
+        List<ItemCategory> GetAllCategories();
+        [OperationContract]
+        List<Item> GetAllActiveItemsByCategory(int catId);
+        [OperationContract]
+        List<Item> GetAllItems();
     }
 }

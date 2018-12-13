@@ -28,28 +28,63 @@ namespace Controller
         {
             return ItemCtrl.DeleteItem(id, token);
         }
-        public void UpdateItem(int itemId, string token, string name, string description)
+        public void UpdateItem(int itemId, string token, string name, string description, int catId)
         {
-            ItemCtrl.UpdateItem(itemId, token, name, description);
+            ItemCtrl.UpdateItem(itemId, token, name, description, catId);
         }
 
+        /// <summary>
+        /// <param>
+        ///     value can be item name, description or username
+        /// </param>
+        /// <param>
+        ///     set category id to -1 to search in every category
+        /// </param>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         public List<Item> SearchItems(string value, int categoryId)
         {
             return ItemCtrl.SearchItems(value, categoryId);
         }
 
-        public List<Item> GetAllItems(int catId)
-        {
-            return ItemCtrl.GetAllItems(catId);
-        }
+        /// <summary>
+        /// Get the item by his id
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         public Item GetItemById(int itemId)
         {
             return ItemCtrl.GetItemById(itemId);
         }
 
-        public List<ItemCategory> GetCategories()
+        /// <summary>
+        /// Get all existing categorys
+        /// </summary>
+        /// <returns></returns>
+        public List<ItemCategory> GetAllCategories()
         {
             return CategoryCtrl.GetAllCategories();
+        }
+
+        /// <summary>
+        /// Provide -1 as category id to get all items
+        /// </summary>
+        /// <param name="catId"></param>
+        /// <returns></returns>
+        public List<Item> GetAllActiveItemsByCategory(int catId)
+        {
+            return ItemCtrl.GetAllActiveItemsByCategory(catId);
+        }
+
+        /// <summary>
+        /// Get all items from the system ! HEAVY LOAD !
+        /// </summary>
+        /// <returns></returns>
+        public List<Item> GetAllItems()
+        {
+            return ItemCtrl.GetAllItems();
         }
     }
 }

@@ -25,20 +25,21 @@ namespace Controller
             User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(id);
 
-            if (string.Equals(user.UserName , item.SellerUser.UserName))
+            if (string.Equals(user.UserName , item.SellerUser.UserName) && !user.Admin)
                 return itemDB.DeleteItem(id);
             else
                 return "Ooops something went wrong.";
         }
 
-        public void UpdateItem(int itemId, string token, string name, string description)
+        public void UpdateItem(int itemId, string token, string name, string description, int catId)
         {
             User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(itemId);
-            if (string.Equals(user.UserName, item.SellerUser.UserName))
+            if (string.Equals(user.UserName, item.SellerUser.UserName) && !user.Admin)
             {
                 item.Name = name;
                 item.Description = description;
+                item.Category = categoryCtrl.GetItemCategory(catId);
                 itemDB.UpdateItem(item);
             }
         }
@@ -53,16 +54,16 @@ namespace Controller
             return itemDB.SearchItems(value, categoryId);
         }
 
-        public List<Item> GetAllItems(int catId)
+        public List<Item> GetAllActiveItemsByCategory(int catId)
         {
             List<Item> items = new List<Item>();
             List<Item> newLst = new List<Item>();
 
-            items = itemDB.GetAllItems(catId);
+            items = itemDB.GetAllActiveItemsByCategory(catId);
 
             foreach (Item item in items)
             {
-                if (DateTime.Now < item.EndDate)
+                if (DateTime.Now < item.EndDate )
                 {
                     newLst.Add(item);
                 }
@@ -87,6 +88,11 @@ namespace Controller
                 }
             }
             return item;
+        }
+
+        public List<Item> GetAllItems()
+        {
+            return itemDB.GetAllItems();
         }
     }
 }
