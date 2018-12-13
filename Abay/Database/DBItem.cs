@@ -22,42 +22,50 @@ namespace Database
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
-                                      "FROM [Item] ";
+                                      "FROM Item i " +
+                                      "LEFT JOIN Bid b ON i.bid_id = b.id ";
                     if (CatId != -1)
-                        cmd.CommandText += "WHERE category_id = @catId AND state = 0";
+                        cmd.CommandText += "WHERE i.category_id = @catId AND i.state = 0";
 
                     cmd.Parameters.AddWithValue("@catId", CatId);
                     
                     SqlDataReader reader = cmd.ExecuteReader();
-                    
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        User seller = new User
+                        while (reader.Read())
                         {
-                            UserName = reader["seller_username"].ToString()
-                        };
+                            User seller = new User
+                            {
+                                UserName = reader["seller_username"].ToString()
+                            };
 
-                        User buyer = new User
-                        {
-                            UserName = CheckValue(reader["buyer_username"]).ToString()
-                        };
+                            item = new Item
+                            {
+                                Id = int.Parse(CheckValue(reader["id"]).ToString()),
+                                Name = CheckValue(reader["name"]).ToString(),
+                                Description = CheckValue(reader["description"]).ToString(),
+                                InitialPrice = (double)reader["initialPrice"],
+                                StartDate = (DateTime)reader["startDate"],
+                                EndDate = (DateTime)reader["endDate"],
+                                State = (int)reader["state"],
+                                SellerUser = seller,
+                                Category = DBCategory.GetItemCategory((int)reader["category_id"])
+                                //Bid = (int)reader["bid_id"] >= 0 ? DBBid.GetBid((int)reader["bid_id"]) : null
 
-                        item = new Item
-                        {
-                            Id = int.Parse(CheckValue(reader["id"]).ToString()),
-                            Name = CheckValue(reader["name"]).ToString(),
-                            Description = CheckValue(reader["description"]).ToString(),
-                            InitialPrice = (double)reader["initialPrice"],
-                            FinalPrice = reader["finalPrice"] == DBNull.Value ? 0 : (double)reader["finalPrice"],
-                            StartDate = (DateTime)reader["startDate"],
-                            EndDate = (DateTime)reader["endDate"],
-                            State = (int)reader["state"],
-                            SellerUser = seller,
-                            BuyerUser = buyer,
-                            Category = DBCategory.GetItemCategory((int)reader["category_id"])
-                        };
+                            };
 
-                        items.Add(item);
+                            item.Bid = reader["bid_id"] != DBNull.Value
+                                ? new Bid
+                                {
+                                    Id = (int)reader["bid_id"],
+                                    UserName = (string)reader["username"],
+                                    Amount = double.Parse(reader["amount"].ToString()),
+                                    Timestamp = (DateTime)reader["timestamp"]
+                                }
+                                : null;
+
+                            items.Add(item);
+                        }
                     }
                     return items;
                 }
@@ -65,7 +73,7 @@ namespace Database
         }
         #endregion
 
-        #region GetItemById(int id)
+        #region GetItemById(int id)WORKS
         public Item GetItemById(int id)
         {
             Item item = null;
@@ -77,40 +85,47 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                            "FROM [Item] " +
-                                            "WHERE id = @id";
+                                          "FROM [Item] i " +
+                                          "LEFT JOIN [Bid] b " +
+                                          "ON i.bid_id = b.id " +
+                                          "WHERE i.id = @id";
                         cmd.Parameters.AddWithValue("@id", id);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.HasRows)
                             {
-                                User seller = new User
+                                while (reader.Read())
                                 {
-                                    UserName = reader["seller_username"].ToString()
-                                };
+                                    User seller = new User
+                                    {
+                                        UserName = reader["seller_username"].ToString()
+                                    };
 
-                                User buyer = new User
-                                {
-                                    UserName = CheckValue(reader["buyer_username"]).ToString()
-                                };
+                                    item = new Item
+                                    {
+                                        Id = (int)reader["id"],
+                                        Name = reader["name"].ToString(),
+                                        Description = CheckValue(reader["description"]).ToString(),
+                                        InitialPrice = (double)reader["initialPrice"],
+                                        StartDate = (DateTime)reader["startDate"],
+                                        EndDate = (DateTime)reader["endDate"],
+                                        State = (int)reader["state"],
+                                        SellerUser = seller,
+                                        Category = DBCategory.GetItemCategory((int)reader["category_id"])
+                                    };
 
-                                item = new Item
-                                {
-                                    Id = (int)reader["id"],
-                                    Name = reader["name"].ToString(),
-                                    Description = CheckValue(reader["description"]).ToString(),
-                                    InitialPrice = (double)reader["initialPrice"],
-                                    FinalPrice = reader["finalPrice"] == DBNull.Value ? 0 : (double)reader["finalPrice"],
-                                    StartDate = (DateTime)reader["startDate"],
-                                    EndDate = (DateTime)reader["endDate"],
-                                    State = (int)reader["state"],
-                                    SellerUser = seller,
-                                    BuyerUser = buyer,
-                                    Category = DBCategory.GetItemCategory((int)reader["category_id"])
-                                };
+                                    item.Bid = reader["bid_id"] != DBNull.Value
+                                        ? new Bid
+                                        {
+                                            Id = (int)reader["bid_id"],
+                                            UserName = (string)reader["username"],
+                                            Amount = double.Parse(reader["amount"].ToString()),
+                                            Timestamp = (DateTime)reader["timestamp"]
+                                        }
+                                        : null;
+                                }
                             }
-                            
                         }
                     }
                 }
@@ -122,17 +137,17 @@ namespace Database
                 Debug.Write("\n" + e + "\n");
                 Debug.Write("\n #### ERROR FOR GetItemById END #### \n");
             }
+
             return item;
         }
-        #endregion
+        #endregion 
 
         #region SearchItems(string value, int categoryId)
         public List<Item> SearchItems(string value, int categoryId)
         {
             List<Item> items = new List<Item>();
-            User seller = new User();
-            User buyer = new User();
-            Item item = new Item();
+            User seller = null ;
+            Item item = null;
 
             try
             {
@@ -141,14 +156,15 @@ namespace Database
 
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT id, name, description, initialPrice, finalPrice, startDate, endDate,state, seller_username, buyer_username,category_id " +
-                                            "FROM [Item] ";
+                        cmd.CommandText = "SELECT * " +
+                                          "FROM Item i " +
+                                          "LEFT JOIN Bid b ON i.bid_id = b.id ";
                         if(categoryId != -1)
-                            cmd.CommandText += "WHERE(id = @id OR name like @value OR description LIKE @value OR seller_username LIKE @value) AND category_id = @id";
+                            cmd.CommandText += "WHERE(i.name LIKE @value OR i.description LIKE @value OR i.seller_username LIKE @value) AND i.category_id = @catId";
                         else
-                            cmd.CommandText += "WHERE(id = @id OR name like @value OR description LIKE @value OR seller_username LIKE @value)";
-                        cmd.Parameters.AddWithValue("@id", categoryId);
-                        cmd.Parameters.AddWithValue("@value", value);
+                            cmd.CommandText += "WHERE(i.name LIKE @value OR i.description LIKE @value OR i.seller_username LIKE @value)";
+                        cmd.Parameters.AddWithValue("@catId", categoryId);
+                        cmd.Parameters.AddWithValue("@value", "%"+value+"%");
 
                         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -156,24 +172,36 @@ namespace Database
                         {
                             while (reader.Read())
                             {
+                                seller = new User
+                                {
+                                    UserName = (string)reader["seller_username"]
+                                };
 
-                            
-                                seller.UserName = (string)reader["seller_username"];
+                                item = new Item
+                                {
+                                    Id = int.Parse(CheckValue(reader["id"]).ToString()),
+                                    Name = CheckValue(reader["name"]).ToString(),
+                                    Description = CheckValue(reader["description"]).ToString(),
+                                    InitialPrice = (double)reader["initialPrice"],
+                                    StartDate = (DateTime)reader["startDate"],
+                                    EndDate = (DateTime)reader["endDate"],
+                                    State = (int)reader["state"],
+                                    SellerUser = seller,
+                                    Category = DBCategory.GetItemCategory((int)reader["category_id"])
+                                };
 
-                                buyer.UserName = CheckValue(reader["buyer_username"]).ToString();
-                            
-                                item.Id = int.Parse(CheckValue(reader["id"]).ToString());
-                                item.Name = CheckValue(reader["name"]).ToString();
-                                item.Description = CheckValue(reader["description"]).ToString();
-                                item.InitialPrice = (double)reader["initialPrice"];
-                                item.FinalPrice = reader["finalPrice"] == System.DBNull.Value ? 0 : (double)reader["finalPrice"];
-                                item.StartDate = (DateTime)reader["startDate"];
-                                item.EndDate = (DateTime)reader["endDate"];
-                                item.State = (int)reader["state"];
-                                item.SellerUser = seller;
-                                item.BuyerUser = buyer;
-                                item.Category = DBCategory.GetItemCategory((int)reader["category_id"]);
-                            
+                                
+
+                                item.Bid = reader["bid_id"] != DBNull.Value
+                                    ? new Bid
+                                    {
+                                        Id = (int)reader["bid_id"],
+                                        UserName = (string)reader["username"],
+                                        Amount = double.Parse(reader["amount"].ToString()),
+                                        Timestamp = (DateTime)reader["timestamp"]
+                                    }
+                                    : null;
+
                                 items.Add(item);
                             }
                         }
@@ -261,14 +289,15 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [Item] " +
-                                            "SET name = @name, description = @description, finalPrice = @finalPrice, state = @state, buyer_username = @buyer " +
-                                            "WHERE id = @id";
+                                          "SET name = @name, description = @description, state = @state ";
+                        if (item.Bid != null)
+                            cmd.CommandText += ", bid_id = @bidId ";
+                        cmd.CommandText += "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", item.Id);
                         cmd.Parameters.AddWithValue("@name", item.Name);
                         cmd.Parameters.AddWithValue("@description", item.Description);
-                        cmd.Parameters.AddWithValue("@finalPrice", item.FinalPrice);
                         cmd.Parameters.AddWithValue("@state", item.State);
-                        cmd.Parameters.AddWithValue("@buyer", item.BuyerUser.UserName);
+                        cmd.Parameters.AddWithValue("@bidId", item.Bid.Id);
                         cmd.ExecuteScalar();
                         return true;
                     }

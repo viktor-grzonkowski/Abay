@@ -18,13 +18,13 @@ namespace ServiceLibrary
         ValidateInput Validate = new ValidateInput();
 
         /// <summary>
-        /// CreateItem returns the itemId from the database or -1 if it failed to create it
+        /// CreateItem returns the itemId from the database or -1 if it fails to create it
         /// </summary>
-        public int CreateItem(string name, double initialPrice, string token, int CategoryId, string description, int duration)
+        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration)
         {
             return !Validate.CheckDouble(initialPrice) || !Validate.CheckString(name, 3) || !Validate.CheckInt(CategoryId)
                 ? -1
-                : ItemCtrl.CreateItem(name, initialPrice, token, CategoryId, description, duration);
+                : ItemCtrl.CreateItem(name, description, initialPrice, CategoryId, token, duration);
         }
 
         public string DeleteItem(int id, string token)

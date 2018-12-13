@@ -19,6 +19,7 @@ namespace ServiceLibrary
         public bool BidOnItem(int itemId, double amount, string token)
         {
             return !Validate.CheckDouble(amount) ? false : BidCtrl.Bid(itemId, amount, token);
+            return false;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Controller
         CategoryController categoryCtrl = new CategoryController();
         TokenController tokenCtrl = new TokenController();
 
-        public int CreateItem(string name, double initialPrice, string token, int categoryId, string description, int duration)
+        public int CreateItem(string name, string description, double initialPrice, int categoryId, string token, int duration)
         {  
             return itemDB.InsertItem(new Item(name, initialPrice, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId), description, duration));
         }
@@ -77,10 +77,13 @@ namespace Controller
         public Item GetItemById(int id)
         {
             Item item = itemDB.GetItemById(id);
-            if (DateTime.Now > item.EndDate)
+            if (item != null)
             {
-                item.State = 1;
-                UpdateItem(item);
+                if (DateTime.Now > item.EndDate)
+                {
+                    item.State = 1;
+                    UpdateItem(item);
+                }
             }
             return item;
         }

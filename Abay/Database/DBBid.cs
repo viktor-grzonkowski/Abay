@@ -9,8 +9,8 @@ namespace Database
 {
     public class DBBid
     {
-        #region Bid(Item item)
-        public bool Bid(Item item)
+        #region UpdateBid(Bid bid)
+        public bool UpdateBid(Bid bid)
         {
             TransactionOptions options = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
 
@@ -25,11 +25,11 @@ namespace Database
                     {
                         // Execute one command.
                         cmd.CommandText =   "UPDATE [Bid] " +
-                                            "SET username = @username, amount = @amount " +
-                                            "WHERE item_id = @id";
-                        cmd.Parameters.AddWithValue("@id", item.Id);
-                        cmd.Parameters.AddWithValue("@username", item.BuyerUser.UserName);
-                        cmd.Parameters.AddWithValue("@amount", item.FinalPrice);
+                                            "SET username = @username, amount = @amount, timestamp = @timestamp " +
+                                            "WHERE id = @id";
+                        cmd.Parameters.AddWithValue("@username", bid.UserName);
+                        cmd.Parameters.AddWithValue("@amount", bid.Amount);
+                        cmd.Parameters.AddWithValue("@timestamp", bid.Timestamp);
                         cmd.ExecuteNonQuery();
 
                         scope.Complete();
@@ -54,8 +54,8 @@ namespace Database
         }
         #endregion
 
-        #region GetBid(int itemId)
-        public Bid GetBid(int itemId)
+        #region GetBid(int bidId)
+        public Bid GetBid(int bidId)
         {
             Bid bid = null;
             try {
@@ -65,9 +65,9 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                            "FROM [Bid] " +
-                                            "WHERE item_id = @id";
-                        cmd.Parameters.AddWithValue("@id", itemId);
+                                          "FROM [Bid] " +
+                                          "WHERE id = @id";
+                        cmd.Parameters.AddWithValue("@id", bidId);
 
                         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -77,8 +77,8 @@ namespace Database
                             {
                                 bid = new Bid
                                 {
+                                    Id = bidId,
                                     UserName = reader["username"].ToString(),
-                                    ItemId = int.Parse(reader["item_id"].ToString()),
                                     Amount = double.Parse(reader["amount"].ToString()),
                                     Timestamp = DateTime.Parse(reader["timestamp"].ToString())
                                 };
@@ -99,8 +99,9 @@ namespace Database
         #endregion
 
         #region InsertBid(Bid bid)
-        public bool InsertBid(Bid bid)
+        public int InsertBid(Bid bid)
         {
+            int rowId = -1;
             using (SqlConnection connection = DBConnection.GetConnection())
             {
                 // Start a local transaction.
@@ -114,19 +115,19 @@ namespace Database
                 {
                     // Execute one command.
                     cmd.CommandText =   "INSERT INTO [Bid] " +
-                                        "(username ,item_id ,amount ,timestamp) " +
-                                        "VALUES " +
-                                        "(@username ,@item_id ,@amount ,@timestamp)";
+                                        "(username ,amount ,timestamp) " +
+                                        "OUTPUT INSERTED.ID " +
+                                        "VALUES (@username ,@amount ,@timestamp)";
                     cmd.Parameters.AddWithValue("@username", bid.UserName);
-                    cmd.Parameters.AddWithValue("@item_id", bid.ItemId);
                     cmd.Parameters.AddWithValue("@amount", bid.Amount);
                     cmd.Parameters.AddWithValue("@timestamp", bid.Timestamp);
-                    cmd.ExecuteNonQuery();
+                    rowId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     // Commit the transaction.
                     sqlTran.Commit();
+                    
 
-                    return true;
+                    return rowId;
                 }
                 catch (Exception e)
                 {
@@ -149,7 +150,7 @@ namespace Database
                         Debug.Write(exRollback.Message + "\n");
                         Debug.Write("#### ROLLBACK ERROR FOR GetBid END ####");
                     }
-                    return false;
+                    return -1;
                 }
             }
         }
