@@ -40,3 +40,12 @@ C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.csproj.
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.csproj.CopyComplete
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.dll
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Database\obj\Debug\Database.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\bin\Debug\Database.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\bin\Debug\Database.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\bin\Debug\Entities.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\bin\Debug\Entities.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\obj\Debug\Database.csprojAssemblyReference.cache
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\obj\Debug\Database.csproj.CopyComplete
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\obj\Debug\Database.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Database\obj\Debug\Database.pdb

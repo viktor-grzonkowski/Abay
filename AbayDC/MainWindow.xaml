@@ -6,5 +6,7 @@
         xmlns:local="clr-namespace:DedicatedClient"
         mc:Ignorable="d"
         Title="Admin" Height="800" Width="1000">
-    <Frame Name="frame"/>
+    <StackPanel>
+        
+    </StackPanel>
 </Window>
