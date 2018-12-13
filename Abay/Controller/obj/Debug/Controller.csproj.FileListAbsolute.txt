@@ -51,3 +51,14 @@ C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.csp
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.dll
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\Controller\obj\Debug\Controller.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\bin\Debug\Controller.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\bin\Debug\Controller.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\bin\Debug\Database.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\bin\Debug\Entities.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\bin\Debug\Database.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\bin\Debug\Entities.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\obj\Debug\Controller.csprojAssemblyReference.cache
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\obj\Debug\Controller.csproj.CoreCompileInputs.cache
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\obj\Debug\Controller.csproj.CopyComplete
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\obj\Debug\Controller.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\Controller\obj\Debug\Controller.pdb

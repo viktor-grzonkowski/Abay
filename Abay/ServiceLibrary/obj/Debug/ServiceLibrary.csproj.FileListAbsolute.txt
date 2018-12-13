@@ -76,3 +76,16 @@ C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLib
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
 C:\Users\VGrzo\Desktop\Project 3rd seme\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\ServiceLibrary.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\Controller.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\Entities.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\Database.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\Controller.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\Entities.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\bin\Debug\Database.pdb
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csprojAssemblyReference.cache
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CoreCompileInputs.cache
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.csproj.CopyComplete
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.dll
+D:\Downloads\UCN\Workshops and projects\Project 3\codes\Vithoh\Abay\Abay\ServiceLibrary\obj\Debug\ServiceLibrary.pdb
