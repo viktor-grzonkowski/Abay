@@ -23,8 +23,8 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                            "FROM [User] " +
-                                            "WHERE username = @username AND password = @password";
+                                          "FROM [User] " +
+                                          "WHERE username = @username AND password = @password";
                         cmd.Parameters.AddWithValue("@username", userName);
                         cmd.Parameters.AddWithValue("@password", password);
 
@@ -40,7 +40,6 @@ namespace Database
                                     FirstName = (string)reader["firstName"],
                                     LastName = (string)reader["lastName"],
                                     Email = (string)reader["email"],
-                                    Password = (string)reader["password"],
                                     Admin = (bool)reader["admin"]
                                 };
                             }

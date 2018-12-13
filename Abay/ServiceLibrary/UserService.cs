@@ -21,10 +21,9 @@ namespace Controller
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string Login(string userName, string password)
+        public User Login(string userName, string password)
         {
-            Token token = UserCtrl.Login(userName, password);
-            return token != null ? token.SecureToken : "";
+            return UserCtrl.Login(userName, password);
         }
 
         /// <summary>

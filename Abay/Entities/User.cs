@@ -14,7 +14,7 @@ namespace Entities
         private string _email;
         private bool _admin;
         private string _password;
-        private string _salt;
+        private Token _loginToken;
 
         public User()
         {
@@ -36,6 +36,6 @@ namespace Entities
         public string Email { get => _email; set => _email = value; }
         public bool Admin { get => _admin; set => _admin = value; }
         public string Password { get => _password; set => _password = value; }
-        public string Salt { get => _salt; set => _salt = value; }
+        public Token LoginToken { get => _loginToken; set => _loginToken = value; }
     }
 }

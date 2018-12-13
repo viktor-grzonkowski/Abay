@@ -59,6 +59,7 @@ namespace Controller
             List<Item> newLst = new List<Item>();
 
             items = itemDB.GetAllItems(catId);
+
             foreach (Item item in items)
             {
                 if (DateTime.Now < item.EndDate)

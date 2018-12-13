@@ -19,13 +19,14 @@ namespace Controller
                 return -2;
             if (userDb.CheckUserName(user.UserName))
                 return -3;
+                
             if (userDb.InsertUser(user))
                 return 1;
 
             return 0;
         }
 
-        public Token Login(string userName, string password)
+        public User Login(string userName, string password)
         {
             if (userDb.CheckUserName(userName))
             {
@@ -45,8 +46,10 @@ namespace Controller
                         CreateDate = DateTime.Now
                     };
 
+                    user.LoginToken = token;
+
                     if (tokenCtrl.InsertToken(token))
-                        return token;
+                        return user;
                 }
             }
 

@@ -30,6 +30,7 @@ namespace AbayMVC.Controllers
 
             var items = services.ItemClient().GetAllItems(categoryId);
 
+            // Build items 
             foreach (var item in items)
             {
                 Item itm = new Item
@@ -37,12 +38,25 @@ namespace AbayMVC.Controllers
                     Id = item.Id,
                     Name = item.Name,
                     InitialPrice = item.InitialPrice,
-                    FinalPrice = item.FinalPrice,
                     StartDate = item.StartDate,
                     EndDate = item.EndDate,
-                    SellerUser = item.SellerUser.UserName,
-                    BuyerUser = item.BuyerUser.UserName
+                    SellerUser = item.SellerUser.UserName
                 };
+
+                // Check if there is a winning bid
+                if (item.WinningBid != null)
+                {
+                    Bid bid = new Bid
+                    {
+                        BuyerName = item.WinningBid.BuyerName,
+                        ItemId = item.WinningBid.ItemId,
+                        Amount = item.WinningBid.Amount,
+                        Timestamp = item.WinningBid.Timestamp,
+                        Winning = item.WinningBid.Winning
+                    };
+
+                    itm.WinningBid = bid;
+                }
 
                 lst.Add(itm);
             }
@@ -53,6 +67,7 @@ namespace AbayMVC.Controllers
         public ActionResult Bid()
         {
             string s = Request.QueryString["itemId"];
+
             if (string.IsNullOrEmpty(s))
             {
                 return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Item", action = "Listing" }));
@@ -65,11 +80,43 @@ namespace AbayMVC.Controllers
                 Id = item.Id,
                 Name = item.Name,
                 InitialPrice = item.InitialPrice,
-                FinalPrice = item.FinalPrice,
                 StartDate = item.StartDate,
                 EndDate = item.EndDate,
                 SellerUser = item.SellerUser.UserName
             };
+
+            // Check for winning bid
+            if (item.WinningBid != null)
+            {
+                Bid bid = new Bid {
+                    BuyerName = item.WinningBid.BuyerName,
+                    ItemId = item.WinningBid.ItemId,
+                    Amount = item.WinningBid.Amount,
+                    Timestamp = item.WinningBid.Timestamp,
+                    Winning = item.WinningBid.Winning
+                };
+
+                itm.WinningBid = bid;
+            }
+
+            // Check if it has old bids
+            if (item.OldBids != null)
+            {
+                itm.OldBid = new List<Bid>();
+                foreach (var oldBid in item.OldBids)
+                {
+                    Bid bid = new Bid
+                    {
+                        BuyerName = oldBid.BuyerName,
+                        ItemId = oldBid.ItemId,
+                        Amount = oldBid.Amount,
+                        Timestamp = oldBid.Timestamp,
+                        Winning = oldBid.Winning
+                    };
+
+                    itm.OldBid.Add(bid);
+                }
+            }
             return View(itm);
         }
 
@@ -78,11 +125,12 @@ namespace AbayMVC.Controllers
         public ActionResult Bid(FormCollection collection)
         {
             int itemId = Convert.ToInt32(collection["itemId"]);
+
             var item = services.ItemClient().GetItemById(itemId);
 
             double startingPrice = Convert.ToDouble(collection["startingPriceNumber"]);
-            double highestOffer = Convert.ToDouble(collection["highestOfferNumber"]);
-            double finalPrice = Convert.ToDouble(collection["finalPrice"]);
+            double highestOffer = string.IsNullOrEmpty(collection["highestOfferNumber"]) ? 0 : Convert.ToDouble(collection["highestOfferNumber"]);
+            double offer = Convert.ToDouble(collection["offerAmount"]);
 
             string token = SessionPersister.Token;
 
@@ -91,15 +139,14 @@ namespace AbayMVC.Controllers
                 Id = item.Id,
                 Name = item.Name,
                 InitialPrice = item.InitialPrice,
-                FinalPrice = item.FinalPrice,
                 StartDate = item.StartDate,
                 EndDate = item.EndDate,
                 SellerUser = item.SellerUser.UserName
             };
 
-            if (services.UserClient().CheckToken(token))
+            if (services.UserClient().CheckTokenTime(token))
             {
-                if (finalPrice <= startingPrice || finalPrice <= highestOffer)
+                if (offer <= startingPrice || offer <= highestOffer)
                 {
                     Information("Your offer is to low! ");
                     return View(itmOld);
@@ -114,18 +161,54 @@ namespace AbayMVC.Controllers
 
                     try
                     {
-                        services.BidClient().BidOnItem(itemId, finalPrice, token);
+                        services.BidClient().BidOnItem(itemId, offer, token);
+                        var newItem = services.ItemClient().GetItemById(itemId);
 
                         Item itmNew = new Item
                         {
-                            Id = item.Id,
-                            Name = item.Name,
-                            InitialPrice = item.InitialPrice,
-                            FinalPrice = item.FinalPrice,
-                            StartDate = item.StartDate,
-                            EndDate = item.EndDate,
-                            SellerUser = item.SellerUser.UserName
+                            Id = newItem.Id,
+                            Name = newItem.Name,
+                            InitialPrice = newItem.InitialPrice,
+                            StartDate = newItem.StartDate,
+                            EndDate = newItem.EndDate,
+                            SellerUser = newItem.SellerUser.UserName
                         };
+
+                        // Check for winning bid
+                        if (newItem.WinningBid != null)
+                        {
+                            Bid bid = new Bid
+                            {
+                                BuyerName = newItem.WinningBid.BuyerName,
+                                ItemId = newItem.WinningBid.ItemId,
+                                Amount = newItem.WinningBid.Amount,
+                                Timestamp = newItem.WinningBid.Timestamp,
+                                Winning = newItem.WinningBid.Winning
+                            };
+
+                            itmNew.WinningBid = bid;
+                        }
+
+                        // Check if it has old bids
+                        if (newItem.OldBids != null)
+                        {
+                            itmNew.OldBid = new List<Bid>();
+
+                            foreach (var oldBid in newItem.OldBids)
+                            {
+                                Bid bid = new Bid
+                                {
+                                    BuyerName = oldBid.BuyerName,
+                                    ItemId = oldBid.ItemId,
+                                    Amount = oldBid.Amount,
+                                    Timestamp = oldBid.Timestamp,
+                                    Winning = oldBid.Winning
+                                };
+
+                                itmNew.OldBid.Add(bid);
+                            }
+                        }
+
                         Success("Your bid was placed");
                         return View(itmNew);
                     }
@@ -173,7 +256,7 @@ namespace AbayMVC.Controllers
             string description = Request.Form["item-description"];
             int duration = Int32.Parse(collection["item-sellduration"]);
 
-            int insertId = services.ItemClient().CreateItem(name, startingPrice, SessionPersister.Token, category, description, duration);
+            int insertId = services.ItemClient().CreateItem(name, description, startingPrice, category, SessionPersister.Token, duration);
 
             if (insertId < 0)
             {
@@ -186,6 +269,32 @@ namespace AbayMVC.Controllers
             }
 
             return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));
+        }
+
+        public ActionResult OldBids(Item modelItem)
+        {
+            List<Bid> oldBids = new List<Bid>();
+            var item = services.ItemClient().GetItemById(modelItem.Id);
+
+            // Check if it has old bids
+            if (item.OldBids != null)
+            {
+                foreach (var oldBid in item.OldBids)
+                {
+                    Bid bid = new Bid
+                    {
+                        BuyerName = oldBid.BuyerName,
+                        ItemId = oldBid.ItemId,
+                        Amount = oldBid.Amount,
+                        Timestamp = oldBid.Timestamp,
+                        Winning = oldBid.Winning
+                    };
+
+                    oldBids.Add(bid);
+                }
+            }
+
+            return View(oldBids);
         }
     }
 }

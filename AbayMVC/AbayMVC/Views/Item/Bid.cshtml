@@ -12,7 +12,10 @@
 {
     @Html.Hidden("itemId", Model.Id)
     @Html.Hidden("startingPriceNumber", Model.InitialPrice)
-    @Html.Hidden("highestOfferNumber", Model.FinalPrice)
+    if (Model.WinningBid != null)
+    {
+        @Html.Hidden("highestOfferNumber", Model.WinningBid.Amount)
+    }
     @Html.Hidden("sellerName", Model.SellerUser)
     <div class="container" style="padding:0 0 60px;">
         <h2>@ViewBag.Title</h2>
@@ -35,9 +38,25 @@
                     Auction ends in: <span id="demo"></span>
                 </div>
                 <div id="priceSection">
+
                     <p class="color-secondary">Starting price: <span id="startingPriceNumber" class="priceSign">@Html.DisplayFor(model => model.InitialPrice)</span></p>
-                    <p class="color-secondary">Highest offer: <span id="highestOfferNumber" class="priceSign">@Html.DisplayFor(model => model.FinalPrice)</span></p>
+                    @if (Model.WinningBid != null)
+                    {
+                        <p class="color-secondary">
+                            Highest offer: <span id="highestOfferNumber" class="priceSign">@Html.DisplayFor(model => model.WinningBid.Amount)</span>
+                            @if (Model.OldBid != null)
+                            {
+                                <a href="@Url.Action("OldBids", "Item", Model)" rel="nofollow" id="vi-VR-bid-lnk" class="vi-bidC"><span id="qty-test">@Html.DisplayFor(model => model.OldBid.Count)</span><span>&nbsp;Offers</span></a>
+                            }
+                        </p>
+
+                    }
+                    else
+                    {
+                        <p class="color-secondary">Highest offer: <span id="highestOfferNumber">No offers yet</span></p>
+                    }
                 </div>
+
                 <div id="descriptionSection">
                     <ul style="list-style: circle; padding-left: 20px;">
                         @Html.DisplayFor(model => model.Description)
@@ -51,7 +70,7 @@
                             <div class="input-group">
                                 <div class="input-group-addon">$</div>
                                 <!--<input type="text" class="form-control" id="finalPrice" placeholder="Amount">-->
-                                @Html.TextBox("finalPrice", null, new { @type = "text", @class = "form-control", @id = "finalPrice", @placeholder = "Amount" })
+                                @Html.TextBox("offerAmount", null, new { @type = "text", @class = "form-control", @id = "offerAmount", @placeholder = "Amount" })
                                 <!--<div class="input-group-addon">.00</div>-->
                             </div>
                         </div>
@@ -59,14 +78,14 @@
                     </form>
                 </div>
 
-
+                <!--
                 <div id="buyNowSection">
                     <form class="form-inline">
                         <p class="color-secondary">
                             Buy now price: <span id="buyNowPrice" class="priceSign">30</span>
                             <button type="submit" class="btn btn-primary btn-custom">Buy It Now</button>
                     </form>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Showcase";
 }
 
-<h2>Showcase</h2>
+<h2>Listing</h2>
 
 <table class="table">
     <tr>
@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.InitialPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FinalPrice)
+            @Html.DisplayNameFor(model => model.WinningBid)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
@@ -30,7 +30,7 @@
             @Html.DisplayNameFor(model => model.SellerUser)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BuyerUser)
+            @Html.DisplayNameFor(model => model.WinningBid.BuyerName)
         </th>
         <th></th>
     </tr>
@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.InitialPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FinalPrice)
+            @Html.DisplayFor(modelItem => item.WinningBid.Amount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartDate)
@@ -59,7 +59,7 @@
             @Html.DisplayFor(modelItem => item.SellerUser)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BuyerUser)
+            @Html.DisplayFor(modelItem => item.WinningBid.BuyerName)
         </td>
         <td>
             @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id}, null )

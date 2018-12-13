@@ -19,13 +19,13 @@ namespace AbayMVC.Models
         [Display(Name = "Starting price")]
         public double InitialPrice { get; set; }
         [Required]
-        [Display(Name = "Current bid")]
-        public double FinalPrice { get; set; }
-        [Required]
         [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string SellerUser { get; set; }
-        public string BuyerUser { get; set; }
+        [Display(Name = "Highest offer")]
+        public Bid WinningBid { get; set; }
+        [Display(Name = "Previous offers")]
+        public List<Bid> OldBid {get; set; }
     }
 }

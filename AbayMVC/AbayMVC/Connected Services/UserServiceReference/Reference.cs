@@ -176,11 +176,11 @@ namespace AbayMVC.UserServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
         System.Threading.Tasks.Task<AbayMVC.UserServiceReference.User> GetUserByTokenAsync(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckToken", ReplyAction="http://tempuri.org/IUserService/CheckTokenResponse")]
-        bool CheckToken(string token);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckTokenTime", ReplyAction="http://tempuri.org/IUserService/CheckTokenTimeResponse")]
+        bool CheckTokenTime(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckToken", ReplyAction="http://tempuri.org/IUserService/CheckTokenResponse")]
-        System.Threading.Tasks.Task<bool> CheckTokenAsync(string token);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckTokenTime", ReplyAction="http://tempuri.org/IUserService/CheckTokenTimeResponse")]
+        System.Threading.Tasks.Task<bool> CheckTokenTimeAsync(string token);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -234,12 +234,12 @@ namespace AbayMVC.UserServiceReference {
             return base.Channel.GetUserByTokenAsync(token);
         }
         
-        public bool CheckToken(string token) {
-            return base.Channel.CheckToken(token);
+        public bool CheckTokenTime(string token) {
+            return base.Channel.CheckTokenTime(token);
         }
         
-        public System.Threading.Tasks.Task<bool> CheckTokenAsync(string token) {
-            return base.Channel.CheckTokenAsync(token);
+        public System.Threading.Tasks.Task<bool> CheckTokenTimeAsync(string token) {
+            return base.Channel.CheckTokenTimeAsync(token);
         }
     }
 }

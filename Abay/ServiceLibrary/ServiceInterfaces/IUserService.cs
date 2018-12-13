@@ -13,7 +13,7 @@ namespace Controller.ServiceInterfaces
     public interface IUserService
     {
         [OperationContract]
-        string Login(string userName, string password);
+        User Login(string userName, string password);
         
         [OperationContract]
         int CreateUser(string userName, string firstName, string lastName, string password, string email);
