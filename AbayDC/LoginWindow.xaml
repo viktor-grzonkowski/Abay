@@ -19,9 +19,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Username"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Width="100" Name="txtUsername" KeyDown="txtUsername_KeyDown"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Width="100" Name="txtUsername" KeyDown="txtField_KeyDown"/>
                 <Label Grid.Row="1" Grid.Column="0" Content="Password"/>
-                <PasswordBox Grid.Row="1" Grid.Column="1" Width="100" Name="txtPassword"/>
+                <PasswordBox Grid.Row="1" Grid.Column="1" Width="100" Name="txtPassword" KeyDown="txtField_KeyDown"/>
             </Grid>
             <Button Content="Login" Click="Button_Click"/>
         </StackPanel>

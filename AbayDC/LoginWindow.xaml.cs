@@ -31,11 +31,17 @@ namespace DedicatedCliend
             string username = txtUsername.Text;
             string password = txtPassword.Password;
 
-            //TODO: login
             string token = userService.Login(username, password);
             if (token.Length < 1)
             {
                 MessageBox.Show("Username or password is incorrect.");
+                return;
+            }
+
+            User user = userService.GetUserByToken(token);
+            if (!user.Admin)
+            {
+                MessageBox.Show("Not sufficient rights.");
                 return;
             }
 
@@ -48,7 +54,7 @@ namespace DedicatedCliend
         {
             Login();
         }
-        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        private void txtField_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
