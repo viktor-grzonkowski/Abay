@@ -6,24 +6,32 @@
         xmlns:local="clr-namespace:DedicatedClient"
         mc:Ignorable="d"
         Title="LoginWindow" Height="200" Width="300" ResizeMode="NoResize">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel HorizontalAlignment="Center">
-            <Label Content="Login" HorizontalAlignment="Center"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Username"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Width="100" Name="txtUsername" KeyDown="txtField_KeyDown"/>
-                <Label Grid.Row="1" Grid.Column="0" Content="Password"/>
-                <PasswordBox Grid.Row="1" Grid.Column="1" Width="100" Name="txtPassword" KeyDown="txtField_KeyDown"/>
-            </Grid>
-            <Button Content="Login" Click="Button_Click"/>
-        </StackPanel>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="1" Grid.Column="1" Content="Login" VerticalAlignment="Center"  HorizontalAlignment="Center" Grid.ColumnSpan="3" FontWeight="Bold" FontSize="16"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="Username" FontSize="14"/>
+            <TextBox Grid.Row="3" Grid.Column="3" Name="txtUsername" KeyDown="txtField_KeyDown" FontStyle="Italic"/>
+            <Label Grid.Row="5" Grid.Column="1" Content="Password" FontSize="14"/>
+            <PasswordBox Grid.Row="5" Grid.Column="3" Name="txtPassword" KeyDown="txtField_KeyDown" FontStyle="Italic"/>
+            <Button Grid.Row="7" Grid.Column="1" Content="Login" Click="Button_Click" Grid.ColumnSpan="3" FontSize="14"/>
+        </Grid>
     </Grid>
 </Window>
