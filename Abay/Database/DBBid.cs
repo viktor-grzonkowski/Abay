@@ -140,5 +140,57 @@ namespace Database
             return bids;
         }
         #endregion
+
+        #region GetAllBidsByItem(int itemId)
+        public List<Bid> GetAllBidsByItem(int itemId)
+        {
+            Bid bid = null;
+            List<Bid> bids = new List<Bid>();
+
+            try
+            {
+
+                using (SqlConnection connection = DBConnection.GetConnection())
+                {
+
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * " +
+                                          "FROM [Bids] " +
+                                          "WHERE itemId = @itemId " +
+                                          "ORDER BY amount DESC";
+                        cmd.Parameters.AddWithValue("@itemId", itemId);
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                bid = new Bid
+                                {
+                                    BuyerName = reader["buyerName"].ToString(),
+                                    ItemId = (int)reader["itemId"],
+                                    Amount = double.Parse(reader["amount"].ToString()),
+                                    Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
+                                    Winning = (bool)reader["winning"]
+                                };
+
+                                bids.Add(bid);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Write("#### ERROR IN GetAllBidsByItem START #### \n");
+                Debug.Write(e + "\n");
+                Debug.Write("#### ERROR FOR GetAllBidsByItem END ####");
+            }
+
+            return bids;
+        }
+        #endregion
     }
 }
