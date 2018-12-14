@@ -1,4 +1,6 @@
-﻿@model AbayMVC.Models.Item
+﻿@model AbayMVC.Models.BuyItemView
+
+@using AbayMVC.Security
 
 @{
     ViewBag.Title = "Bid";
@@ -8,15 +10,12 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
     -->
-@using (Html.BeginForm())
+@using (Html.BeginForm("Bid", "Item", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.Hidden("itemId", Model.Id)
-    @Html.Hidden("startingPriceNumber", Model.InitialPrice)
-    if (Model.WinningBid != null)
-    {
-        @Html.Hidden("highestOfferNumber", Model.WinningBid.Amount)
-    }
-    @Html.Hidden("sellerName", Model.SellerUser)
+    //Pass some old data with view
+    @Html.HiddenFor(model => Model.WebItem.ItemId)
+    @Html.HiddenFor(model => Model.WebItem.BuyerName)
+
     <div class="container" style="padding:0 0 60px;">
         <h2>@ViewBag.Title</h2>
         <div class="row">
@@ -27,39 +26,47 @@
                 <div id="titleSection">
                     <h2 id="title">
                         <span id="productTitle">
-                            @Html.DisplayFor(model => model.Name)
+                            @Html.DisplayFor(model => model.ServiceItem.Name)
                         </span>
                     </h2>
                 </div>
                 <div id="bySection sellerName">
-                    by <a href="#">@Html.DisplayFor(model => model.SellerUser)</a>
+                    by
+                    <a href="#">@Html.DisplayFor(model => model.ServiceItem.SellerUser.UserName)</a>
                 </div>
                 <div id="countdownSection">
-                    Auction ends in: <span id="demo"></span>
+                    Auction ends in:
+                    <span id="demo"></span>
                 </div>
                 <div id="priceSection">
 
-                    <p class="color-secondary">Starting price: <span id="startingPriceNumber" class="priceSign">@Html.DisplayFor(model => model.InitialPrice)</span></p>
-                    @if (Model.WinningBid != null)
+                    <p class="color-secondary">
+                        Starting price:
+                        <span id="startingPriceNumber" class="priceSign">@Html.DisplayFor(model => model.ServiceItem.InitialPrice)</span>
+                    </p>
+                    @if (Model.ServiceItem.WinningBid != null)
                     {
                         <p class="color-secondary">
-                            Highest offer: <span id="highestOfferNumber" class="priceSign">@Html.DisplayFor(model => model.WinningBid.Amount)</span>
-                            @if (Model.OldBid != null)
+                            Highest offer:
+                            <span id="highestOfferNumber" class="priceSign">@Html.DisplayFor(model => model.ServiceItem.WinningBid.Amount)</span>
+                            @if (Model.ServiceItem.OldBids != null)
                             {
-                                <a href="@Url.Action("OldBids", "Item", Model)" rel="nofollow" id="vi-VR-bid-lnk" class="vi-bidC"><span id="qty-test">@Html.DisplayFor(model => model.OldBid.Count)</span><span>&nbsp;Offers</span></a>
+                                <a href="@Url.Action("OldBids", "Item", Model.ServiceItem)" rel="nofollow" id="vi-VR-bid-lnk" class="vi-bidC"><span id="qty-test">@Model.ServiceItem.OldBids.Count() </span><span>&nbsp;Offer/s</span></a>
                             }
                         </p>
-
                     }
                     else
                     {
-                        <p class="color-secondary">Highest offer: <span id="highestOfferNumber">No offers yet</span></p>
+                        <p class="color-secondary">
+                            Highest offer:
+                            <span id="highestOfferNumber">No offers yet</span>
+                        </p>
                     }
                 </div>
 
                 <div id="descriptionSection">
                     <ul style="list-style: circle; padding-left: 20px;">
-                        @Html.DisplayFor(model => model.Description)
+                        @Html.DisplayFor(model => model.ServiceItem.Description)
                     </ul>
                 </div>
 
@@ -70,7 +77,8 @@
                             <div class="input-group">
                                 <div class="input-group-addon">$</div>
                                 <!--<input type="text" class="form-control" id="finalPrice" placeholder="Amount">-->
-                                @Html.TextBox("offerAmount", null, new { @type = "text", @class = "form-control", @id = "offerAmount", @placeholder = "Amount" })
+                                @*@Html.TextBox("offerAmount", null, new { @type = "text", @class = "form-control", @id = "offerAmount" })*@
+                                @Html.TextBoxFor(model => model.WebItem.Amount, new { @class = "form-control" })
                                 <!--<div class="input-group-addon">.00</div>-->
                             </div>
                         </div>
@@ -93,7 +101,7 @@
 <script>
 
         // Set the date we're counting down to
-        var countDownDate = new Date(@Model.EndDate.Year+"-"+@Model.EndDate.Month+"-"+@Model.EndDate.Day+" "+@Model.EndDate.Hour+":"+@Model.EndDate.Minute+":"+@Model.EndDate.Second).getTime();
+        var countDownDate = new Date(@Model.ServiceItem.EndDate.Year+"-"+@Model.ServiceItem.EndDate.Month+"-"+@Model.ServiceItem.EndDate.Day+" "+@Model.ServiceItem.EndDate.Hour+":"+@Model.ServiceItem.EndDate.Minute+":"+@Model.ServiceItem.EndDate.Second).getTime();
         // Update the count down every 1 second
         var x = setInterval(function () {
 

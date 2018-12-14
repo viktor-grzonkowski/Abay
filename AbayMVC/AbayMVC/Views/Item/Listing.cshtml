@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AbayMVC.Models.Item>
+﻿@model IEnumerable<AbayMVC.ItemServiceReference.Item>
 
 @{
     ViewBag.Title = "Showcase";
@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.InitialPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WinningBid)
+            @Html.DisplayNameFor(model => model.WinningBid.Amount)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SellerUser)
+            @Html.DisplayNameFor(model => model.SellerUser.UserName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.WinningBid.BuyerName)
@@ -35,36 +35,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InitialPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WinningBid.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SellerUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WinningBid.BuyerName)
-        </td>
-        <td>
-            @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id}, null )
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InitialPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WinningBid.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SellerUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WinningBid.BuyerName)
+            </td>
+            <td>
+                @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id }, null)
+            </td>
+        </tr>
+    }
 
 </table>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AbayMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -56,6 +57,8 @@ namespace AbayMVC.Security
         {
             Token = string.Empty;
             Username = string.Empty;
+            new BuyItemView().ServiceItem = null;
+            new BuyItemView().WebItem = null;
         }
     }
 }

@@ -217,7 +217,7 @@ namespace Database
                                     };
 
                                     List<Bid> winningBid = new DBBid().GetBids(item.Id, true);
-                                    List<Bid> prevBids = new DBBid().GetBids(item.Id, false);
+                                    List<Bid> prevBids = new DBBid().GetAllBidsByItem(item.Id);
                                     item.WinningBid = winningBid.Count != 0 ? winningBid[0] : null;
                                     item.OldBids = prevBids.Count != 0 ? prevBids : null;
 

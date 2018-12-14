@@ -32,11 +32,11 @@ namespace AbayMVC.Models
 
         public Account Login(string username, string password)
         {
-            string token = Services.Instance.UserClient().Login(username, password);
-            if (string.IsNullOrEmpty(token))
+            UserServiceReference.User user = Services.Instance.UserClient().Login(username, password);
+            if (string.IsNullOrEmpty(user.LoginToken.SecureToken))
                 return null;
 
-            return Find(token);
+            return Find(user.LoginToken.SecureToken);
         }
     }
 }

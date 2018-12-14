@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AbayMVC.Models.Bid>
+﻿@model IEnumerable<AbayMVC.ItemServiceReference.Bid>
 
 @{
     ViewBag.Title = "OldBids";
@@ -20,20 +20,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuyerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+        </tr>
+    }
 
 </table>
 
-<a href="@Url.Action("Bid", "Item", new { itemId = Model.First().ItemId})" ><span> Go back </span></a>
+<a href="@Url.Action("Bid", "Item", new { itemId = Model.First().ItemId})"><span> Go back </span></a>

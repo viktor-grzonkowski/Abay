@@ -177,6 +177,7 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\Bid.cs" />
+    <Compile Include="Models\BuyItemView.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Item.cs" />
@@ -197,6 +198,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\ItemServiceReference\AbayMVC.ItemServiceReference.ItemCategory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ItemServiceReference\AbayMVC.ItemServiceReference.Bid.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\ItemServiceReference\item.disco" />
@@ -310,10 +314,10 @@
     <Content Include="Views\Item\Sell.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Item\OldBids.cshtml" />
+    <Content Include="Views\Home\something.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

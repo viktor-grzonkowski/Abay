@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AbayMVC.Models;
@@ -12,27 +13,9 @@ namespace AbayMVC.Controllers
         Services services = Services.Instance;
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List<Category> cats = new List<Category>();
-            try {
-                var categorys = services.ItemClient().GetCategories();
-                foreach (var category in categorys)
-                {
-                    Category cat = new Category
-                    {
-                        Id = category.Id,
-                        Name = category.Name
-                    };
-                    cats.Add(cat);
-                }
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error", "Index");
-            }
-
-            return View(cats);
+            return View(await services.ItemClient().GetAllCategoriesAsync());
         }
         [AllowAnonymous]
         public ActionResult About()

@@ -301,10 +301,10 @@ namespace AbayMVC.ItemServiceReference {
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
+        private AbayMVC.ItemServiceReference.Token LoginTokenField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SaltField;
+        private string PasswordField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -372,6 +372,19 @@ namespace AbayMVC.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public AbayMVC.ItemServiceReference.Token LoginToken {
+            get {
+                return this.LoginTokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginTokenField, value) != true)) {
+                    this.LoginTokenField = value;
+                    this.RaisePropertyChanged("LoginToken");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Password {
             get {
                 return this.PasswordField;
@@ -380,19 +393,6 @@ namespace AbayMVC.ItemServiceReference {
                 if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
                     this.PasswordField = value;
                     this.RaisePropertyChanged("Password");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Salt {
-            get {
-                return this.SaltField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SaltField, value) != true)) {
-                    this.SaltField = value;
-                    this.RaisePropertyChanged("Salt");
                 }
             }
         }
@@ -529,27 +529,86 @@ namespace AbayMVC.ItemServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Token", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    [System.SerializableAttribute()]
+    public partial class Token : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecureTokenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreateDate {
+            get {
+                return this.CreateDateField;
+            }
+            set {
+                if ((this.CreateDateField.Equals(value) != true)) {
+                    this.CreateDateField = value;
+                    this.RaisePropertyChanged("CreateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecureToken {
+            get {
+                return this.SecureTokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecureTokenField, value) != true)) {
+                    this.SecureTokenField = value;
+                    this.RaisePropertyChanged("SecureToken");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ItemServiceReference.IItemService")]
     public interface IItemService {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllItems", ReplyAction="http://tempuri.org/IItemService/GetAllItemsResponse")]
-        AbayMVC.ItemServiceReference.Item[] GetAllItems(int catId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllItems", ReplyAction="http://tempuri.org/IItemService/GetAllItemsResponse")]
-        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> GetAllItemsAsync(int catId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetItemById", ReplyAction="http://tempuri.org/IItemService/GetItemByIdResponse")]
-        AbayMVC.ItemServiceReference.Item GetItemById(int itemId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetItemById", ReplyAction="http://tempuri.org/IItemService/GetItemByIdResponse")]
-        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item> GetItemByIdAsync(int itemId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/SearchItems", ReplyAction="http://tempuri.org/IItemService/SearchItemsResponse")]
-        AbayMVC.ItemServiceReference.Item[] SearchItems(string value, int categoryId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/SearchItems", ReplyAction="http://tempuri.org/IItemService/SearchItemsResponse")]
-        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
         int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration);
@@ -557,23 +616,53 @@ namespace AbayMVC.ItemServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
         System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/UpdateItem", ReplyAction="http://tempuri.org/IItemService/UpdateItemResponse")]
-        void UpdateItem(int itemId, string userToken, string name, string description);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/UpdateItem", ReplyAction="http://tempuri.org/IItemService/UpdateItemResponse")]
-        System.Threading.Tasks.Task UpdateItemAsync(int itemId, string userToken, string name, string description);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/DeleteItem", ReplyAction="http://tempuri.org/IItemService/DeleteItemResponse")]
+        bool DeleteItem(int id, string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/DeleteItem", ReplyAction="http://tempuri.org/IItemService/DeleteItemResponse")]
-        string DeleteItem(int id, string token);
+        System.Threading.Tasks.Task<bool> DeleteItemAsync(int id, string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/DeleteItem", ReplyAction="http://tempuri.org/IItemService/DeleteItemResponse")]
-        System.Threading.Tasks.Task<string> DeleteItemAsync(int id, string token);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/UpdateItem", ReplyAction="http://tempuri.org/IItemService/UpdateItemResponse")]
+        bool UpdateItem(int itemId, string userToken, string name, string description, int catId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetCategories", ReplyAction="http://tempuri.org/IItemService/GetCategoriesResponse")]
-        AbayMVC.ItemServiceReference.ItemCategory[] GetCategories();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/UpdateItem", ReplyAction="http://tempuri.org/IItemService/UpdateItemResponse")]
+        System.Threading.Tasks.Task<bool> UpdateItemAsync(int itemId, string userToken, string name, string description, int catId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetCategories", ReplyAction="http://tempuri.org/IItemService/GetCategoriesResponse")]
-        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.ItemCategory[]> GetCategoriesAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/SearchItems", ReplyAction="http://tempuri.org/IItemService/SearchItemsResponse")]
+        AbayMVC.ItemServiceReference.Item[] SearchItems(string value, int categoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/SearchItems", ReplyAction="http://tempuri.org/IItemService/SearchItemsResponse")]
+        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetItemById", ReplyAction="http://tempuri.org/IItemService/GetItemByIdResponse")]
+        AbayMVC.ItemServiceReference.Item GetItemById(int itemId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetItemById", ReplyAction="http://tempuri.org/IItemService/GetItemByIdResponse")]
+        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item> GetItemByIdAsync(int itemId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllCategories", ReplyAction="http://tempuri.org/IItemService/GetAllCategoriesResponse")]
+        AbayMVC.ItemServiceReference.ItemCategory[] GetAllCategories();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllCategories", ReplyAction="http://tempuri.org/IItemService/GetAllCategoriesResponse")]
+        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.ItemCategory[]> GetAllCategoriesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllActiveItemsByCategory", ReplyAction="http://tempuri.org/IItemService/GetAllActiveItemsByCategoryResponse")]
+        AbayMVC.ItemServiceReference.Item[] GetAllActiveItemsByCategory(int catId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllActiveItemsByCategory", ReplyAction="http://tempuri.org/IItemService/GetAllActiveItemsByCategoryResponse")]
+        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> GetAllActiveItemsByCategoryAsync(int catId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllItems", ReplyAction="http://tempuri.org/IItemService/GetAllItemsResponse")]
+        AbayMVC.ItemServiceReference.Item[] GetAllItems();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllItems", ReplyAction="http://tempuri.org/IItemService/GetAllItemsResponse")]
+        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> GetAllItemsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllBidsByItem", ReplyAction="http://tempuri.org/IItemService/GetAllBidsByItemResponse")]
+        AbayMVC.ItemServiceReference.Bid[] GetAllBidsByItem(int itemId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllBidsByItem", ReplyAction="http://tempuri.org/IItemService/GetAllBidsByItemResponse")]
+        System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Bid[]> GetAllBidsByItemAsync(int itemId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -603,20 +692,28 @@ namespace AbayMVC.ItemServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public AbayMVC.ItemServiceReference.Item[] GetAllItems(int catId) {
-            return base.Channel.GetAllItems(catId);
+        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
+            return base.Channel.CreateItem(name, description, initialPrice, CategoryId, token, duration);
         }
         
-        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> GetAllItemsAsync(int catId) {
-            return base.Channel.GetAllItemsAsync(catId);
+        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
+            return base.Channel.CreateItemAsync(name, description, initialPrice, CategoryId, token, duration);
         }
         
-        public AbayMVC.ItemServiceReference.Item GetItemById(int itemId) {
-            return base.Channel.GetItemById(itemId);
+        public bool DeleteItem(int id, string token) {
+            return base.Channel.DeleteItem(id, token);
         }
         
-        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item> GetItemByIdAsync(int itemId) {
-            return base.Channel.GetItemByIdAsync(itemId);
+        public System.Threading.Tasks.Task<bool> DeleteItemAsync(int id, string token) {
+            return base.Channel.DeleteItemAsync(id, token);
+        }
+        
+        public bool UpdateItem(int itemId, string userToken, string name, string description, int catId) {
+            return base.Channel.UpdateItem(itemId, userToken, name, description, catId);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateItemAsync(int itemId, string userToken, string name, string description, int catId) {
+            return base.Channel.UpdateItemAsync(itemId, userToken, name, description, catId);
         }
         
         public AbayMVC.ItemServiceReference.Item[] SearchItems(string value, int categoryId) {
@@ -627,36 +724,44 @@ namespace AbayMVC.ItemServiceReference {
             return base.Channel.SearchItemsAsync(value, categoryId);
         }
         
-        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
-            return base.Channel.CreateItem(name, description, initialPrice, CategoryId, token, duration);
+        public AbayMVC.ItemServiceReference.Item GetItemById(int itemId) {
+            return base.Channel.GetItemById(itemId);
         }
         
-        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
-            return base.Channel.CreateItemAsync(name, description, initialPrice, CategoryId, token, duration);
+        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item> GetItemByIdAsync(int itemId) {
+            return base.Channel.GetItemByIdAsync(itemId);
         }
         
-        public void UpdateItem(int itemId, string userToken, string name, string description) {
-            base.Channel.UpdateItem(itemId, userToken, name, description);
+        public AbayMVC.ItemServiceReference.ItemCategory[] GetAllCategories() {
+            return base.Channel.GetAllCategories();
         }
         
-        public System.Threading.Tasks.Task UpdateItemAsync(int itemId, string userToken, string name, string description) {
-            return base.Channel.UpdateItemAsync(itemId, userToken, name, description);
+        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.ItemCategory[]> GetAllCategoriesAsync() {
+            return base.Channel.GetAllCategoriesAsync();
         }
         
-        public string DeleteItem(int id, string token) {
-            return base.Channel.DeleteItem(id, token);
+        public AbayMVC.ItemServiceReference.Item[] GetAllActiveItemsByCategory(int catId) {
+            return base.Channel.GetAllActiveItemsByCategory(catId);
         }
         
-        public System.Threading.Tasks.Task<string> DeleteItemAsync(int id, string token) {
-            return base.Channel.DeleteItemAsync(id, token);
+        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> GetAllActiveItemsByCategoryAsync(int catId) {
+            return base.Channel.GetAllActiveItemsByCategoryAsync(catId);
         }
         
-        public AbayMVC.ItemServiceReference.ItemCategory[] GetCategories() {
-            return base.Channel.GetCategories();
+        public AbayMVC.ItemServiceReference.Item[] GetAllItems() {
+            return base.Channel.GetAllItems();
         }
         
-        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.ItemCategory[]> GetCategoriesAsync() {
-            return base.Channel.GetCategoriesAsync();
+        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Item[]> GetAllItemsAsync() {
+            return base.Channel.GetAllItemsAsync();
+        }
+        
+        public AbayMVC.ItemServiceReference.Bid[] GetAllBidsByItem(int itemId) {
+            return base.Channel.GetAllBidsByItem(itemId);
+        }
+        
+        public System.Threading.Tasks.Task<AbayMVC.ItemServiceReference.Bid[]> GetAllBidsByItemAsync(int itemId) {
+            return base.Channel.GetAllBidsByItemAsync(itemId);
         }
     }
 }

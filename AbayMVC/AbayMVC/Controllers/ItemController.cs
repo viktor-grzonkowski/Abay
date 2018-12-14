@@ -9,6 +9,7 @@ using AbayMVC.BidServiceReference;
 using AbayMVC.Models;
 using AbayMVC.Security;
 using System.Web.Routing;
+using System.Threading.Tasks;
 
 namespace AbayMVC.Controllers
 {
@@ -17,233 +18,100 @@ namespace AbayMVC.Controllers
         Services services = Services.Instance;
 
         [AllowAnonymous]
-        public ActionResult Listing()
+        public async Task<ActionResult> Listing()
         {
             string s = Request.QueryString["catId"];
-            int categoryId = -1;
-            
+            int categoryId = -1; 
             if (!string.IsNullOrEmpty(s))
             {
                 categoryId = int.Parse(s);
             }
-            List<Item> lst = new List<Item>();
 
-            var items = services.ItemClient().GetAllItems(categoryId);
-
-            // Build items 
-            foreach (var item in items)
-            {
-                Item itm = new Item
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    InitialPrice = item.InitialPrice,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    SellerUser = item.SellerUser.UserName
-                };
-
-                // Check if there is a winning bid
-                if (item.WinningBid != null)
-                {
-                    Bid bid = new Bid
-                    {
-                        BuyerName = item.WinningBid.BuyerName,
-                        ItemId = item.WinningBid.ItemId,
-                        Amount = item.WinningBid.Amount,
-                        Timestamp = item.WinningBid.Timestamp,
-                        Winning = item.WinningBid.Winning
-                    };
-
-                    itm.WinningBid = bid;
-                }
-
-                lst.Add(itm);
-            }
-            return View(lst);
+            return View(await services.ItemClient().GetAllActiveItemsByCategoryAsync(categoryId));
         }
 
         [AllowAnonymous]
-        public ActionResult Bid()
+        public async Task <ActionResult> Bid()
         {
             string s = Request.QueryString["itemId"];
-
             if (string.IsNullOrEmpty(s))
-            {
-                return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Item", action = "Listing" }));
-            }
+                return RedirectToAction("Listing", "Item");
 
-            var item = services.ItemClient().GetItemById(Int32.Parse(s));
-
-            Item itm = new Item
-            {
-                Id = item.Id,
-                Name = item.Name,
-                InitialPrice = item.InitialPrice,
-                StartDate = item.StartDate,
-                EndDate = item.EndDate,
-                SellerUser = item.SellerUser.UserName
+            // Create viewmodel
+            BuyItemView view = new BuyItemView();
+            view.ServiceItem = await services.ItemClient().GetItemByIdAsync(Int32.Parse(s));
+            view.WebItem = new Item {
+                ItemId = Int32.Parse(s)
             };
 
-            // Check for winning bid
-            if (item.WinningBid != null)
-            {
-                Bid bid = new Bid {
-                    BuyerName = item.WinningBid.BuyerName,
-                    ItemId = item.WinningBid.ItemId,
-                    Amount = item.WinningBid.Amount,
-                    Timestamp = item.WinningBid.Timestamp,
-                    Winning = item.WinningBid.Winning
-                };
-
-                itm.WinningBid = bid;
-            }
-
-            // Check if it has old bids
-            if (item.OldBids != null)
-            {
-                itm.OldBid = new List<Bid>();
-                foreach (var oldBid in item.OldBids)
-                {
-                    Bid bid = new Bid
-                    {
-                        BuyerName = oldBid.BuyerName,
-                        ItemId = oldBid.ItemId,
-                        Amount = oldBid.Amount,
-                        Timestamp = oldBid.Timestamp,
-                        Winning = oldBid.Winning
-                    };
-
-                    itm.OldBid.Add(bid);
-                }
-            }
-            return View(itm);
+            if(!string.IsNullOrEmpty(SessionPersister.Username))
+                view.WebItem.BuyerName = SessionPersister.Username;
+            int count = view.ServiceItem.OldBids.Count();
+            return View(view);
         }
 
         [HttpPost]
         [CustomAuthAttribute(Roles = "User")]
-        public ActionResult Bid(FormCollection collection)
+        public async Task<ActionResult> Bid(BuyItemView viewCollection)
         {
-            int itemId = Convert.ToInt32(collection["itemId"]);
-
-            var item = services.ItemClient().GetItemById(itemId);
-
-            double startingPrice = Convert.ToDouble(collection["startingPriceNumber"]);
-            double highestOffer = string.IsNullOrEmpty(collection["highestOfferNumber"]) ? 0 : Convert.ToDouble(collection["highestOfferNumber"]);
-            double offer = Convert.ToDouble(collection["offerAmount"]);
-
-            string token = SessionPersister.Token;
-
-            Item itmOld = new Item
+            
+            if (await services.UserClient().CheckTokenTimeAsync(SessionPersister.Token))
             {
-                Id = item.Id,
-                Name = item.Name,
-                InitialPrice = item.InitialPrice,
-                StartDate = item.StartDate,
-                EndDate = item.EndDate,
-                SellerUser = item.SellerUser.UserName
-            };
-
-            if (services.UserClient().CheckTokenTime(token))
-            {
-                if (offer <= startingPrice || offer <= highestOffer)
+                // no bid right now
+                if (viewCollection.ServiceItem.WinningBid != null)
+                {
+                    // check if the amount is higher than the previous bid
+                    if (viewCollection.WebItem.Amount <= viewCollection.ServiceItem.WinningBid.Amount)
+                    {
+                        Information("Your offer is to low! ");
+                        return View(viewCollection);
+                    }
+                }
+                // offer is beneath the initial price
+                if (viewCollection.WebItem.Amount <= viewCollection.ServiceItem.InitialPrice)
                 {
                     Information("Your offer is to low! ");
-                    return View(itmOld);
+                    return View(viewCollection);
                 }
-                else if (string.Compare(SessionPersister.Username, collection["sellerName"]) == 0)
+                // seller and buyer is the same
+                if (string.Equals(SessionPersister.Username, viewCollection.ServiceItem.SellerUser.UserName))
                 {
-                    Danger("Your can't bid on your own item ");
-                    return View(itmOld);
+                    Danger("You can't bid on your own item ");
+                    return View(viewCollection);
                 }
-                else
+
+                // Place bid
+                if (await services.BidClient().BidOnItemAsync(viewCollection.WebItem.ItemId, viewCollection.WebItem.Amount, SessionPersister.Token))
                 {
+                    viewCollection.ServiceItem = null;
+                    viewCollection.WebItem.Amount = 0;
+                    viewCollection.ServiceItem = await services.ItemClient().GetItemByIdAsync(viewCollection.WebItem.ItemId);
 
-                    try
-                    {
-                        services.BidClient().BidOnItem(itemId, offer, token);
-                        var newItem = services.ItemClient().GetItemById(itemId);
-
-                        Item itmNew = new Item
-                        {
-                            Id = newItem.Id,
-                            Name = newItem.Name,
-                            InitialPrice = newItem.InitialPrice,
-                            StartDate = newItem.StartDate,
-                            EndDate = newItem.EndDate,
-                            SellerUser = newItem.SellerUser.UserName
-                        };
-
-                        // Check for winning bid
-                        if (newItem.WinningBid != null)
-                        {
-                            Bid bid = new Bid
-                            {
-                                BuyerName = newItem.WinningBid.BuyerName,
-                                ItemId = newItem.WinningBid.ItemId,
-                                Amount = newItem.WinningBid.Amount,
-                                Timestamp = newItem.WinningBid.Timestamp,
-                                Winning = newItem.WinningBid.Winning
-                            };
-
-                            itmNew.WinningBid = bid;
-                        }
-
-                        // Check if it has old bids
-                        if (newItem.OldBids != null)
-                        {
-                            itmNew.OldBid = new List<Bid>();
-
-                            foreach (var oldBid in newItem.OldBids)
-                            {
-                                Bid bid = new Bid
-                                {
-                                    BuyerName = oldBid.BuyerName,
-                                    ItemId = oldBid.ItemId,
-                                    Amount = oldBid.Amount,
-                                    Timestamp = oldBid.Timestamp,
-                                    Winning = oldBid.Winning
-                                };
-
-                                itmNew.OldBid.Add(bid);
-                            }
-                        }
-
-                        Success("Your bid was placed");
-                        return View(itmNew);
-                    }
-                    catch
-                    {
-                        Danger("Your bid wasn't placed");
-                        return View(itmOld);
-                    }
+                    Success("Your bid was placed");
+                    return View(viewCollection);
                 }
+
+                Danger("Your bid was not placed");
+                return View(viewCollection);
             }
             else
             {
                 SessionPersister.Logout();
-                Information("Your session timed out");
-                return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Account", action = "Login" }));
+                Danger("Your session timed out");
+                return RedirectToAction("Login", "Account");
             }
         }
 
-        [CustomAuthAttribute(Roles = "User")]
-        public ActionResult Sell()
+        public async Task<ActionResult> OldBids(ItemServiceReference.Item modelItem)
         {
-            List<Category> cats = new List<Category>();
-            var categorys = services.ItemClient().GetCategories();
+            return View(await services.ItemClient().GetAllBidsByItemAsync(modelItem.Id));
+        }
 
-            foreach (var category in categorys)
-            {
-                Category cat = new Category
-                {
-                    Id = category.Id,
-                    Name = category.Name
-                };
-                cats.Add(cat);
-            }
 
-            return View(cats);
+        [CustomAuthAttribute(Roles = "User")]
+        public async Task<ActionResult> Sell()
+        {
+            return View(await services.ItemClient().GetAllCategoriesAsync());
         }
 
         [HttpPost]
@@ -269,32 +137,6 @@ namespace AbayMVC.Controllers
             }
 
             return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));
-        }
-
-        public ActionResult OldBids(Item modelItem)
-        {
-            List<Bid> oldBids = new List<Bid>();
-            var item = services.ItemClient().GetItemById(modelItem.Id);
-
-            // Check if it has old bids
-            if (item.OldBids != null)
-            {
-                foreach (var oldBid in item.OldBids)
-                {
-                    Bid bid = new Bid
-                    {
-                        BuyerName = oldBid.BuyerName,
-                        ItemId = oldBid.ItemId,
-                        Amount = oldBid.Amount,
-                        Timestamp = oldBid.Timestamp,
-                        Winning = oldBid.Winning
-                    };
-
-                    oldBids.Add(bid);
-                }
-            }
-
-            return View(oldBids);
         }
     }
 }
