@@ -1,17 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using System;
 using DedicatedCliend.ItemServiceReference;
+using System.ComponentModel;
 
 namespace DedicatedClient
 {
     public partial class MainWindow : Window
     {
         private ItemServiceClient itemService;
-        private ObservableCollection<Item> items;
+        private BackgroundWorker updateWorker;
+        private bool isUpdating;
         private Item selectedItem;
         private DedicatedCliend.UserServiceReference.User user;
+        private BackgroundWorker searchWorker;
         private bool isSearching;
         private string lastKeyword;
 
@@ -23,21 +25,48 @@ namespace DedicatedClient
 
             this.user = user;
 
-            //Fill up DataContext for DataGrid
-            items = new ObservableCollection<Item>(itemService.GetAllItems());
-            dgItems.DataContext = items;
+            updateWorker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = false,
+                WorkerReportsProgress = false
+            };
+            updateWorker.DoWork += UpdateWorker_DoWork;
+            updateWorker.RunWorkerCompleted += UpdateWorker_RunWorkerCompleted;
+            isUpdating = false;
+            UpdateDataGrid();
 
             selectedItem = null;
 
+            searchWorker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = false,
+                WorkerReportsProgress = false
+            };
+            searchWorker.DoWork += SearchWorker_DoWork;
+            searchWorker.RunWorkerCompleted += SearchWorker_RunWorkerCompleted;
             isSearching = false;
             lastKeyword = "";
         }
-
+   
         private void UpdateDataGrid()
         {
-            items = new ObservableCollection<Item>(itemService.GetAllItems());
-            dgItems.DataContext = items;
+            if (isUpdating) return;
+
+            isUpdating = true;
+            updateWorker.RunWorkerAsync();
         }
+        private void UpdateWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Item[] results = itemService.GetAllItems();
+            e.Result = new ObservableCollection<Item>(results);
+        }
+        private void UpdateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            dgItems.DataContext = (ObservableCollection<Item>)e.Result;
+
+            isUpdating = false;
+        }
+
         private void FillFormWithItem(Item item)
         {
             lblId.Content = item.Id;
@@ -76,12 +105,23 @@ namespace DedicatedClient
             isSearching = true;
             lastKeyword = keyword;
 
-            items = new ObservableCollection<Item>(itemService.SearchItems(keyword, -1));
-            dgItems.DataContext = items;
+            searchWorker.RunWorkerAsync(keyword);
+        }
+        private void SearchWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string keyword = (string)e.Argument;
+            Item[] results = itemService.SearchItems(keyword, -1);
+            e.Result = new ObservableCollection<Item>(results);
+        }
+        private void SearchWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            dgItems.DataContext = (ObservableCollection< Item >)e.Result;
 
             isSearching = false;
-        }
 
+            //check if there was another request submitted, while it was searching
+            Search();
+        }
         private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedItem = (Item)dgItems.SelectedItem;

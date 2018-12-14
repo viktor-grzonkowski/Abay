@@ -1,25 +1,36 @@
 ﻿using DedicatedCliend.UserServiceReference;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DedicatedClient
 {
     public partial class LoginWindow : Window
-    { 
-
-        public UserServiceClient userService;
+    {
+        private UserServiceClient userService;
 
         public LoginWindow()
         {
             InitializeComponent();
             userService = new UserServiceClient("NetTcpBinding_IUserService");
         }
+
         private void Login()
         {
             string username = txtUsername.Text;
             string password = txtPassword.Password;
+            User user = null;
 
-            User user = userService.Login(username, password);
+            try
+            {
+                user = userService.Login(username, password);
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show("No connenction to the Host. Try again later!");
+                return;
+            }
+            
             if (user == null)
             {
                 MessageBox.Show("Username or password is incorrect.");
