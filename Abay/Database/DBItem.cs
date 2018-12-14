@@ -341,10 +341,8 @@ namespace Database
         #endregion
 
         #region DeleteItem(int id)
-        public string DeleteItem(int id)
+        public bool DeleteItem(int id)
         {
-            string message = "";
-
             using (SqlConnection connection = DBConnection.GetConnection())
             {
                 // Start a local transaction.
@@ -364,29 +362,27 @@ namespace Database
 
                     // Commit the transaction.
                     sqlTran.Commit();
-                    message = "Item deleted.";
-                    return message;
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     // Handle the exception if the transaction fails to commit.
-                    message = ex.Message;
+                    Debug.Write(ex);
 
                     try
                     {
                         // Attempt to roll back the transaction.
                         sqlTran.Rollback();
-                        return message;
                     }
                     catch (Exception exRollback)
                     {
                         // Throws an InvalidOperationException if the connection 
                         // is closed or the transaction has already been rolled 
                         // back on the server.
-                        message += "/n" + exRollback.Message;
-                        return message;
+                        Debug.Write(exRollback);
                     }
                 }
+                return false;
             }
         }
         #endregion

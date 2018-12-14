@@ -20,18 +20,15 @@ namespace Controller
             return itemDB.InsertItem(new Item(name, initialPrice, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId), description, duration));
         }
 
-        public string DeleteItem(int id, string token)
+        public bool DeleteItem(int id, string token)
         {
             User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(id);
 
-            if (string.Equals(user.UserName , item.SellerUser.UserName) && !user.Admin)
-                return itemDB.DeleteItem(id);
-            else
-                return "Ooops something went wrong.";
+            return string.Equals(user.UserName , item.SellerUser.UserName) && !user.Admin ? itemDB.DeleteItem(id) : false;
         }
 
-        public void UpdateItem(int itemId, string token, string name, string description, int catId)
+        public bool UpdateItem(int itemId, string token, string name, string description, int catId)
         {
             User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(itemId);
@@ -40,13 +37,9 @@ namespace Controller
                 item.Name = name;
                 item.Description = description;
                 item.Category = categoryCtrl.GetItemCategory(catId);
-                itemDB.UpdateItem(item);
+                return itemDB.UpdateItem(item);
             }
-        }
-
-        public bool UpdateItem(Item item)
-        {
-            return itemDB.UpdateItem(item);
+            return false;
         }
 
         public List<Item> SearchItems(string value, int categoryId)
@@ -70,7 +63,7 @@ namespace Controller
                 else
                 {
                     item.State = 1;
-                    UpdateItem(item);
+                    itemDB.UpdateItem(item);
                 }
             }
             return newLst;
@@ -84,7 +77,7 @@ namespace Controller
                 if (DateTime.Now > item.EndDate)
                 {
                     item.State = 1;
-                    UpdateItem(item);
+                    itemDB.UpdateItem(item);
                 }
             }
             return item;
