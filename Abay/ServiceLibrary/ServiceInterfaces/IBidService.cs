@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,6 +12,13 @@ namespace Controller.ServiceInterfaces
     [ServiceContract]
     public interface IBidService
     {
+        /// <summary>
+        /// Heavy shit is going on here
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="amount"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [OperationContract]
         bool BidOnItem(int itemId, double amount, string token);
     }

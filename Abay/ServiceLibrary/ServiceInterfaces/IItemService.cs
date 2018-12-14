@@ -85,5 +85,13 @@ namespace Controller.ServiceInterfaces
         /// <returns></returns>
         [OperationContract]
         List<Item> GetAllItems();
+
+        /// <summary>
+        /// Provide an valid itemId to get all bids
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        [OperationContract]
+        List<Bid> GetAllBidsByItem(int itemId);
     }
 }

@@ -14,6 +14,7 @@ namespace Controller
     public class ItemService : IItemService
     {
         ItemController ItemCtrl = new ItemController();
+        BidController BidCtrl = new BidController();
         CategoryController CategoryCtrl = new CategoryController();
 
         public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration)
@@ -53,6 +54,11 @@ namespace Controller
         public List<Item> GetAllItems()
         {
             return ItemCtrl.GetAllItems();
+        }
+
+        public List<Bid> GetAllBidsByItem(int itemId)
+        {
+            return BidCtrl.GetAllBidsByItem(itemId);
         }
     }
 }

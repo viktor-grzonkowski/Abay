@@ -117,5 +117,10 @@ namespace Controller
                 return null;
             return bidDb.GetBids(itemId, false);
         }
+
+        public List<Bid> GetAllBidsByItem(int itemId)
+        {
+            return bidDb.GetAllBidsByItem(itemId);
+        }
     }
 }
