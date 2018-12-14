@@ -6,17 +6,23 @@
         xmlns:local="clr-namespace:DedicatedClient"
         mc:Ignorable="d"
         Title="Admin" Height="500" Width="1000" ResizeMode="NoResize">
-    <Window.Resources>
-        <Style x:Key="HeaderStyle" TargetType="Label">
-            <Setter Property="FontWeight" Value="Bold" />
-        </Style>
-    </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <DataGrid Grid.Column="0"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="1" Name="txtSearch" Width="300" Height="20" TextChanged="txtSearch_TextChanged"/>
+            <Button Grid.Column="3" Name="btnSearch" Width="100" Height="20" Content="Search" Click="btnSearch_Click"/>
+        </Grid>
+        <DataGrid Grid.Row="1"
                       Name="dgItems" ItemsSource="{Binding}" AutoGenerateColumns="False"
                       IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
                       SelectionMode="Single" SelectionUnit="FullRow" SelectionChanged="dgItems_SelectionChanged" FontSize="14">
@@ -30,16 +36,8 @@
                 <DataGridTextColumn Header="End Date" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -54,6 +52,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="1" Grid.Column="0" Content="Item No." FontWeight="Bold" FontSize="14"/>
             <Label Grid.Row="1" Grid.Column="1" Name="lblId" Content="-" FontStyle="Italic" FontSize="14"/>
@@ -62,17 +64,25 @@
             <Label Grid.Row="2" Grid.Column="0" Content="Name" FontWeight="Bold" FontSize="14"/>
             <TextBox Grid.Row="2" Grid.Column="1" Name="txtName" Text="-" FontStyle="Italic" FontSize="14" Grid.ColumnSpan="3" BorderBrush="{x:Null}"/>
             <Label Grid.Row="3" Grid.Column="0" Content="Describe" FontWeight="Bold" FontSize="14" />
-            <TextBox Grid.Row="3" Grid.Column="1" Name="txtDescribe" Text="-" FontStyle="Italic" FontSize="14" Grid.ColumnSpan="3" Grid.RowSpan="2" BorderBrush="{x:Null}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Name="txtDescribe" Text="-" FontStyle="Italic" FontSize="14" Grid.ColumnSpan="3" Grid.RowSpan="2" BorderBrush="{x:Null}" TextWrapping="Wrap" AcceptsReturn="True"/>
             <Label Grid.Row="5" Grid.Column="0" Content="Start Date" FontWeight="Bold" FontSize="14" />
             <Label Grid.Row="5" Grid.Column="1" Name="lblStartDate" Content="-" FontStyle="Italic" FontSize="14"/>
             <Label Grid.Row="5" Grid.Column="2" Content="End Date" FontWeight="Bold" FontSize="14"/>
-            <Label Grid.Row="5" Grid.Column="4" Name="lblEndDate" Content="-" FontStyle="Italic" FontSize="14"/>
+            <Label Grid.Row="5" Grid.Column="3" Name="lblEndDate" Content="-" FontStyle="Italic" FontSize="14"/>
             <Label Grid.Row="6" Grid.Column="0" Content="Seller" FontWeight="Bold" FontSize="14"/>
             <Label Grid.Row="6" Grid.Column="1" Name="lblSeller" Content="-" FontStyle="Italic" FontSize="14"/>
             <Label Grid.Row="6" Grid.Column="2" Content="Sold" FontWeight="Bold" FontSize="14"/>
-            <CheckBox Grid.Row="6" Grid.Column="4" Name="chkSold" IsChecked="False" VerticalAlignment="Center"/>
-            <Label Grid.Row="8" Grid.Column="0" Content="Bids" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="4"/>
-            <Grid Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="0">
+            <CheckBox Grid.Row="6" Grid.Column="3" Name="chkSold" IsChecked="False" VerticalAlignment="Center" IsEnabled="False"/>
+            <Label Grid.Row="1" Grid.Column="4" Content="Bids" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="4"/>
+            <ListView Grid.Row="2" Grid.Column="4" Name="lvBids" Grid.RowSpan="3" Grid.ColumnSpan="4" ItemsSource="{Binding}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding BuyerName}" Header="Buyer"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Bid"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Grid Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="10"/>

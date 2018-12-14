@@ -88,6 +88,12 @@
   <wsdl:message name="IItemService_GetAllItems_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllItemsResponse" />
   </wsdl:message>
+  <wsdl:message name="IItemService_GetAllBidsByItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllBidsByItem" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllBidsByItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllBidsByItemResponse" />
+  </wsdl:message>
   <wsdl:portType name="IItemService">
     <wsdl:operation name="CreateItem">
       <wsdl:input wsaw:Action="http://tempuri.org/IItemService/CreateItem" message="tns:IItemService_CreateItem_InputMessage" />
@@ -120,6 +126,10 @@
     <wsdl:operation name="GetAllItems">
       <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetAllItems" message="tns:IItemService_GetAllItems_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetAllItemsResponse" message="tns:IItemService_GetAllItems_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBidsByItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetAllBidsByItem" message="tns:IItemService_GetAllBidsByItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetAllBidsByItemResponse" message="tns:IItemService_GetAllBidsByItem_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IItemService" type="tns:IItemService">
@@ -189,6 +199,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllItems">
       <soap:operation soapAction="http://tempuri.org/IItemService/GetAllItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBidsByItem">
+      <soap:operation soapAction="http://tempuri.org/IItemService/GetAllBidsByItem" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -266,6 +285,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllItems">
       <soap12:operation soapAction="http://tempuri.org/IItemService/GetAllItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBidsByItem">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/GetAllBidsByItem" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

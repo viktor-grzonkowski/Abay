@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using DedicatedClient.ItemServiceReference;
 using System;
+using DedicatedCliend.ItemServiceReference;
 
 namespace DedicatedClient
 {
@@ -11,9 +11,11 @@ namespace DedicatedClient
         private ItemServiceClient itemService;
         private ObservableCollection<Item> items;
         private Item selectedItem;
-        private UserServiceReference.User user;
+        private DedicatedCliend.UserServiceReference.User user;
+        private bool isSearching;
+        private string lastKeyword;
 
-        public MainWindow(UserServiceReference.User user)
+        public MainWindow(DedicatedCliend.UserServiceReference.User user)
         {
             InitializeComponent();
 
@@ -26,6 +28,9 @@ namespace DedicatedClient
             dgItems.DataContext = items;
 
             selectedItem = null;
+
+            isSearching = false;
+            lastKeyword = "";
         }
 
         private void UpdateDataGrid()
@@ -43,6 +48,8 @@ namespace DedicatedClient
             lblEndDate.Content = item.EndDate;
             lblSeller.Content = item.SellerUser.UserName;
             chkSold.IsChecked = item.State > 0;
+
+            lvBids.DataContext = itemService.GetAllBidsByItem(item.Id);
         }
         private void ResetForm()
         {
@@ -58,6 +65,21 @@ namespace DedicatedClient
         private bool IsItemSelected()
         {
             return selectedItem != null;
+        }
+        private void Search()
+        {
+            if (isSearching) return;
+            
+            string keyword = txtSearch.Text.Trim();
+            if (keyword == lastKeyword) return;
+
+            isSearching = true;
+            lastKeyword = keyword;
+
+            items = new ObservableCollection<Item>(itemService.SearchItems(keyword, -1));
+            dgItems.DataContext = items;
+
+            isSearching = false;
         }
 
         private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,8 +99,8 @@ namespace DedicatedClient
                 return;
             }
 
-            itemService.UpdateItem(selectedItem.Id, user.LoginToken.SecureToken, selectedItem.Name,
-                selectedItem.Description, selectedItem.Category.Id);
+            itemService.UpdateItem(selectedItem.Id, user.LoginToken.SecureToken, txtName.Text,
+                 txtDescribe.Text, selectedItem.Category.Id);
 
             UpdateDataGrid();
         }
@@ -102,6 +124,14 @@ namespace DedicatedClient
             }
 
             FillFormWithItem(selectedItem);
+        }
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search();
+        }
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
         }
     }
 }
