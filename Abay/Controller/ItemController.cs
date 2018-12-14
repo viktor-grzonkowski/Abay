@@ -25,14 +25,14 @@ namespace Controller
             User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(id);
 
-            return string.Equals(user.UserName , item.SellerUser.UserName) && !user.Admin ? itemDB.DeleteItem(id) : false;
+            return string.Equals(user.UserName , item.SellerUser.UserName) || user.Admin ? itemDB.DeleteItem(id) : false;
         }
 
         public bool UpdateItem(int itemId, string token, string name, string description, int catId)
         {
             User user = tokenCtrl.GetUserByToken(token);
             Item item = GetItemById(itemId);
-            if (string.Equals(user.UserName, item.SellerUser.UserName) && !user.Admin)
+            if (string.Equals(user.UserName, item.SellerUser.UserName) || user.Admin)
             {
                 item.Name = name;
                 item.Description = description;
