@@ -1,4 +1,4 @@
-﻿using DedicatedCliend.UserServiceReference;
+﻿using DedicatedClient.UserServiceReference;
 using System.Windows;
 using System.Windows.Input;
 
@@ -19,7 +19,7 @@ namespace DedicatedClient
             string username = txtUsername.Text;
             string password = txtPassword.Password;
 
-            DedicatedCliend.UserServiceReference.User user = userService.Login(username, password);
+            DedicatedClient.UserServiceReference.User user = userService.Login(username, password);
             if (user == null)
             {
                 MessageBox.Show("Username or password is incorrect.");

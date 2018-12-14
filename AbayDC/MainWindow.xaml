@@ -72,13 +72,6 @@
             <Label Grid.Row="6" Grid.Column="2" Content="Sold" FontWeight="Bold" FontSize="14"/>
             <CheckBox Grid.Row="6" Grid.Column="4" Name="chkSold" IsChecked="False" VerticalAlignment="Center"/>
             <Label Grid.Row="8" Grid.Column="0" Content="Bids" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="4"/>
-            <ListView Grid.Row="9" Grid.Column="0" Name="lvBids" Grid.ColumnSpan="4" Grid.RowSpan="4" ItemsSource="{Binding}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
             <Grid Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
