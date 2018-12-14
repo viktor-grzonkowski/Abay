@@ -40,35 +40,11 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Entities" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IItemService_GetAllItems_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllItems" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_GetAllItems_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllItemsResponse" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_GetItemById_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetItemById" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_GetItemById_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetItemByIdResponse" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_SearchItems_InputMessage">
-    <wsdl:part name="parameters" element="tns:SearchItems" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_SearchItems_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SearchItemsResponse" />
-  </wsdl:message>
   <wsdl:message name="IItemService_CreateItem_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateItem" />
   </wsdl:message>
   <wsdl:message name="IItemService_CreateItem_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateItemResponse" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_UpdateItem_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateItem" />
-  </wsdl:message>
-  <wsdl:message name="IItemService_UpdateItem_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateItemResponse" />
   </wsdl:message>
   <wsdl:message name="IItemService_DeleteItem_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteItem" />
@@ -76,82 +52,80 @@
   <wsdl:message name="IItemService_DeleteItem_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteItemResponse" />
   </wsdl:message>
-  <wsdl:message name="IItemService_GetCategories_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetCategories" />
+  <wsdl:message name="IItemService_UpdateItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateItem" />
   </wsdl:message>
-  <wsdl:message name="IItemService_GetCategories_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetCategoriesResponse" />
+  <wsdl:message name="IItemService_UpdateItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_SearchItems_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchItems" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_SearchItems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetItemById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemById" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetItemById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllCategories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCategories" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllCategories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllActiveItemsByCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllActiveItemsByCategory" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllActiveItemsByCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllActiveItemsByCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllItems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllItems" />
+  </wsdl:message>
+  <wsdl:message name="IItemService_GetAllItems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllItemsResponse" />
   </wsdl:message>
   <wsdl:portType name="IItemService">
-    <wsdl:operation name="GetAllItems">
-      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetAllItems" message="tns:IItemService_GetAllItems_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetAllItemsResponse" message="tns:IItemService_GetAllItems_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetItemById">
-      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetItemById" message="tns:IItemService_GetItemById_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetItemByIdResponse" message="tns:IItemService_GetItemById_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="SearchItems">
-      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/SearchItems" message="tns:IItemService_SearchItems_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/SearchItemsResponse" message="tns:IItemService_SearchItems_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="CreateItem">
       <wsdl:input wsaw:Action="http://tempuri.org/IItemService/CreateItem" message="tns:IItemService_CreateItem_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IItemService/CreateItemResponse" message="tns:IItemService_CreateItem_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdateItem">
-      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/UpdateItem" message="tns:IItemService_UpdateItem_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/UpdateItemResponse" message="tns:IItemService_UpdateItem_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeleteItem">
       <wsdl:input wsaw:Action="http://tempuri.org/IItemService/DeleteItem" message="tns:IItemService_DeleteItem_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IItemService/DeleteItemResponse" message="tns:IItemService_DeleteItem_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetCategories">
-      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetCategories" message="tns:IItemService_GetCategories_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetCategoriesResponse" message="tns:IItemService_GetCategories_OutputMessage" />
+    <wsdl:operation name="UpdateItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/UpdateItem" message="tns:IItemService_UpdateItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/UpdateItemResponse" message="tns:IItemService_UpdateItem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchItems">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/SearchItems" message="tns:IItemService_SearchItems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/SearchItemsResponse" message="tns:IItemService_SearchItems_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetItemById" message="tns:IItemService_GetItemById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetItemByIdResponse" message="tns:IItemService_GetItemById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCategories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetAllCategories" message="tns:IItemService_GetAllCategories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetAllCategoriesResponse" message="tns:IItemService_GetAllCategories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllActiveItemsByCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetAllActiveItemsByCategory" message="tns:IItemService_GetAllActiveItemsByCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetAllActiveItemsByCategoryResponse" message="tns:IItemService_GetAllActiveItemsByCategory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllItems">
+      <wsdl:input wsaw:Action="http://tempuri.org/IItemService/GetAllItems" message="tns:IItemService_GetAllItems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IItemService/GetAllItemsResponse" message="tns:IItemService_GetAllItems_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IItemService" type="tns:IItemService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetAllItems">
-      <soap:operation soapAction="http://tempuri.org/IItemService/GetAllItems" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetItemById">
-      <soap:operation soapAction="http://tempuri.org/IItemService/GetItemById" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SearchItems">
-      <soap:operation soapAction="http://tempuri.org/IItemService/SearchItems" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="CreateItem">
       <soap:operation soapAction="http://tempuri.org/IItemService/CreateItem" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateItem">
-      <soap:operation soapAction="http://tempuri.org/IItemService/UpdateItem" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -168,8 +142,53 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetCategories">
-      <soap:operation soapAction="http://tempuri.org/IItemService/GetCategories" style="document" />
+    <wsdl:operation name="UpdateItem">
+      <soap:operation soapAction="http://tempuri.org/IItemService/UpdateItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchItems">
+      <soap:operation soapAction="http://tempuri.org/IItemService/SearchItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemById">
+      <soap:operation soapAction="http://tempuri.org/IItemService/GetItemById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCategories">
+      <soap:operation soapAction="http://tempuri.org/IItemService/GetAllCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllActiveItemsByCategory">
+      <soap:operation soapAction="http://tempuri.org/IItemService/GetAllActiveItemsByCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllItems">
+      <soap:operation soapAction="http://tempuri.org/IItemService/GetAllItems" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -182,44 +201,8 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IItemService_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="GetAllItems">
-      <soap12:operation soapAction="http://tempuri.org/IItemService/GetAllItems" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetItemById">
-      <soap12:operation soapAction="http://tempuri.org/IItemService/GetItemById" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SearchItems">
-      <soap12:operation soapAction="http://tempuri.org/IItemService/SearchItems" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="CreateItem">
       <soap12:operation soapAction="http://tempuri.org/IItemService/CreateItem" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateItem">
-      <soap12:operation soapAction="http://tempuri.org/IItemService/UpdateItem" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -236,8 +219,53 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetCategories">
-      <soap12:operation soapAction="http://tempuri.org/IItemService/GetCategories" style="document" />
+    <wsdl:operation name="UpdateItem">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/UpdateItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchItems">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/SearchItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemById">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/GetItemById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCategories">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/GetAllCategories" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllActiveItemsByCategory">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/GetAllActiveItemsByCategory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllItems">
+      <soap12:operation soapAction="http://tempuri.org/IItemService/GetAllItems" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

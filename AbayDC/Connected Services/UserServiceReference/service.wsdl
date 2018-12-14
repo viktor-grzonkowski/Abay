@@ -58,11 +58,11 @@
   <wsdl:message name="IUserService_GetUserByToken_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUserByTokenResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_CheckToken_InputMessage">
-    <wsdl:part name="parameters" element="tns:CheckToken" />
+  <wsdl:message name="IUserService_CheckTokenTime_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckTokenTime" />
   </wsdl:message>
-  <wsdl:message name="IUserService_CheckToken_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CheckTokenResponse" />
+  <wsdl:message name="IUserService_CheckTokenTime_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckTokenTimeResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Login">
@@ -77,9 +77,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserByToken" message="tns:IUserService_GetUserByToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserByTokenResponse" message="tns:IUserService_GetUserByToken_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CheckToken">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/CheckToken" message="tns:IUserService_CheckToken_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/CheckTokenResponse" message="tns:IUserService_CheckToken_OutputMessage" />
+    <wsdl:operation name="CheckTokenTime">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/CheckTokenTime" message="tns:IUserService_CheckTokenTime_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/CheckTokenTimeResponse" message="tns:IUserService_CheckTokenTime_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -111,8 +111,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CheckToken">
-      <soap:operation soapAction="http://tempuri.org/IUserService/CheckToken" style="document" />
+    <wsdl:operation name="CheckTokenTime">
+      <soap:operation soapAction="http://tempuri.org/IUserService/CheckTokenTime" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -152,8 +152,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CheckToken">
-      <soap12:operation soapAction="http://tempuri.org/IUserService/CheckToken" style="document" />
+    <wsdl:operation name="CheckTokenTime">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/CheckTokenTime" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

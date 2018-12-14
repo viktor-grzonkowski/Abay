@@ -35,10 +35,10 @@ namespace DedicatedClient.UserServiceReference {
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
+        private DedicatedClient.UserServiceReference.Token LoginTokenField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SaltField;
+        private string PasswordField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -106,6 +106,19 @@ namespace DedicatedClient.UserServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public DedicatedClient.UserServiceReference.Token LoginToken {
+            get {
+                return this.LoginTokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginTokenField, value) != true)) {
+                    this.LoginTokenField = value;
+                    this.RaisePropertyChanged("LoginToken");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Password {
             get {
                 return this.PasswordField;
@@ -119,14 +132,78 @@ namespace DedicatedClient.UserServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Salt {
+        public string UserName {
             get {
-                return this.SaltField;
+                return this.UserNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.SaltField, value) != true)) {
-                    this.SaltField = value;
-                    this.RaisePropertyChanged("Salt");
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Token", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    [System.SerializableAttribute()]
+    public partial class Token : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecureTokenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreateDate {
+            get {
+                return this.CreateDateField;
+            }
+            set {
+                if ((this.CreateDateField.Equals(value) != true)) {
+                    this.CreateDateField = value;
+                    this.RaisePropertyChanged("CreateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecureToken {
+            get {
+                return this.SecureTokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecureTokenField, value) != true)) {
+                    this.SecureTokenField = value;
+                    this.RaisePropertyChanged("SecureToken");
                 }
             }
         }
@@ -159,10 +236,10 @@ namespace DedicatedClient.UserServiceReference {
     public interface IUserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
-        string Login(string userName, string password);
+        DedicatedClient.UserServiceReference.User Login(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
-        System.Threading.Tasks.Task<string> LoginAsync(string userName, string password);
+        System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> LoginAsync(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CreateUser", ReplyAction="http://tempuri.org/IUserService/CreateUserResponse")]
         int CreateUser(string userName, string firstName, string lastName, string password, string email);
@@ -176,11 +253,11 @@ namespace DedicatedClient.UserServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
         System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> GetUserByTokenAsync(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckToken", ReplyAction="http://tempuri.org/IUserService/CheckTokenResponse")]
-        bool CheckToken(string token);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckTokenTime", ReplyAction="http://tempuri.org/IUserService/CheckTokenTimeResponse")]
+        bool CheckTokenTime(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckToken", ReplyAction="http://tempuri.org/IUserService/CheckTokenResponse")]
-        System.Threading.Tasks.Task<bool> CheckTokenAsync(string token);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckTokenTime", ReplyAction="http://tempuri.org/IUserService/CheckTokenTimeResponse")]
+        System.Threading.Tasks.Task<bool> CheckTokenTimeAsync(string token);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -210,11 +287,11 @@ namespace DedicatedClient.UserServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public string Login(string userName, string password) {
+        public DedicatedClient.UserServiceReference.User Login(string userName, string password) {
             return base.Channel.Login(userName, password);
         }
         
-        public System.Threading.Tasks.Task<string> LoginAsync(string userName, string password) {
+        public System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> LoginAsync(string userName, string password) {
             return base.Channel.LoginAsync(userName, password);
         }
         
@@ -234,12 +311,12 @@ namespace DedicatedClient.UserServiceReference {
             return base.Channel.GetUserByTokenAsync(token);
         }
         
-        public bool CheckToken(string token) {
-            return base.Channel.CheckToken(token);
+        public bool CheckTokenTime(string token) {
+            return base.Channel.CheckTokenTime(token);
         }
         
-        public System.Threading.Tasks.Task<bool> CheckTokenAsync(string token) {
-            return base.Channel.CheckTokenAsync(token);
+        public System.Threading.Tasks.Task<bool> CheckTokenTimeAsync(string token) {
+            return base.Channel.CheckTokenTimeAsync(token);
         }
     }
 }

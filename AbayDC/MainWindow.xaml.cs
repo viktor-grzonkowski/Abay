@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using DedicatedCliend.ItemServiceReference;
+using DedicatedClient.ItemServiceReference;
+using System;
 
 namespace DedicatedClient
 {
@@ -24,9 +11,9 @@ namespace DedicatedClient
         private ItemServiceClient itemService;
         private ObservableCollection<Item> items;
         private Item selectedItem;
-        private User user;
+        private UserServiceReference.User user;
 
-        public MainWindow(User user)
+        public MainWindow(UserServiceReference.User user)
         {
             InitializeComponent();
 
@@ -35,12 +22,17 @@ namespace DedicatedClient
             this.user = user;
 
             //Fill up DataContext for DataGrid
-            items = new ObservableCollection<Item>(itemService.GetAllItems(-1));
+            items = new ObservableCollection<Item>(itemService.GetAllItems());
             dgItems.DataContext = items;
 
             selectedItem = null;
         }
 
+        private void UpdateDataGrid()
+        {
+            items = new ObservableCollection<Item>(itemService.GetAllItems());
+            dgItems.DataContext = items;
+        }
         private void FillFormWithItem(Item item)
         {
             lblId.Content = item.Id;
@@ -63,6 +55,10 @@ namespace DedicatedClient
             lblSeller.Content = "-";
             chkSold.IsChecked = false;
         }
+        private bool IsItemSelected()
+        {
+            return selectedItem != null;
+        }
 
         private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -74,17 +70,37 @@ namespace DedicatedClient
 
             FillFormWithItem(selectedItem);
         }
-
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            //itemService.UpdateItem(selectedItem.Id, user.);
+            if (!IsItemSelected())
+            {
+                return;
+            }
+
+            itemService.UpdateItem(selectedItem.Id, user.LoginToken.SecureToken, selectedItem.Name,
+                selectedItem.Description, selectedItem.Category.Id);
+
+            UpdateDataGrid();
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsItemSelected())
+            {
+                return;
+            }
 
+            itemService.DeleteItem(selectedItem.Id, user.LoginToken.SecureToken);
+
+            ResetForm();
+            UpdateDataGrid();
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsItemSelected())
+            {
+                return;
+            }
+
             FillFormWithItem(selectedItem);
         }
     }

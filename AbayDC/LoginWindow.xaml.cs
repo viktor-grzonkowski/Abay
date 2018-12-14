@@ -1,20 +1,8 @@
-﻿using DedicatedClient;
-using DedicatedClient.UserServiceReference;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DedicatedClient.UserServiceReference;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace DedicatedCliend
+namespace DedicatedClient
 {
     public partial class LoginWindow : Window
     { 
@@ -31,21 +19,20 @@ namespace DedicatedCliend
             string username = txtUsername.Text;
             string password = txtPassword.Password;
 
-            string token = userService.Login(username, password);
-            if (token.Length < 1)
+            DedicatedClient.UserServiceReference.User user = userService.Login(username, password);
+            if (user == null)
             {
                 MessageBox.Show("Username or password is incorrect.");
                 return;
             }
 
-            User user = userService.GetUserByToken(token);
             if (!user.Admin)
             {
                 MessageBox.Show("Not sufficient rights.");
                 return;
             }
 
-            MainWindow mainWindow = new MainWindow(token);
+            MainWindow mainWindow = new MainWindow(user);
             mainWindow.Show();
             this.Close();
         }
