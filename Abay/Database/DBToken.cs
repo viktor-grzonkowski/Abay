@@ -87,11 +87,11 @@ namespace Database
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * " +
-                                      "FROM [User] " +
-                                      "WHERE username IN " +
-                                      "(SELECT username " +
-                                      "FROM Token " +
-                                      "WHERE token = @token)";
+                                      "FROM [User] u " +
+                                      "WHERE u.username IN " +
+                                      "(SELECT t.username " +
+                                      "FROM [Token] t " +
+                                      "WHERE t.token = @token)";
                     cmd.Parameters.AddWithValue("@token", token);
 
                     SqlDataReader reader = cmd.ExecuteReader();

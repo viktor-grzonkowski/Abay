@@ -319,12 +319,12 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [Item] " +
-                                          "SET name = @name, description = @description, state = @state " +
+                                          "SET name = @name, description = @description, categoryId = @categoryId " +
                                           "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", item.Id);
                         cmd.Parameters.AddWithValue("@name", item.Name);
                         cmd.Parameters.AddWithValue("@description", item.Description);
-                        cmd.Parameters.AddWithValue("@state", item.State);
+                        cmd.Parameters.AddWithValue("@categoryId", item.Category.Id);
                         cmd.ExecuteScalar();
                         return true;
                     }
