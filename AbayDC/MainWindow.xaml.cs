@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using DedicatedClient.ItemServiceReference;
 using System;
+using DedicatedCliend.ItemServiceReference;
+using System.Collections.Generic;
 
 namespace DedicatedClient
 {
@@ -11,9 +12,9 @@ namespace DedicatedClient
         private ItemServiceClient itemService;
         private ObservableCollection<Item> items;
         private Item selectedItem;
-        private UserServiceReference.User user;
+        private DedicatedCliend.UserServiceReference.User user;
 
-        public MainWindow(UserServiceReference.User user)
+        public MainWindow(DedicatedCliend.UserServiceReference.User user)
         {
             InitializeComponent();
 
@@ -43,6 +44,14 @@ namespace DedicatedClient
             lblEndDate.Content = item.EndDate;
             lblSeller.Content = item.SellerUser.UserName;
             chkSold.IsChecked = item.State > 0;
+
+            List<Bid> bids = new List<Bid>();
+            bids.Add(item.WinningBid);
+            foreach (Bid bid in item.OldBids)
+            {
+
+            }
+            lvBids.DataContext = bids;
         }
         private void ResetForm()
         {
@@ -77,8 +86,13 @@ namespace DedicatedClient
                 return;
             }
 
-            itemService.UpdateItem(selectedItem.Id, user.LoginToken.SecureToken, selectedItem.Name,
+            bool success = itemService.UpdateItem(selectedItem.Id, user.LoginToken.SecureToken, selectedItem.Name,
                 selectedItem.Description, selectedItem.Category.Id);
+            if (!success)
+            {
+                MessageBox.Show("Something went wrong! Try again!");
+                return;
+            }
 
             UpdateDataGrid();
         }
@@ -89,7 +103,12 @@ namespace DedicatedClient
                 return;
             }
 
-            itemService.DeleteItem(selectedItem.Id, user.LoginToken.SecureToken);
+            bool success = itemService.DeleteItem(selectedItem.Id, user.LoginToken.SecureToken);
+            if (!success)
+            {
+                MessageBox.Show("Something went wrong! Try again!");
+                return;
+            }
 
             ResetForm();
             UpdateDataGrid();
