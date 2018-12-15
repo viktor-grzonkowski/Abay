@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Item
+    public class Item : IEquatable<Item>
     {
         private int _id;
         private string _name;
@@ -51,5 +51,27 @@ namespace Entities
         public Bid WinningBid { get => _winningBid; set => _winningBid = value; }
         public List<Bid> OldBids { get => _oldBids; set => _oldBids = value; }
         public string ImagePath { get => _imagePath; set => _imagePath = value; }
+
+        public bool Equals(Item other)
+        {
+            return (this._category.Equals(other._category) &&
+                this._description.Equals(other._description) &&
+                this._endDate.Equals(other._endDate) &&
+                this._id == other._id &&
+                this._imagePath.Equals(other._imagePath) &&
+                this._initialPrice == other._initialPrice &&
+                this._name.Equals(other._name) &&
+                this._oldBids.Equals(other._oldBids) &&
+                this._sellerUser.Equals(other._sellerUser) &&
+                this._startDate.Equals(other._startDate) &&
+                this._state == other._state &&
+                this._winningBid.Equals(other._winningBid));
+    }
+        public override int GetHashCode()
+        {
+            return _category.GetHashCode() ^ _description.GetHashCode() ^ _endDate.GetHashCode() ^ _id.GetHashCode() ^
+                _imagePath.GetHashCode() ^ _initialPrice.GetHashCode() ^ _name.GetHashCode() ^ _oldBids.GetHashCode() ^
+                _sellerUser.GetHashCode() ^ _startDate.GetHashCode() ^ _state.GetHashCode() ^ _winningBid.GetHashCode();
+        }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class ItemCategory
+    public class ItemCategory : IEquatable<ItemCategory>
     {
-        private int _Id;
+        private int _id;
         private string _name;
 
         public ItemCategory()
@@ -21,11 +21,20 @@ namespace Entities
             Name = name;
         }
 
-        public int Id { get => _Id; set => _Id = value; }
+        public int Id { get => _id; set => _id = value; }
         public string Name { get => _name; set => _name = value; }
         public override string ToString()
         {
             return Name;
+        }
+        public bool Equals(ItemCategory other)
+        {
+            return (this._id == other._id &&
+                this._name.Equals(other._name));
+        }
+        public override int GetHashCode()
+        {
+            return _id.GetHashCode() ^ _name.GetHashCode();
         }
     }
 }
