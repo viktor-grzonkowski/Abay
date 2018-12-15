@@ -16,11 +16,12 @@
     @Html.HiddenFor(model => Model.WebItem.ItemId)
     @Html.HiddenFor(model => Model.WebItem.BuyerName)
 
+
     <div class="container" style="padding:0 0 60px;">
         <h2>@ViewBag.Title</h2>
         <div class="row">
             <div class="col-md-6">
-                <img style="width:400px;" src="~/Images/s-l500.jpg" />
+                <img style="width:400px;" src="~/Images/ItemsOnSell/@Model.ServiceItem.ImagePath" />
             </div>
             <div class="col-md-6" style="background-color:#fff;padding:0 20px 30px;">
                 <div id="titleSection">

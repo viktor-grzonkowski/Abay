@@ -10,6 +10,7 @@
         <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="duration" type="xs:int" />
+        <xs:element minOccurs="0" name="imagePath" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

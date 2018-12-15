@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<AbayMVC.ItemServiceReference.Item>
-
+@Styles.Render("~/Content/abay-Design.css")
 @{
     ViewBag.Title = "Showcase";
 }
@@ -8,6 +8,9 @@
 
 <table class="table">
     <tr>
+        <th>
+            Image
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -38,6 +41,9 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                <img class="listing-img" src="~/Images/ItemsOnSell/@item.ImagePath" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

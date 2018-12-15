@@ -176,10 +176,10 @@
     <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\BuyItemView.cs" />
+    <Compile Include="Models\SellItem.cs" />
+    <Compile Include="Models\SellItemView.cs" />
     <Compile Include="Models\ViewModels.cs" />
-    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\CustomAuthAttribute.cs" />
@@ -249,6 +249,12 @@
     <Content Include="Images\Categorys\watches.png" />
     <Content Include="Images\Categorys\womens_shoes.png" />
     <Content Include="Images\email.png" />
+    <Content Include="Images\ItemsOnSell\819VYzO3Y1L._UY606_.jpg" />
+    <Content Include="Images\ItemsOnSell\81p2X1FNrJL._UX522_.jpg" />
+    <Content Include="Images\ItemsOnSell\f50c2633-f115-400b-afdd-9503cbc3d129_proxy.duckduckgo.png" />
+    <Content Include="Images\ItemsOnSell\f50c2633-f115-400b-afdd-proxy.duckduckgo.jpg" />
+    <Content Include="Images\ItemsOnSell\switch.jpg" />
+    <Content Include="Images\ItemsOnSell\tut1s6ohmRkMZqAC.jpg" />
     <Content Include="Images\Logos\aBayLogo.png" />
     <Content Include="Images\Logos\abay_logo.png" />
     <Content Include="Images\Logos\new_abay_logo.png" />

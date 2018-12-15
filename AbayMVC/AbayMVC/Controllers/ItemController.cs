@@ -10,6 +10,8 @@ using AbayMVC.Models;
 using AbayMVC.Security;
 using System.Web.Routing;
 using System.Threading.Tasks;
+using System.IO;
+using System.Web.UI.WebControls;
 
 namespace AbayMVC.Controllers
 {
@@ -46,7 +48,6 @@ namespace AbayMVC.Controllers
 
             if(!string.IsNullOrEmpty(SessionPersister.Username))
                 view.WebItem.BuyerName = SessionPersister.Username;
-            int count = view.ServiceItem.OldBids.Count();
             return View(view);
         }
 
@@ -57,7 +58,7 @@ namespace AbayMVC.Controllers
             
             if (await services.UserClient().CheckTokenTimeAsync(SessionPersister.Token))
             {
-                // no bid right now
+                // no bid there right now
                 if (viewCollection.ServiceItem.WinningBid != null)
                 {
                     // check if the amount is higher than the previous bid
@@ -111,20 +112,35 @@ namespace AbayMVC.Controllers
         [CustomAuthAttribute(Roles = "User")]
         public async Task<ActionResult> Sell()
         {
-            return View(await services.ItemClient().GetAllCategoriesAsync());
+            SellItemView sellIt = new SellItemView();
+            sellIt.AllCategorys = await services.ItemClient().GetAllCategoriesAsync();
+
+            return View(sellIt);
         }
 
         [HttpPost]
         [CustomAuthAttribute(Roles = "User")]
-        public ActionResult Sell(FormCollection collection)
+        public ActionResult Sell(FormCollection collection, HttpPostedFileBase file)
         {
+            int insertId = -1;
             string name = collection["item-name"];
             double startingPrice = Double.Parse(collection["item-startPrice"]);
             int category = Int32.Parse(collection["item-category"]); 
             string description = Request.Form["item-description"];
             int duration = Int32.Parse(collection["item-sellduration"]);
 
-            int insertId = services.ItemClient().CreateItem(name, description, startingPrice, category, SessionPersister.Token, duration);
+            if (file != null)
+            {
+                string pic = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("~/images/ItemsOnSell/"), pic);
+
+                insertId = services.ItemClient().CreateItem(name, description, startingPrice, category, SessionPersister.Token, duration, pic);
+                if (insertId >= 0)
+                {
+                    file.SaveAs(path);
+                }
+                // file is uploaded
+            }
 
             if (insertId < 0)
             {
@@ -133,7 +149,7 @@ namespace AbayMVC.Controllers
             else
             {
                 Success("Your item is on sale now!");
-                return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Item", action = "Bid", itemId = insertId }));
+                return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));
             }
 
             return new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));

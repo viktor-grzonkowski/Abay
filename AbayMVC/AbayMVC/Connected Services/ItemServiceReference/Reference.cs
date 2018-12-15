@@ -35,6 +35,9 @@ namespace AbayMVC.ItemServiceReference {
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImagePathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double InitialPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -113,6 +116,19 @@ namespace AbayMVC.ItemServiceReference {
                 if ((this.IdField.Equals(value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImagePath {
+            get {
+                return this.ImagePathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImagePathField, value) != true)) {
+                    this.ImagePathField = value;
+                    this.RaisePropertyChanged("ImagePath");
                 }
             }
         }
@@ -611,10 +627,10 @@ namespace AbayMVC.ItemServiceReference {
     public interface IItemService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
-        int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration);
+        int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/CreateItem", ReplyAction="http://tempuri.org/IItemService/CreateItemResponse")]
-        System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration);
+        System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/DeleteItem", ReplyAction="http://tempuri.org/IItemService/DeleteItemResponse")]
         bool DeleteItem(int id, string token);
@@ -692,12 +708,12 @@ namespace AbayMVC.ItemServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
-            return base.Channel.CreateItem(name, description, initialPrice, CategoryId, token, duration);
+        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath) {
+            return base.Channel.CreateItem(name, description, initialPrice, CategoryId, token, duration, imagePath);
         }
         
-        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration) {
-            return base.Channel.CreateItemAsync(name, description, initialPrice, CategoryId, token, duration);
+        public System.Threading.Tasks.Task<int> CreateItemAsync(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath) {
+            return base.Channel.CreateItemAsync(name, description, initialPrice, CategoryId, token, duration, imagePath);
         }
         
         public bool DeleteItem(int id, string token) {

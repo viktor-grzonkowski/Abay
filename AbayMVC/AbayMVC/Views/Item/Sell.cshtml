@@ -1,5 +1,5 @@
-﻿@model IEnumerable<AbayMVC.ItemServiceReference.ItemCategory>
-
+﻿@model AbayMVC.Models.SellItemView
+@*Todo: Use the model and not collection for the post method*@
 @{
     ViewBag.Title = "Sell an item";
 }
@@ -7,7 +7,7 @@
 <div class="container" style="padding:0 0 60px;">
     <h2>@ViewBag.Title</h2>
 
-    @using (Html.BeginForm("Sell", "Item", FormMethod.Post, new { role = "form" }))
+    @using (Html.BeginForm("Sell", "Item", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
     {
         <div class="container" style="background-color:#fff;padding-left: 25px;">
             <h3>@ViewBag.Message</h3>
@@ -20,18 +20,7 @@
             <div class="form-inline">
                 <span class="required" id="field"><label>Category</label></span>
                 <select class="form-control" name="item-category">
-                    <!--
-                <option>Women's Clothing</option>
-                <option>Women's Shoes</option>
-                <option>Men's Clothing</option>
-                <option>Men's Shoes</option>
-                <option>Watches</option>
-                <option>Fine Jewelry</option>
-                <option>Jewelry</option>
-                <option>Belts</option>
-                <option>Other</option>
-                -->
-                    @foreach (var cat in Model)
+                    @foreach (var cat in Model.AllCategorys)
                     {
                         <option value="@cat.Id">@cat.Name</option>
                     }
@@ -48,13 +37,13 @@
                     <option value="notworking">For parts or not working</option>
                 </select>
             </div>
+                -->
 
-                
             <div class="form-inline">
                 <span class="required" id="field"><label>Photos</label></span>
-                <input type="file" id="imageInputFile">
+                <input type="file" name="file" id="file" accept=".jpg,.png"/>
             </div>
-            -->
+
 
             <div class="form-inline">
                 <span class="required" id="field"><label>Item description</label></span>

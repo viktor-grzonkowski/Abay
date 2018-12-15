@@ -32,18 +32,11 @@ namespace AbayMVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                string userName = Convert.ToString(model.UserName);
-                string firstName = Convert.ToString(model.FirstName);
-                string lastName = Convert.ToString(model.LastName);
-                string password = Convert.ToString(model.Password);
-                string email = Convert.ToString(model.Email);
-                
-
-                switch (Services.Instance.UserClient().CreateUser(userName, firstName, lastName, password, email))
+                switch (await Services.Instance.UserClient().CreateUserAsync(model.UserName, model.FirstName, model.LastName, model.Password, model.Email))
                 {
                     case -2:
                         Warning("Username is already in use!");
