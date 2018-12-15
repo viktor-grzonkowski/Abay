@@ -1,8 +1,8 @@
-﻿using Controller;
-using Entities;
-using Controller.ServiceInterfaces;
+﻿using Entities;
+using ServiceLibrary.ServiceInterfaces;
+using Controller;
 
-namespace Controller
+namespace ServiceLibrary
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserLogin" in both code and config file together.
     public class UserService : IUserService

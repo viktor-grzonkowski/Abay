@@ -1,9 +1,6 @@
-﻿using Database;
-using System.Collections.Generic;
-using Controller;
+﻿using Controller;
 using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Data.SqlClient;
 
 namespace Test
 {

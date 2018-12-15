@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostConsole", "HostConsole\HostConsole.csproj", "{28A69734-B519-4B61-BDE2-A003A19A4548}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F8D23F02-987F-4BB4-8B10-27C8CA992194} = {F8D23F02-987F-4BB4-8B10-27C8CA992194}
+		{DD2A39C5-84DF-42E2-A1A5-0D0E4AE807DA} = {DD2A39C5-84DF-42E2-A1A5-0D0E4AE807DA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLibrary", "ServiceLibrary\ServiceLibrary.csproj", "{89CEC8F7-55D9-40BA-89F9-248988D5C76B}"
 EndProject
