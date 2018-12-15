@@ -106,7 +106,7 @@ namespace Database
                                 FirstName = (string)reader["firstName"],
                                 LastName = (string)reader["lastName"],
                                 Email = (string)reader["email"],
-                                Admin = (bool)reader["admin"]
+                                Admin = (bool)reader["isAdmin"]
                             };
                         }
                     }
