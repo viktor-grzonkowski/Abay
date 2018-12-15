@@ -9,10 +9,10 @@ namespace Test
     [TestClass]
     public class WCFTest
     {
-        /*
         private UserController userCtrl = new UserController();
         private ItemController itemCtrl = new ItemController();
         private BidController bidCtrl = new BidController();
+        private User testUser;
 
         [TestCleanup]
         public void TestClean()
@@ -23,7 +23,7 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-            User user = new User
+            testUser = new User
             {
                 UserName = "TestUser",
                 FirstName = "TestFirstName",
@@ -32,7 +32,7 @@ namespace Test
                 Email = "TestEmail@gmail.com",
                 Admin = false
             };
-            userCtrl.CreateUser(user);
+            userCtrl.CreateUser(testUser);
         }
 
         //
@@ -42,16 +42,25 @@ namespace Test
         [TestMethod]
         public void UserLogin()
         {
-            Token tk = userCtrl.Login("TestUser", "TestPassword");
-            Assert.IsNotNull(tk,"User could not login no token was generated!");
-        }
+            User user = userCtrl.Login("TestUser", "TestPassword");
 
+            Assert.IsNotNull(user.LoginToken, "User could not login no token was generated!");
+        }
         [TestMethod]
         public void GetUserInformation()
         {
-            User getUser = userCtrl.GetUserInformation("TestUser");
-            Assert.IsNotNull(getUser, "There is no such user!");
-            Assert.IsTrue(string.Equals(getUser.FirstName, "TestFirstName"),"It's not the right user or user was not found!");
+            User user = userCtrl.GetUserInformation("TestUser");
+
+            Assert.IsNotNull(user, "There is no such user!");
+            Assert.AreEqual(user.FirstName, testUser.FirstName, "It's not the right user!");
+        }
+        [TestMethod]
+        public void CreateUser()
+        {
+            User user = userCtrl.GetUserInformation("TestUser");
+
+            Assert.IsNotNull(user, "There is no such user!");
+            Assert.AreEqual(user.FirstName, testUser.FirstName, "It's not the right user!");
         }
 
         //
@@ -119,6 +128,5 @@ namespace Test
         {
             //TestHelper.DeleteTest("User","username");
         }
-        */
     }
 }

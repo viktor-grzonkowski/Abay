@@ -28,10 +28,10 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="1" Grid.Column="1" Content="Login" VerticalAlignment="Center"  HorizontalAlignment="Center" Grid.ColumnSpan="3" FontWeight="Bold" FontSize="16"/>
             <Label Grid.Row="3" Grid.Column="1" Content="Username" FontSize="14"/>
-            <TextBox Grid.Row="3" Grid.Column="3" Name="txtUsername" KeyDown="txtField_KeyDown" FontStyle="Italic"/>
+            <TextBox Grid.Row="3" Grid.Column="3" Name="txtUsername" FontStyle="Italic"/>
             <Label Grid.Row="5" Grid.Column="1" Content="Password" FontSize="14"/>
-            <PasswordBox Grid.Row="5" Grid.Column="3" Name="txtPassword" KeyDown="txtField_KeyDown" FontStyle="Italic"/>
-            <Button Grid.Row="7" Grid.Column="1" Content="Login" Click="Button_Click" Grid.ColumnSpan="3" FontSize="14"/>
+            <PasswordBox Grid.Row="5" Grid.Column="3" Name="txtPassword" FontStyle="Italic"/>
+            <Button Grid.Row="7" Grid.Column="1" Content="Login" Click="Button_Click" IsDefault="True" Grid.ColumnSpan="3" FontSize="14" />
         </Grid>
     </Grid>
 </Window>
