@@ -17,9 +17,9 @@ namespace Controller
         BidController BidCtrl = new BidController();
         CategoryController CategoryCtrl = new CategoryController();
 
-        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration)
+        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath)
         {
-            return ItemCtrl.CreateItem(name, description, initialPrice, CategoryId, token, duration);
+            return ItemCtrl.CreateItem(name, description, initialPrice, CategoryId, token, duration, imagePath);
         }
 
         public bool DeleteItem(int id, string token)

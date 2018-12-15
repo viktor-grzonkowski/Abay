@@ -58,9 +58,7 @@ namespace Controller
 
         public User GetUserInformation(string userName)
         {
-            if (userDb.CheckUserName(userName))
-                return userDb.GetUserInformation(userName);
-            return null;
+            return userDb.GetUserInformation(userName);
         }
     }
 }

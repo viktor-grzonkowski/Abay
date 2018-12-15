@@ -30,9 +30,9 @@ namespace Database
                 {
                     // Execute one command.
                     cmd.CommandText = "INSERT INTO [Item] " +
-                                       "(name, description, initialPrice, startDate, endDate, state, sellerUsername, categoryId) " +
+                                       "(name, description, initialPrice, startDate, endDate, state, sellerUsername, categoryId, imagePath) " +
                                        "OUTPUT INSERTED.ID " +
-                                       "VALUES (@name, @description, @initialPrice, @startDate, @endDate, @state, @sellerUsername, @categoryId)";
+                                       "VALUES (@name, @description, @initialPrice, @startDate, @endDate, @state, @sellerUsername, @categoryId, @imagePath)";
                     cmd.Parameters.AddWithValue("@name", item.Name);
                     cmd.Parameters.AddWithValue("@description", item.Description);
                     cmd.Parameters.AddWithValue("@initialPrice", item.InitialPrice);
@@ -41,6 +41,7 @@ namespace Database
                     cmd.Parameters.AddWithValue("@state", item.State);
                     cmd.Parameters.AddWithValue("@sellerUsername", item.SellerUser.UserName);
                     cmd.Parameters.AddWithValue("@categoryId", item.Category.Id);
+                    cmd.Parameters.AddWithValue("@imagePath", item.ImagePath);
 
                     itemId = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -100,8 +101,8 @@ namespace Database
                                 UserName = reader["sellerUsername"].ToString()
                             };
 
-                            
 
+                            
                             item = new Item
                             {
                                 Id = (int)reader["id"],
@@ -112,7 +113,8 @@ namespace Database
                                 EndDate = (DateTime)reader["endDate"],
                                 State = (int)reader["state"],
                                 SellerUser = seller,
-                                Category = DBCategory.GetItemCategory((int)reader["categoryId"])
+                                Category = DBCategory.GetItemCategory((int)reader["categoryId"]),
+                                ImagePath = (string)reader["imagePath"]
                             };
 
                             List<Bid> winningBid = new DBBid().GetBids((int)reader["id"], true);
@@ -159,7 +161,8 @@ namespace Database
                                 EndDate = (DateTime)reader["endDate"],
                                 State = (int)reader["state"],
                                 SellerUser = seller,
-                                Category = DBCategory.GetItemCategory((int)reader["categoryId"])
+                                Category = DBCategory.GetItemCategory((int)reader["categoryId"]),
+                                ImagePath = (string)reader["imagePath"]
                             };
 
                             List<Bid> winningBid = new DBBid().GetBids(item.Id, true);
@@ -213,7 +216,8 @@ namespace Database
                                         EndDate = (DateTime)reader["endDate"],
                                         State = (int)reader["state"],
                                         SellerUser = seller,
-                                        Category = DBCategory.GetItemCategory((int)reader["categoryId"])
+                                        Category = DBCategory.GetItemCategory((int)reader["categoryId"]),
+                                        ImagePath = (string)reader["imagePath"]
                                     };
 
                                     List<Bid> winningBid = new DBBid().GetBids(item.Id, true);
@@ -285,7 +289,8 @@ namespace Database
                                     EndDate = (DateTime)reader["endDate"],
                                     State = (int)reader["state"],
                                     SellerUser = seller,
-                                    Category = DBCategory.GetItemCategory((int)reader["categoryId"])
+                                    Category = DBCategory.GetItemCategory((int)reader["categoryId"]),
+                                    ImagePath = (string)reader["imagePath"]
                                 };
 
                                 List<Bid> winningBid = new DBBid().GetBids((int)reader["id"], true);

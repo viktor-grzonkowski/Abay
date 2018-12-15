@@ -19,13 +19,14 @@ namespace Entities
         private ItemCategory _category;
         private Bid _winningBid;
         private List<Bid> _oldBids;
+        private string _imagePath;
 
         public Item()
         { 
 
         }
 
-        public Item(string name, double initialPrice, User seller, ItemCategory categoryId, string description, int duration)
+        public Item(string name, double initialPrice, User seller, ItemCategory categoryId, string description, int duration, string imagePath)
         {
             Name = name;
             InitialPrice = initialPrice;
@@ -35,6 +36,7 @@ namespace Entities
             Description = description;
             StartDate = DateTime.Now;
             EndDate = DateTime.Now.AddDays(duration);
+            ImagePath = imagePath;
         }
 
         public int Id { get => _id; set => _id = value; }
@@ -48,5 +50,6 @@ namespace Entities
         public ItemCategory Category { get => _category; set => _category = value; }
         public Bid WinningBid { get => _winningBid; set => _winningBid = value; }
         public List<Bid> OldBids { get => _oldBids; set => _oldBids = value; }
+        public string ImagePath { get => _imagePath; set => _imagePath = value; }
     }
 }

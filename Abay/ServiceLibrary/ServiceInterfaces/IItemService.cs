@@ -23,7 +23,7 @@ namespace Controller.ServiceInterfaces
         /// <param name="duration"></param>
         /// <returns></returns>
         [OperationContract]
-        int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration);
+        int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath);
 
         /// <summary>
         /// 

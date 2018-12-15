@@ -15,9 +15,9 @@ namespace Controller
         CategoryController categoryCtrl = new CategoryController();
         TokenController tokenCtrl = new TokenController();
 
-        public int CreateItem(string name, string description, double initialPrice, int categoryId, string token, int duration)
+        public int CreateItem(string name, string description, double initialPrice, int categoryId, string token, int duration, string imagePath)
         {  
-            return itemDB.InsertItem(new Item(name, initialPrice, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId), description, duration));
+            return itemDB.InsertItem(new Item(name, initialPrice, tokenCtrl.GetUserByToken(token), categoryCtrl.GetItemCategory(categoryId), description, duration, imagePath));
         }
 
         public bool DeleteItem(int id, string token)
