@@ -44,13 +44,12 @@ namespace Entities
                 this._firstName.Equals(other._firstName) &&
                 this._lastName.Equals(other._lastName) &&
                 this._email.Equals(other._email) &&
-                this._admin == other._admin &&
-                this._loginToken.Equals(other._loginToken));
+                this._admin == other._admin);
         }
         public override int GetHashCode()
         {
             return _userName.GetHashCode() ^ _firstName.GetHashCode() ^ _lastName.GetHashCode() ^ _email.GetHashCode() ^
-                _admin.GetHashCode() ^ _loginToken.GetHashCode();
+                _admin.GetHashCode();
         }
     }
 }

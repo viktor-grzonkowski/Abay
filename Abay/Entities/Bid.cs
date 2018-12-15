@@ -30,13 +30,12 @@ namespace Entities
             return (this._buyerName.Equals(other._buyerName) &&
                 this._itemId == other._itemId &&
                 this._amount == other._amount &&
-                this._timestamp.Equals(other._timestamp) &&
-                this._winning == other._winning);
+                this._timestamp.Equals(other._timestamp));
         }
         public override int GetHashCode()
         {
             return _buyerName.GetHashCode() ^ _itemId.GetHashCode() ^ _amount.GetHashCode() ^
-                _timestamp.GetHashCode() ^ _winning.GetHashCode();
+                _timestamp.GetHashCode();
         }
     }
 }

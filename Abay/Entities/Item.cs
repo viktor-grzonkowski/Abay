@@ -58,20 +58,17 @@ namespace Entities
                 this._description.Equals(other._description) &&
                 this._endDate.Equals(other._endDate) &&
                 this._id == other._id &&
-                this._imagePath.Equals(other._imagePath) &&
                 this._initialPrice == other._initialPrice &&
                 this._name.Equals(other._name) &&
-                this._oldBids.Equals(other._oldBids) &&
                 this._sellerUser.Equals(other._sellerUser) &&
                 this._startDate.Equals(other._startDate) &&
-                this._state == other._state &&
-                this._winningBid.Equals(other._winningBid));
+                this._state == other._state);
     }
         public override int GetHashCode()
         {
             return _category.GetHashCode() ^ _description.GetHashCode() ^ _endDate.GetHashCode() ^ _id.GetHashCode() ^
-                _imagePath.GetHashCode() ^ _initialPrice.GetHashCode() ^ _name.GetHashCode() ^ _oldBids.GetHashCode() ^
-                _sellerUser.GetHashCode() ^ _startDate.GetHashCode() ^ _state.GetHashCode() ^ _winningBid.GetHashCode();
+                _initialPrice.GetHashCode() ^ _name.GetHashCode() ^ _sellerUser.GetHashCode() ^ _startDate.GetHashCode() ^
+                _state.GetHashCode();
         }
     }
 }
