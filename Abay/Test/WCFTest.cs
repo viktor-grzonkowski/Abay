@@ -229,6 +229,28 @@ namespace Test
         #region Bid Test
 
         [TestMethod]
+        public void Bid_ExpectedScenario()
+        {
+            User bidder = new User
+            {
+                UserName = "TestBidderUser",
+                FirstName = "TestBidderFirstName",
+                LastName = "TestBidderLastName",
+                Password = "TestBidderPassword",
+                Email = "TestBidderEmail@gmail.com",
+                Admin = false
+            };
+            userCtrl.CreateUser(bidder);
+
+            bidder = userCtrl.Login("TestBidderUser", "TestBidderPassword");
+
+            List<Item> result = itemCtrl.SearchItems("TestItem", -1);
+
+            int itemId = result[0].Id;
+            bool success = bidCtrl.Bid(itemId, 40, bidder.LoginToken.SecureToken);
+            Assert.IsTrue(success, "Bid was not placed!");
+        }
+        [TestMethod]
         public void Bid_SellerBidderIsTheSame_ReturnsFalse()
         {
             List<Item> result = itemCtrl.SearchItems("TestItem", -1);
@@ -238,30 +260,6 @@ namespace Test
             bool success = bidCtrl.Bid(itemId, 40, user.LoginToken.SecureToken);
 
             Assert.IsFalse(success, "The seller and the bidder is the same user!");
-        }
-        [TestMethod]
-        public void BidDifferentBuyer()
-        {
-            User userTwo = new User
-            {
-                UserName = "Test2User",
-                FirstName = "Test2FirstName",
-                LastName = "Test2LastName",
-                Password = "Test2Password",
-                Email = "Test2Email@gmail.com",
-                Admin = false
-            };
-            userCtrl.CreateUser(userTwo);
-
-            Token token = userCtrl.Login("Test2User", "Test2Password");
-
-            List<Item> newList = itemCtrl.SearchItems("TestItem", -1);
-
-            Assert.IsTrue(bidCtrl.Bid(newList[0].Id, 40, token.SecureToken),"Bid wa not placed!");
-
-            Item item = itemCtrl.GetItemById(newList[0].Id);
-
-            //Assert.IsTrue(string.Equals(userTwo.UserName,item.BuyerUser.UserName),"It's the wrong buyer!");
         }
         
         #endregion
