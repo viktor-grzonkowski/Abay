@@ -52,7 +52,7 @@ namespace Database
                             using (SqlCommand cmdDos = new SqlCommand("", connection))
                             {
                                 cmdDos.CommandText = "INSERT INTO [Bids] " +
-                                                     "(buyerName, itemId, amount, timestamp, winning) " +
+                                                     "(buyerName, itemId, amount, timestamp, isWinning) " +
                                                      "VALUES " +
                                                      "(@buyerName, @itemId, @amount, @timestamp, @winning)";
 
@@ -104,7 +104,7 @@ namespace Database
                     {
                         cmd.CommandText = "SELECT * " +
                                           "FROM [Bids] " +
-                                          "WHERE itemId = @itemId AND winning = @winning " +
+                                          "WHERE itemId = @itemId AND isWinning = @winning " +
                                           "ORDER BY amount DESC";
                         cmd.Parameters.AddWithValue("@itemId", itemId);
                         cmd.Parameters.AddWithValue("@winning", winningBid);
@@ -121,7 +121,7 @@ namespace Database
                                     ItemId = (int)reader["itemId"],
                                     Amount = double.Parse(reader["amount"].ToString()),
                                     Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
-                                    Winning = (bool)reader["winning"]
+                                    Winning = (bool)reader["isWinning"]
                                 };
 
                                 bids.Add(bid);
@@ -173,7 +173,7 @@ namespace Database
                                     ItemId = (int)reader["itemId"],
                                     Amount = double.Parse(reader["amount"].ToString()),
                                     Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
-                                    Winning = (bool)reader["winning"]
+                                    Winning = (bool)reader["isWinning"]
                                 };
 
                                 bids.Add(bid);

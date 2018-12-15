@@ -40,7 +40,7 @@ namespace Database
                                     FirstName = (string)reader["firstName"],
                                     LastName = (string)reader["lastName"],
                                     Email = (string)reader["email"],
-                                    Admin = (bool)reader["admin"]
+                                    Admin = (bool)reader["isAdmin"]
                                 };
                             }
                         }
@@ -108,7 +108,7 @@ namespace Database
                 {
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
-                        cmd.CommandText = "INSERT INTO [User] (username, firstName, lastName, password, email, admin, salt) " +
+                        cmd.CommandText = "INSERT INTO [User] (username, firstName, lastName, password, email, isAdmin, salt) " +
                                             "VALUES " +
                                             "(@username, @firstName, @lastName, @password, @email, @admin, @salt)";
                         cmd.Parameters.AddWithValue("@username", user.UserName);
@@ -189,7 +189,8 @@ namespace Database
                                     UserName = (string)reader["username"],
                                     FirstName = (string)reader["firstName"],
                                     LastName = (string)reader["lastName"],
-                                    Email = (string)reader["email"]
+                                    Email = (string)reader["email"],
+                                    Admin = (bool)reader["isAdmin"]
                                 };
                             }
                         }

@@ -5,73 +5,120 @@
 }
 
 <h2>Listing</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            Image
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InitialPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WinningBid.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SellerUser.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WinningBid.BuyerName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="container">
+    <table class="table">
         <tr>
-            <td>
-                <img class="listing-img" src="~/Images/ItemsOnSell/@item.ImagePath" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InitialPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WinningBid.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SellerUser.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WinningBid.BuyerName)
-            </td>
-            <td>
-                @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id }, null)
-            </td>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InitialPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WinningBid.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SellerUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WinningBid.BuyerName)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img class="listing-img" src="~/Images/ItemsOnSell/@item.ImagePath" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InitialPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WinningBid.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellerUser.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WinningBid.BuyerName)
+                </td>
+                <td>
+                    @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+
+
+
+
+
+@*
+    <div class="container">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li class="no-style">
+
+
+                    <div class="col-xs-3">
+                        <img class="listing-img" src="~/Images/ItemsOnSell/@item.ImagePath" />
+                    </div>
+
+
+                    <div class="col-xs-8 item-info">
+
+                        <h3>@item.Name</h3>
+                        <span>Seller: @item.SellerUser.UserName</span>
+                        <div>
+                            <span>Start price: @item.InitialPrice $</span>
+                        </div>
+                        <div>
+                            @if (item.WinningBid != null)
+                            {
+                                <span>Highest offer: @item.WinningBid.Amount $</span>
+                            }
+
+                        </div>
+                        <span @Html.ActionLink("Bid", "Bid", "Item", new { itemId = item.Id }, null) />
+                    </div>
+                    <hr>
+
+                </li>
+            }
+        </ul>
+    </div>
+*@
+
+
+
