@@ -52,12 +52,5 @@ namespace DedicatedClient
         {
             Login();
         }
-        private void txtField_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-            {
-                Login();
-            }
-        }
     }
 }
