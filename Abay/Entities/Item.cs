@@ -60,7 +60,7 @@ namespace Entities
                 this._id == other._id &&
                 this._initialPrice == other._initialPrice &&
                 this._name.Equals(other._name) &&
-                this._sellerUser.Equals(other._sellerUser) &&
+                this._sellerUser.UserName.Equals(other._sellerUser.UserName) &&
                 this._startDate.Equals(other._startDate) &&
                 this._state == other._state);
     }

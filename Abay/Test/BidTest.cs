@@ -1,6 +1,7 @@
 ﻿using Controller;
 using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -11,6 +12,7 @@ namespace Test
         private ItemController itemCtrl;
         private BidController bidCtrl;
         private User testSeller;
+        private User testBidder;
         private Item testItem;
 
         [TestInitialize]
@@ -20,9 +22,7 @@ namespace Test
             itemCtrl = new ItemController();
             bidCtrl = new BidController();
 
-            userCtrl = new UserController();
-            itemCtrl = new ItemController();
-
+            //TestSeller
             testSeller = new User
             {
                 UserName = "TestSeller",
@@ -32,10 +32,22 @@ namespace Test
                 Email = "TestSellerEmail@gmail.com",
                 Admin = false
             };
-
             userCtrl.CreateUser(testSeller);
-            testSeller = userCtrl.Login("TestSeller", "TestPassword");
 
+            //TestBidder
+            testBidder = new User
+            {
+                UserName = "TestBidder",
+                FirstName = "TestFirstName",
+                LastName = "TestLastName",
+                Password = "TestPassword",
+                Email = "TestBidderEmail@gmail.com",
+                Admin = false
+            };
+            userCtrl.CreateUser(testBidder);
+
+            //TestItem
+            testSeller = userCtrl.Login(testSeller.UserName, testSeller.Password);
             int itemId = itemCtrl.CreateItem(
                 "TestItem",
                 "This is a test item",
@@ -45,6 +57,8 @@ namespace Test
                 3,
                 "");
             testItem = itemCtrl.GetItemById(itemId);
+
+            testSeller.Password = "TestPassword";
         }
         [TestCleanup]
         public void TestClean()
@@ -57,101 +71,113 @@ namespace Test
         [TestMethod]
         public void Bid_ExpectedScenario()
         {
-            User bidder = new User
-            {
-                UserName = "TestBidder",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                Password = "TestPassword",
-                Email = "TestBidderEmail@gmail.com",
-                Admin = false
-            };
-            userCtrl.CreateUser(bidder);
+            //Arrange
+            testBidder = userCtrl.Login(testBidder.UserName, testBidder.Password);
 
-            bidder = userCtrl.Login("TestBidder", "TestPassword");
+            double amount = testItem.InitialPrice + 1;
+            string token = testBidder.LoginToken.SecureToken;
 
-            bool success = bidCtrl.Bid(testItem.Id, 40, bidder.LoginToken.SecureToken);
+            //Act
+            bool success = bidCtrl.Bid(testItem.Id, amount, token);
+
+            //Assert
             Assert.IsTrue(success, "Bid was not placed!");
         }
         [TestMethod]
         public void Bid_SellerBidderIsTheSame_ReturnsFalse()
         {
-            bool success = bidCtrl.Bid(testItem.Id, 40, testSeller.LoginToken.SecureToken);
+            //Arrange
+            testSeller = userCtrl.Login(testSeller.UserName, testSeller.Password);
 
-            Assert.IsFalse(success, "The seller and the bidder is the same user!");
+            string token = testSeller.LoginToken.SecureToken;
+
+            //Act
+            bool success = bidCtrl.Bid(testItem.Id, 40, token);
+
+            //Assert
+            Assert.IsFalse(success, "Despite the seller and bidder are the same, the bid was placed!");
         }
         [TestMethod]
         public void Bid_AmountLowerThanInitialPrice_ReturnsFalse()
         {
-            User bidder = new User
-            {
-                UserName = "TestBidder",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                Password = "TestPassword",
-                Email = "TestBidderEmail@gmail.com",
-                Admin = false
-            };
-            userCtrl.CreateUser(bidder);
+            //Arrange
+            testBidder = userCtrl.Login(testBidder.UserName, testBidder.Password);
 
-            bidder = userCtrl.Login("TestBidder", "TestPassword");
+            double amount = testItem.InitialPrice - 1;
+            string token = testBidder.LoginToken.SecureToken;
 
-            bool success = bidCtrl.Bid(testItem.Id, testItem.InitialPrice-1, bidder.LoginToken.SecureToken);
+            //Act
+            bool success = bidCtrl.Bid(testItem.Id, amount, token);
 
-            Assert.IsFalse(success, "The bid amount is lower than the initialPrice!");
+            //Assert
+            Assert.IsFalse(success, "Despite the amount was lower then the initial price, the bid was placed!");
         }
         [TestMethod]
         public void Bid_AmountLowerThanHighestBid_ReturnsFalse()
         {
-            User bidder = new User
-            {
-                UserName = "TestBidder",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                Password = "TestPassword",
-                Email = "TestBidderEmail@gmail.com",
-                Admin = false
-            };
-            userCtrl.CreateUser(bidder);
+            //Arrange
+            testBidder = userCtrl.Login(testBidder.UserName, testBidder.Password);
 
-            bidder = userCtrl.Login("TestBidder", "TestPassword");
+            double amount = testItem.InitialPrice + 2;
+            string token = testBidder.LoginToken.SecureToken;
 
-            bidCtrl.Bid(testItem.Id, testItem.InitialPrice + 2, bidder.LoginToken.SecureToken);
+            //Making the first, only and highest bid for the testItem
+            bidCtrl.Bid(testItem.Id, amount, token);
+
+            //Refreshing information (winning bid) on the testItem
             testItem = itemCtrl.GetItemById(testItem.Id);
 
-            bool success = bidCtrl.Bid(testItem.Id, testItem.WinningBid.Amount - 1, bidder.LoginToken.SecureToken);
+            //Bid under the highest bid
+            amount = testItem.WinningBid.Amount - 1;
 
-            Assert.IsFalse(success, "The bid amount is lower than the highest bid!");
+            //Act
+            bool success = bidCtrl.Bid(testItem.Id, amount, token);
+
+            //Assert
+            Assert.IsFalse(success, "Despite the amount was lower then highest bid, the bid was placed!");
         }
         [TestMethod]
         public void Bid_AfterEndDate_ReturnsFalse()
         {
-            int itemId = itemCtrl.CreateItem(
-                "TestItem",
-                "This is a test item",
-                10,
-                1,
-                testSeller.LoginToken.SecureToken,
-                0,
+            //Arrange
+            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item",
+                10, 1, testSeller.LoginToken.SecureToken,
+                0, //The duration is set to 0, so it will isntantly expire
                 "");
             testItem = itemCtrl.GetItemById(itemId);
 
-            User bidder = new User
+            testBidder = userCtrl.Login(testBidder.UserName, testBidder.Password);
+
+            double amount = testItem.InitialPrice + 1;
+            string token = testBidder.LoginToken.SecureToken;
+
+            //Act
+            bool success = bidCtrl.Bid(testItem.Id, amount, token);
+
+            //Assert
+            Assert.IsFalse(success, "Despite the bid was made after the expiration date, the bid was placed!");
+        }
+        [DataTestMethod]
+        [DataRow(5)]
+        [DataRow(8)]
+        public void GetAllBidsByItem_ExpectedResults(int itemId)
+        {
+            //Arrange
+            List<Bid> bids = bidCtrl.GetAllBidsByItem(itemId);
+
+            //Act
+            bool success = true;
+            for (int i = 0; i < bids.Count; i++)
             {
-                UserName = "TestBidder",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                Password = "TestPassword",
-                Email = "TestBidderEmail@gmail.com",
-                Admin = false
-            };
-            userCtrl.CreateUser(bidder);
+                if (bids[i].ItemId != itemId)
+                {
+                    success = false;
+                    break;
+                }
+            }
 
-            bidder = userCtrl.Login("TestBidder", "TestPassword");
-
-            bool success = bidCtrl.Bid(testItem.Id, testItem.InitialPrice + 1, bidder.LoginToken.SecureToken);
-
-            Assert.IsFalse(success, "The bid is not expired!");
+            //Assert
+            Assert.IsTrue(success, "Not all bids were associated with the Item!");
         }
     }
 }

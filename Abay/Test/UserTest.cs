@@ -16,6 +16,7 @@ namespace Test
         {
             userCtrl = new UserController();
 
+            //TestUser
             testUser = new User
             {
                 UserName = "TestUser",
@@ -25,10 +26,10 @@ namespace Test
                 Email = "TestEmail@gmail.com",
                 Admin = false
             };
-
             userCtrl.CreateUser(testUser);
 
-            testUser = userCtrl.Login("TestUser", "TestPassword");
+            testUser = userCtrl.Login(testUser.UserName, testUser.Password);
+            testUser.Password = "TestPassword";
         }
         [TestCleanup]
         public void TestClean()
@@ -39,28 +40,46 @@ namespace Test
         [TestMethod]
         public void UserLogin_ExpectedScenario()
         {
-            User user = userCtrl.Login("TestUser", "TestPassword");
+            //Arrange
+            string username = testUser.UserName;
+            string password = testUser.Password;
 
-            Assert.IsNotNull(user.LoginToken, "User could not login no token was generated!");
+            //Act
+            User user = userCtrl.Login(username, password);
+
+            //Assert
+            Assert.IsNotNull(user.LoginToken, "User was not logged in!");
         }
         [TestMethod]
-        public void UserLogin_AnoutherizedUser_ReturnFalse()
+        public void UserLogin_AnautherizedUser_ReturnFalse()
         {
-            User user = userCtrl.Login("RandomUserThatDoesNotExist", "Password");
+            //Arrange
+            string username = "AnauthorizedUser";
+            string password = "password";
 
-            Assert.IsNull(user, "User shouldn't exist in the database!");
+            //Act
+            User user = userCtrl.Login(username, password);
+
+            //Assert
+            Assert.IsNull(user, "Anautherized user was logged in!");
         }
         [TestMethod]
         public void GetUserInformation_ExpectedScenario()
         {
-            User user = userCtrl.GetUserInformation("TestUser");
+            //Arrange
+            string username = testUser.UserName;
+            User user = userCtrl.GetUserInformation(username);
 
-            Assert.IsNotNull(user, "There is no such user!");
-            Assert.AreEqual(user.FirstName, testUser.FirstName, "It's not the right user!");
+            //Act
+            bool success = user.Equals(testUser);
+
+            //Assert
+            Assert.IsTrue(success, "The user information is incorrect!");
         }
         [TestMethod]
         public void CreateUser_ExpectedScenario()
         {
+            //Arrange
             User user = new User
             {
                 UserName = "Test123456",
@@ -71,47 +90,59 @@ namespace Test
                 Admin = false
             };
 
+            //Act
             int success = userCtrl.CreateUser(user);
 
-            Assert.AreEqual(success, 1, "The user wasn't created!");
+            //Assert
+            Assert.AreEqual(success, 1, "The User was not created!");
         }
         [TestMethod]
         public void CreateUser_UsernameAlreadyUsed()
         {
+            //Arrange
             User user = new User
             {
                 UserName = testUser.UserName,
                 Password = "TestPassword"
             };
 
+            //Act
             int success = userCtrl.CreateUser(user);
 
-            Assert.AreEqual(success, -3, "The user should already exist!");
+            //Assert
+            Assert.AreEqual(success, -3, "The username is not used!");
         }
         [TestMethod]
         public void CreateUser_PasswordTooShort()
         {
+            //Arrange
             User user = new User
             {
                 UserName = "Asa123456",
                 Password = ""
             };
 
+            //Act
             int success = userCtrl.CreateUser(user);
 
-            Assert.AreEqual(success, -2, "The password should be too short!");
+            //Assert
+            Assert.AreEqual(success, -2, "The password is long enough!");
         }
         [TestMethod]
         public void CreateUser_UsernameTooShort()
         {
+            //Arrange
             User user = new User
             {
-                UserName = ""
+                UserName = "",
+                Password = "TestPassword"
             };
 
+            //Act
             int success = userCtrl.CreateUser(user);
 
-            Assert.AreEqual(success, -1, "The username should be too short!");
+            //Assert
+            Assert.AreEqual(success, -1, "The username is long enough!");
         }
     }
 }

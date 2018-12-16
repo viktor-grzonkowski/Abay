@@ -20,6 +20,7 @@ namespace Test
             userCtrl = new UserController();
             itemCtrl = new ItemController();
 
+            //TestUser
             testUser = new User
             {
                 UserName = "TestUser",
@@ -29,10 +30,11 @@ namespace Test
                 Email = "TestEmail@gmail.com",
                 Admin = false
             };
-
             userCtrl.CreateUser(testUser);
-            testUser = userCtrl.Login("TestUser", "TestPassword");
 
+            testUser = userCtrl.Login(testUser.UserName, testUser.Password);
+
+            //TestItem
             int itemId = itemCtrl.CreateItem(
                 "TestItem",
                 "This is a test item",
@@ -53,85 +55,120 @@ namespace Test
         [TestMethod]
         public void CreateItem_ExpectedScenario()
         {
-            User user = userCtrl.Login("TestUser", "TestPassword");
+            //Arrange
+            string token = testUser.LoginToken.SecureToken;
+            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, token, 3, "");
 
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, user.LoginToken.SecureToken, 3, "");
-            Assert.IsTrue(itemId >= 0, "Item was not created!");
-
+            //Act
             Item item = itemCtrl.GetItemById(itemId);
-            Assert.IsNotNull(item, "Item was not found!");
+
+            //Assert
+            Assert.IsNotNull(item, "Item was not created!");
         }
         [TestMethod]
         public void CreateItem_WrongCategory_Error()
         {
-            User user = userCtrl.Login("TestUser", "TestPassword");
+            //Arrange
+            string token = testUser.LoginToken.SecureToken;
+            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, -1, token, 3, "");
 
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, -1, user.LoginToken.SecureToken, 3, "");
-            Assert.AreEqual(itemId, -1, "Item was created!");
+            //Act
+            Item item = itemCtrl.GetItemById(itemId);
+
+            //Assert
+            Assert.IsNull(item, "Item was created!");
         }
         [TestMethod]
         public void CreateItem_WrongToken_Error()
         {
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, "", 3, "");
-            Assert.AreEqual(itemId, -1, "Item was created!");
+            //Arrange
+            string token = "INVALID_TOKEN";
+            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, token, 3, "");
+
+            //Act
+            Item item = itemCtrl.GetItemById(itemId);
+
+            //Assert
+            Assert.IsNull(item, "Item was created!");
         }
         [TestMethod]
         public void SearchForItem_ExpectedScenario()
         {
-            List<Item> searchResult = itemCtrl.SearchItems("TestItem", -1);
+            //Arrange
+            List<Item> searchResult = itemCtrl.SearchItems(testItem.Name, -1);
 
-            string itemName = searchResult[0].Name;
+            //Act
+            Item item = searchResult[0];
 
-            Assert.AreEqual(itemName, "TestItem", "It's not the same Item!");
+            //Assert
+            Assert.IsTrue(item.Equals(testItem), "The item found is different!");
         }
         [TestMethod]
         public void UpdateItem_ExpectedScenario()
         {
-            User user = userCtrl.Login("TestUser", "TestPassword");
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, user.LoginToken.SecureToken, 3, "");
-            Item item = itemCtrl.GetItemById(itemId);
+            //Arrange
+            string newName = "TestItem_Updated";
+            string token = testUser.LoginToken.SecureToken;
 
-            bool success = itemCtrl.UpdateItem(itemId, user.LoginToken.SecureToken, "TestItem_Updated", "", 1);
-            Assert.IsTrue(success, "The update was unsuccessful!");
+            //Act
+            testItem.Name = newName;
+            bool success = itemCtrl.UpdateItem(testItem.Id, token, testItem.Name, testItem.Description, testItem.Category.Id);
+            
+            //Assert
+            Assert.IsTrue(success, "The item was not updated!");
 
-            item = itemCtrl.GetItemById(itemId);
-            Assert.AreEqual(item.Name, "TestItem_Updated", "The name of the Item was not updated!");
+            //Act
+            Item item = itemCtrl.GetItemById(testItem.Id);
+
+            //Assert
+            Assert.IsTrue(item.Equals(testItem), "The name of the Item was not updated!");
         }
         [TestMethod]
         public void UpdateItem_WrongCategory_Error()
         {
-            User user = userCtrl.Login("TestUser", "TestPassword");
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, user.LoginToken.SecureToken, 3, "");
-            Item item = itemCtrl.GetItemById(itemId);
+            //Arrange
+            string token = testUser.LoginToken.SecureToken;
 
-            bool success = itemCtrl.UpdateItem(itemId, user.LoginToken.SecureToken, "TestItem_Updated", "", -1);
-            Assert.IsFalse(success, "The update was successful!");
+            //Act
+            bool success = itemCtrl.UpdateItem(testItem.Id, token, testItem.Name, testItem.Description, -1);
+
+            //Assert
+            Assert.IsFalse(success, "The item was updated!");
         }
         [TestMethod]
         public void DeleteItem_ExpectedScenario()
         {
-            User user = userCtrl.Login("TestUser", "TestPassword");
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, user.LoginToken.SecureToken, 3, "");
-            Item item = itemCtrl.GetItemById(itemId);
+            //Arrange
+            string token = testUser.LoginToken.SecureToken;
 
-            bool success = itemCtrl.DeleteItem(itemId, user.LoginToken.SecureToken);
-            Assert.IsTrue(success, "The delete was unsuccessful!");
+            //Act
+            bool success = itemCtrl.DeleteItem(testItem.Id, token);
+
+            //Assert
+            Assert.IsTrue(success, "The Item was deleted!");
         }
-        [TestMethod]
-        public void GetAllItemsByCategory_ExpectedScenario()
+        [DataTestMethod]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(4)]
+        public void GetAllItemsByCategory_ExpectedScenario(int categoryId)
         {
+            //Arrange
+            List<Item> items = itemCtrl.GetAllActiveItemsByCategory(categoryId);
+
+            //Act
             bool success = true;
-            List<Item> items = itemCtrl.GetAllActiveItemsByCategory(1);
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Category.Id != 1)
+                if (items[i].Category.Id != categoryId)
                 {
                     success = false;
                     break;
                 }
             }
 
-            Assert.IsTrue(success, "There was one or more Item which is not in that Category!");
+            //Assert
+            Assert.IsTrue(success, "Not all items were associated with the Category!");
         }
     }
 }

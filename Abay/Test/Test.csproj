@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="TestHelper.cs" />
     <Compile Include="ItemTest.cs" />
+    <Compile Include="CategoryTest.cs" />
+    <Compile Include="TokenTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="BidTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
