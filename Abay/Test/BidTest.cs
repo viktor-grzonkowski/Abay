@@ -25,9 +25,9 @@ namespace Test
             //TestSeller
             testSeller = new User
             {
-                UserName = "TestSeller",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
+                UserName = "_Test__Seller",
+                FirstName = "FirstName",
+                LastName = "LastName",
                 Password = "TestPassword",
                 Email = "TestSellerEmail@gmail.com",
                 Admin = false
@@ -37,7 +37,7 @@ namespace Test
             //TestBidder
             testBidder = new User
             {
-                UserName = "TestBidder",
+                UserName = "_Test__Bidder",
                 FirstName = "TestFirstName",
                 LastName = "TestLastName",
                 Password = "TestPassword",
@@ -49,7 +49,7 @@ namespace Test
             //TestItem
             testSeller = userCtrl.Login(testSeller.UserName, testSeller.Password);
             int itemId = itemCtrl.CreateItem(
-                "TestItem",
+                "_Test__Item",
                 "This is a test item",
                 10,
                 1,
@@ -65,7 +65,7 @@ namespace Test
         {
             TestHelper.DeleteRows("User", "username");
             TestHelper.DeleteRows("Item", "name");
-            TestHelper.DeleteRows("Bids", "buyerName");
+            TestHelper.DeleteRows("Bid", "buyerName");
         }
 
         [TestMethod]
@@ -140,7 +140,7 @@ namespace Test
         public void Bid_AfterEndDate_ReturnsFalse()
         {
             //Arrange
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item",
+            int itemId = itemCtrl.CreateItem("_Test__Item", "This is a test item",
                 10, 1, testSeller.LoginToken.SecureToken,
                 0, //The duration is set to 0, so it will isntantly expire
                 "");

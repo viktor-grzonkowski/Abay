@@ -21,7 +21,7 @@ namespace Test
             //TestUser
             testUser = new User
             {
-                UserName = "TestUser",
+                UserName = "_Test__User",
                 FirstName = "TestFirstName",
                 LastName = "TestLastName",
                 Password = "TestPassword",

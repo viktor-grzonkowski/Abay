@@ -37,7 +37,7 @@ namespace Database
                             // Execute first command for updating the previous winning bid
                             using (SqlCommand cmdUno = new SqlCommand("",connection))
                             {
-                                cmdUno.CommandText = "UPDATE [Bids] " +
+                                cmdUno.CommandText = "UPDATE [Bid] " +
                                                      "SET winning = @winning " +
                                                      "WHERE itemId = @itemId";
                                 cmdUno.Parameters.AddWithValue("@itemId", prevBid.ItemId);
@@ -51,7 +51,7 @@ namespace Database
                             // Execute seccond command to insert the new winning bid
                             using (SqlCommand cmdDos = new SqlCommand("", connection))
                             {
-                                cmdDos.CommandText = "INSERT INTO [Bids] " +
+                                cmdDos.CommandText = "INSERT INTO [Bid] " +
                                                      "(buyerName, itemId, amount, timestamp, isWinning) " +
                                                      "VALUES " +
                                                      "(@buyerName, @itemId, @amount, @timestamp, @winning)";
@@ -103,7 +103,7 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                          "FROM [Bids] " +
+                                          "FROM [Bid] " +
                                           "WHERE itemId = @itemId AND isWinning = @winning " +
                                           "ORDER BY amount DESC";
                         cmd.Parameters.AddWithValue("@itemId", itemId);
@@ -156,7 +156,7 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT * " +
-                                          "FROM [Bids] " +
+                                          "FROM [Bid] " +
                                           "WHERE itemId = @itemId " +
                                           "ORDER BY amount DESC";
                         cmd.Parameters.AddWithValue("@itemId", itemId);

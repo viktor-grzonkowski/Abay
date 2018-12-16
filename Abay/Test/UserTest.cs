@@ -19,7 +19,7 @@ namespace Test
             //TestUser
             testUser = new User
             {
-                UserName = "TestUser",
+                UserName = "_Test__User",
                 FirstName = "TestFirstName",
                 LastName = "TestLastName",
                 Password = "TestPassword",
@@ -82,7 +82,7 @@ namespace Test
             //Arrange
             User user = new User
             {
-                UserName = "Test123456",
+                UserName = "_Test__123456",
                 FirstName = "Test",
                 LastName = "Test",
                 Password = "123qweasd",
@@ -118,7 +118,7 @@ namespace Test
             //Arrange
             User user = new User
             {
-                UserName = "Asa123456",
+                UserName = "_Test__123456",
                 Password = ""
             };
 

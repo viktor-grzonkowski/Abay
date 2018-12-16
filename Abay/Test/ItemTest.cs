@@ -23,7 +23,7 @@ namespace Test
             //TestUser
             testUser = new User
             {
-                UserName = "TestUser",
+                UserName = "_Test__User",
                 FirstName = "TestFirstName",
                 LastName = "TestLastName",
                 Password = "TestPassword",
@@ -36,7 +36,7 @@ namespace Test
 
             //TestItem
             int itemId = itemCtrl.CreateItem(
-                "TestItem",
+                "_Test__Item",
                 "This is a test item",
                 10,
                 1,
@@ -57,7 +57,7 @@ namespace Test
         {
             //Arrange
             string token = testUser.LoginToken.SecureToken;
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, token, 3, "");
+            int itemId = itemCtrl.CreateItem("_Test__Item", "This is a test item", 10, 1, token, 3, "");
 
             //Act
             Item item = itemCtrl.GetItemById(itemId);
@@ -70,7 +70,7 @@ namespace Test
         {
             //Arrange
             string token = testUser.LoginToken.SecureToken;
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, -1, token, 3, "");
+            int itemId = itemCtrl.CreateItem("_Test__Item", "This is a test item", 10, -1, token, 3, "");
 
             //Act
             Item item = itemCtrl.GetItemById(itemId);
@@ -83,7 +83,7 @@ namespace Test
         {
             //Arrange
             string token = "INVALID_TOKEN";
-            int itemId = itemCtrl.CreateItem("TestItem", "This is a test item", 10, 1, token, 3, "");
+            int itemId = itemCtrl.CreateItem("_Test__Item", "This is a test item", 10, 1, token, 3, "");
 
             //Act
             Item item = itemCtrl.GetItemById(itemId);
@@ -107,7 +107,7 @@ namespace Test
         public void UpdateItem_ExpectedScenario()
         {
             //Arrange
-            string newName = "TestItem_Updated";
+            string newName = "_Test__Item_Updated";
             string token = testUser.LoginToken.SecureToken;
 
             //Act

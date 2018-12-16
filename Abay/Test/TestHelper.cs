@@ -18,7 +18,7 @@ namespace Test
                 {
                     cmd.CommandText = String.Format("DELETE " +
                                       "FROM [{0}] " +
-                                      "WHERE {1} LIKE 'test%';", tableName, columnName);
+                                      "WHERE {1} LIKE '_Test__%';", tableName, columnName);
                     cmd.ExecuteNonQuery();
                 }
             }
