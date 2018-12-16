@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E85863AA-4AD5-469A-B1BB-BCBE02CDCE1B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DedicatedCliend</RootNamespace>
-    <AssemblyName>DedicatedCliend</AssemblyName>
+    <RootNamespace>DedicatedClient</RootNamespace>
+    <AssemblyName>DedicatedClient</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -105,13 +105,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\ItemServiceReference\DedicatedCliend.ItemServiceReference.Bid.datasource">
+    <None Include="Connected Services\ItemServiceReference\DedicatedClient.ItemServiceReference.Bid.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ItemServiceReference\DedicatedCliend.ItemServiceReference.Item.datasource">
+    <None Include="Connected Services\ItemServiceReference\DedicatedClient.ItemServiceReference.Item.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ItemServiceReference\DedicatedCliend.ItemServiceReference.ItemCategory.datasource">
+    <None Include="Connected Services\ItemServiceReference\DedicatedClient.ItemServiceReference.ItemCategory.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ItemServiceReference\Entities.xsd">
@@ -124,7 +124,7 @@
     <None Include="Connected Services\ItemServiceReference\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\UserServiceReference\DedicatedCliend.UserServiceReference.User.datasource">
+    <None Include="Connected Services\UserServiceReference\DedicatedClient.UserServiceReference.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\UserServiceReference\Entities.xsd">

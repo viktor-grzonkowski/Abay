@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DedicatedCliend.UserServiceReference {
+namespace DedicatedClient.UserServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -35,7 +35,7 @@ namespace DedicatedCliend.UserServiceReference {
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DedicatedCliend.UserServiceReference.Token LoginTokenField;
+        private DedicatedClient.UserServiceReference.Token LoginTokenField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
@@ -106,7 +106,7 @@ namespace DedicatedCliend.UserServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DedicatedCliend.UserServiceReference.Token LoginToken {
+        public DedicatedClient.UserServiceReference.Token LoginToken {
             get {
                 return this.LoginTokenField;
             }
@@ -236,10 +236,10 @@ namespace DedicatedCliend.UserServiceReference {
     public interface IUserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
-        DedicatedCliend.UserServiceReference.User Login(string userName, string password);
+        DedicatedClient.UserServiceReference.User Login(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.UserServiceReference.User> LoginAsync(string userName, string password);
+        System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> LoginAsync(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CreateUser", ReplyAction="http://tempuri.org/IUserService/CreateUserResponse")]
         int CreateUser(string userName, string firstName, string lastName, string password, string email);
@@ -248,10 +248,10 @@ namespace DedicatedCliend.UserServiceReference {
         System.Threading.Tasks.Task<int> CreateUserAsync(string userName, string firstName, string lastName, string password, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
-        DedicatedCliend.UserServiceReference.User GetUserByToken(string token);
+        DedicatedClient.UserServiceReference.User GetUserByToken(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByToken", ReplyAction="http://tempuri.org/IUserService/GetUserByTokenResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.UserServiceReference.User> GetUserByTokenAsync(string token);
+        System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> GetUserByTokenAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/CheckTokenTime", ReplyAction="http://tempuri.org/IUserService/CheckTokenTimeResponse")]
         bool CheckTokenTime(string token);
@@ -261,12 +261,12 @@ namespace DedicatedCliend.UserServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IUserServiceChannel : DedicatedCliend.UserServiceReference.IUserService, System.ServiceModel.IClientChannel {
+    public interface IUserServiceChannel : DedicatedClient.UserServiceReference.IUserService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class UserServiceClient : System.ServiceModel.ClientBase<DedicatedCliend.UserServiceReference.IUserService>, DedicatedCliend.UserServiceReference.IUserService {
+    public partial class UserServiceClient : System.ServiceModel.ClientBase<DedicatedClient.UserServiceReference.IUserService>, DedicatedClient.UserServiceReference.IUserService {
         
         public UserServiceClient() {
         }
@@ -287,11 +287,11 @@ namespace DedicatedCliend.UserServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public DedicatedCliend.UserServiceReference.User Login(string userName, string password) {
+        public DedicatedClient.UserServiceReference.User Login(string userName, string password) {
             return base.Channel.Login(userName, password);
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.UserServiceReference.User> LoginAsync(string userName, string password) {
+        public System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> LoginAsync(string userName, string password) {
             return base.Channel.LoginAsync(userName, password);
         }
         
@@ -303,11 +303,11 @@ namespace DedicatedCliend.UserServiceReference {
             return base.Channel.CreateUserAsync(userName, firstName, lastName, password, email);
         }
         
-        public DedicatedCliend.UserServiceReference.User GetUserByToken(string token) {
+        public DedicatedClient.UserServiceReference.User GetUserByToken(string token) {
             return base.Channel.GetUserByToken(token);
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.UserServiceReference.User> GetUserByTokenAsync(string token) {
+        public System.Threading.Tasks.Task<DedicatedClient.UserServiceReference.User> GetUserByTokenAsync(string token) {
             return base.Channel.GetUserByTokenAsync(token);
         }
         

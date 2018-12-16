@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using DedicatedCliend.ItemServiceReference;
 using System.ComponentModel;
+using DedicatedClient.ItemServiceReference;
 
 namespace DedicatedClient
 {
@@ -12,18 +12,30 @@ namespace DedicatedClient
         private BackgroundWorker updateWorker;
         private bool isUpdating;
         private Item selectedItem;
-        private DedicatedCliend.UserServiceReference.User user;
+        private User user;
         private BackgroundWorker searchWorker;
         private bool isSearching;
         private string lastKeyword;
 
-        public MainWindow(DedicatedCliend.UserServiceReference.User user)
+        public MainWindow(DedicatedClient.UserServiceReference.User user)
         {
             InitializeComponent();
 
             itemService = new ItemServiceClient("NetTcpBinding_IItemService");
 
-            this.user = user;
+            this.user = new User() {
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Admin = user.Admin,
+                LoginToken = new Token() {
+                    UserName = user.LoginToken.UserName,
+                    CreateDate = user.LoginToken.CreateDate,
+                    SecureToken = user.LoginToken.SecureToken
+                }
+            };
 
             updateWorker = new BackgroundWorker
             {
@@ -67,6 +79,34 @@ namespace DedicatedClient
             isUpdating = false;
         }
 
+        private void Search()
+        {
+            if (isSearching) return;
+
+            string keyword = txtSearch.Text.Trim();
+            if (keyword == lastKeyword) return;
+
+            isSearching = true;
+            lastKeyword = keyword;
+
+            searchWorker.RunWorkerAsync(keyword);
+        }
+        private void SearchWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string keyword = (string)e.Argument;
+            Item[] results = itemService.SearchItems(keyword, -1);
+            e.Result = new ObservableCollection<Item>(results);
+        }
+        private void SearchWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            dgItems.DataContext = (ObservableCollection<Item>)e.Result;
+
+            isSearching = false;
+
+            //check if there was another request submitted, while it was searching
+            Search();
+        }
+
         private void FillFormWithItem(Item item)
         {
             lblId.Content = item.Id;
@@ -95,33 +135,7 @@ namespace DedicatedClient
         {
             return selectedItem != null;
         }
-        private void Search()
-        {
-            if (isSearching) return;
-            
-            string keyword = txtSearch.Text.Trim();
-            if (keyword == lastKeyword) return;
 
-            isSearching = true;
-            lastKeyword = keyword;
-
-            searchWorker.RunWorkerAsync(keyword);
-        }
-        private void SearchWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            string keyword = (string)e.Argument;
-            Item[] results = itemService.SearchItems(keyword, -1);
-            e.Result = new ObservableCollection<Item>(results);
-        }
-        private void SearchWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            dgItems.DataContext = (ObservableCollection< Item >)e.Result;
-
-            isSearching = false;
-
-            //check if there was another request submitted, while it was searching
-            Search();
-        }
         private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedItem = (Item)dgItems.SelectedItem;

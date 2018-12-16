@@ -1,7 +1,5 @@
-﻿using DedicatedCliend.UserServiceReference;
-using System.ComponentModel;
+﻿using DedicatedClient.UserServiceReference;
 using System.Windows;
-using System.Windows.Input;
 
 namespace DedicatedClient
 {

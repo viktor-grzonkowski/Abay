@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DedicatedCliend.ItemServiceReference {
+namespace DedicatedClient.ItemServiceReference {
     using System.Runtime.Serialization;
     using System;
-    
-    
+    using DedicatedClient.UserServiceReference;
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Item", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
@@ -23,7 +23,7 @@ namespace DedicatedCliend.ItemServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DedicatedCliend.ItemServiceReference.ItemCategory CategoryField;
+        private DedicatedClient.ItemServiceReference.ItemCategory CategoryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DescriptionField;
@@ -41,10 +41,10 @@ namespace DedicatedCliend.ItemServiceReference {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DedicatedCliend.ItemServiceReference.Bid[] OldBidsField;
+        private DedicatedClient.ItemServiceReference.Bid[] OldBidsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DedicatedCliend.ItemServiceReference.User SellerUserField;
+        private DedicatedClient.ItemServiceReference.User SellerUserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime StartDateField;
@@ -53,7 +53,7 @@ namespace DedicatedCliend.ItemServiceReference {
         private int StateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DedicatedCliend.ItemServiceReference.Bid WinningBidField;
+        private DedicatedClient.ItemServiceReference.Bid WinningBidField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -66,7 +66,7 @@ namespace DedicatedCliend.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DedicatedCliend.ItemServiceReference.ItemCategory Category {
+        public DedicatedClient.ItemServiceReference.ItemCategory Category {
             get {
                 return this.CategoryField;
             }
@@ -144,7 +144,7 @@ namespace DedicatedCliend.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DedicatedCliend.ItemServiceReference.Bid[] OldBids {
+        public DedicatedClient.ItemServiceReference.Bid[] OldBids {
             get {
                 return this.OldBidsField;
             }
@@ -157,7 +157,7 @@ namespace DedicatedCliend.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DedicatedCliend.ItemServiceReference.User SellerUser {
+        public DedicatedClient.ItemServiceReference.User SellerUser {
             get {
                 return this.SellerUserField;
             }
@@ -196,7 +196,7 @@ namespace DedicatedCliend.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DedicatedCliend.ItemServiceReference.Bid WinningBid {
+        public DedicatedClient.ItemServiceReference.Bid WinningBid {
             get {
                 return this.WinningBidField;
             }
@@ -301,7 +301,7 @@ namespace DedicatedCliend.ItemServiceReference {
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private DedicatedCliend.ItemServiceReference.Token LoginTokenField;
+        private DedicatedClient.ItemServiceReference.Token LoginTokenField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
@@ -372,7 +372,7 @@ namespace DedicatedCliend.ItemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public DedicatedCliend.ItemServiceReference.Token LoginToken {
+        public DedicatedClient.ItemServiceReference.Token LoginToken {
             get {
                 return this.LoginTokenField;
             }
@@ -417,6 +417,11 @@ namespace DedicatedCliend.ItemServiceReference {
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public static explicit operator User(UserServiceReference.User v)
+        {
+            throw new NotImplementedException();
         }
     }
     
@@ -629,49 +634,49 @@ namespace DedicatedCliend.ItemServiceReference {
         System.Threading.Tasks.Task<bool> UpdateItemAsync(int itemId, string userToken, string name, string description, int catId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/SearchItems", ReplyAction="http://tempuri.org/IItemService/SearchItemsResponse")]
-        DedicatedCliend.ItemServiceReference.Item[] SearchItems(string value, int categoryId);
+        DedicatedClient.ItemServiceReference.Item[] SearchItems(string value, int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/SearchItems", ReplyAction="http://tempuri.org/IItemService/SearchItemsResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId);
+        System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetItemById", ReplyAction="http://tempuri.org/IItemService/GetItemByIdResponse")]
-        DedicatedCliend.ItemServiceReference.Item GetItemById(int itemId);
+        DedicatedClient.ItemServiceReference.Item GetItemById(int itemId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetItemById", ReplyAction="http://tempuri.org/IItemService/GetItemByIdResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item> GetItemByIdAsync(int itemId);
+        System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item> GetItemByIdAsync(int itemId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllCategories", ReplyAction="http://tempuri.org/IItemService/GetAllCategoriesResponse")]
-        DedicatedCliend.ItemServiceReference.ItemCategory[] GetAllCategories();
+        DedicatedClient.ItemServiceReference.ItemCategory[] GetAllCategories();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllCategories", ReplyAction="http://tempuri.org/IItemService/GetAllCategoriesResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.ItemCategory[]> GetAllCategoriesAsync();
+        System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.ItemCategory[]> GetAllCategoriesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllActiveItemsByCategory", ReplyAction="http://tempuri.org/IItemService/GetAllActiveItemsByCategoryResponse")]
-        DedicatedCliend.ItemServiceReference.Item[] GetAllActiveItemsByCategory(int catId);
+        DedicatedClient.ItemServiceReference.Item[] GetAllActiveItemsByCategory(int catId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllActiveItemsByCategory", ReplyAction="http://tempuri.org/IItemService/GetAllActiveItemsByCategoryResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item[]> GetAllActiveItemsByCategoryAsync(int catId);
+        System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item[]> GetAllActiveItemsByCategoryAsync(int catId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllItems", ReplyAction="http://tempuri.org/IItemService/GetAllItemsResponse")]
-        DedicatedCliend.ItemServiceReference.Item[] GetAllItems();
+        DedicatedClient.ItemServiceReference.Item[] GetAllItems();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllItems", ReplyAction="http://tempuri.org/IItemService/GetAllItemsResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item[]> GetAllItemsAsync();
+        System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item[]> GetAllItemsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllBidsByItem", ReplyAction="http://tempuri.org/IItemService/GetAllBidsByItemResponse")]
-        DedicatedCliend.ItemServiceReference.Bid[] GetAllBidsByItem(int itemId);
+        DedicatedClient.ItemServiceReference.Bid[] GetAllBidsByItem(int itemId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItemService/GetAllBidsByItem", ReplyAction="http://tempuri.org/IItemService/GetAllBidsByItemResponse")]
-        System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Bid[]> GetAllBidsByItemAsync(int itemId);
+        System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Bid[]> GetAllBidsByItemAsync(int itemId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IItemServiceChannel : DedicatedCliend.ItemServiceReference.IItemService, System.ServiceModel.IClientChannel {
+    public interface IItemServiceChannel : DedicatedClient.ItemServiceReference.IItemService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ItemServiceClient : System.ServiceModel.ClientBase<DedicatedCliend.ItemServiceReference.IItemService>, DedicatedCliend.ItemServiceReference.IItemService {
+    public partial class ItemServiceClient : System.ServiceModel.ClientBase<DedicatedClient.ItemServiceReference.IItemService>, DedicatedClient.ItemServiceReference.IItemService {
         
         public ItemServiceClient() {
         }
@@ -716,51 +721,51 @@ namespace DedicatedCliend.ItemServiceReference {
             return base.Channel.UpdateItemAsync(itemId, userToken, name, description, catId);
         }
         
-        public DedicatedCliend.ItemServiceReference.Item[] SearchItems(string value, int categoryId) {
+        public DedicatedClient.ItemServiceReference.Item[] SearchItems(string value, int categoryId) {
             return base.Channel.SearchItems(value, categoryId);
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId) {
+        public System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item[]> SearchItemsAsync(string value, int categoryId) {
             return base.Channel.SearchItemsAsync(value, categoryId);
         }
         
-        public DedicatedCliend.ItemServiceReference.Item GetItemById(int itemId) {
+        public DedicatedClient.ItemServiceReference.Item GetItemById(int itemId) {
             return base.Channel.GetItemById(itemId);
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item> GetItemByIdAsync(int itemId) {
+        public System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item> GetItemByIdAsync(int itemId) {
             return base.Channel.GetItemByIdAsync(itemId);
         }
         
-        public DedicatedCliend.ItemServiceReference.ItemCategory[] GetAllCategories() {
+        public DedicatedClient.ItemServiceReference.ItemCategory[] GetAllCategories() {
             return base.Channel.GetAllCategories();
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.ItemCategory[]> GetAllCategoriesAsync() {
+        public System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.ItemCategory[]> GetAllCategoriesAsync() {
             return base.Channel.GetAllCategoriesAsync();
         }
         
-        public DedicatedCliend.ItemServiceReference.Item[] GetAllActiveItemsByCategory(int catId) {
+        public DedicatedClient.ItemServiceReference.Item[] GetAllActiveItemsByCategory(int catId) {
             return base.Channel.GetAllActiveItemsByCategory(catId);
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item[]> GetAllActiveItemsByCategoryAsync(int catId) {
+        public System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item[]> GetAllActiveItemsByCategoryAsync(int catId) {
             return base.Channel.GetAllActiveItemsByCategoryAsync(catId);
         }
         
-        public DedicatedCliend.ItemServiceReference.Item[] GetAllItems() {
+        public DedicatedClient.ItemServiceReference.Item[] GetAllItems() {
             return base.Channel.GetAllItems();
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Item[]> GetAllItemsAsync() {
+        public System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Item[]> GetAllItemsAsync() {
             return base.Channel.GetAllItemsAsync();
         }
         
-        public DedicatedCliend.ItemServiceReference.Bid[] GetAllBidsByItem(int itemId) {
+        public DedicatedClient.ItemServiceReference.Bid[] GetAllBidsByItem(int itemId) {
             return base.Channel.GetAllBidsByItem(itemId);
         }
         
-        public System.Threading.Tasks.Task<DedicatedCliend.ItemServiceReference.Bid[]> GetAllBidsByItemAsync(int itemId) {
+        public System.Threading.Tasks.Task<DedicatedClient.ItemServiceReference.Bid[]> GetAllBidsByItemAsync(int itemId) {
             return base.Channel.GetAllBidsByItemAsync(itemId);
         }
     }
