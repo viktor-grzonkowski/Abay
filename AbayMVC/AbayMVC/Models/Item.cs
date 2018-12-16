@@ -11,10 +11,6 @@ namespace AbayMVC.Models
     {
         public int ItemId { get; set; }
         public string BuyerName { get; set; }
-
-        [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Please enter valid price")]
-        [DisplayName("Offer ammount")]
         public double Amount { get; set; }
     }
 }
