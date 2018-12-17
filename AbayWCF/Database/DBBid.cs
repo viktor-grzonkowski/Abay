@@ -38,7 +38,7 @@ namespace Database
                             using (SqlCommand cmdUno = new SqlCommand("",connection))
                             {
                                 cmdUno.CommandText = "UPDATE [Bid] " +
-                                                     "SET winning = @winning " +
+                                                     "SET isWinning = @winning " +
                                                      "WHERE itemId = @itemId";
                                 cmdUno.Parameters.AddWithValue("@itemId", prevBid.ItemId);
                                 cmdUno.Parameters.AddWithValue("@winning", prevBid.Winning);

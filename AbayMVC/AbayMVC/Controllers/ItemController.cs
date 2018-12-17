@@ -81,14 +81,14 @@ namespace AbayMVC.Controllers
                     // check if the amount is higher than the previous bid
                     if (viewCollection.WebItem.Amount <= viewCollection.ServiceItem.WinningBid.Amount)
                     {
-                        Information("Your offer is to low! ");
+                        Information("Your offer is too low! ");
                         return View(viewCollection);
                     }
                 }
                 // offer is beneath the initial price
                 if (viewCollection.WebItem.Amount <= viewCollection.ServiceItem.InitialPrice)
                 {
-                    Information("Your offer is to low! ");
+                    Information("Your offer is too low! ");
                     return View(viewCollection);
                 }
                 // seller and buyer is the same

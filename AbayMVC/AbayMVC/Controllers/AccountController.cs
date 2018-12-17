@@ -37,8 +37,8 @@ namespace AbayMVC.Controllers
             if (ModelState.IsValid)
             {
                 /// -3 : Username already in use
-                /// -2 : Password to short
-                /// -1 : Username to short
+                /// -2 : Password too short
+                /// -1 : Username too short
                 ///  0 : Account couldn't be created
                 ///  1 : Account created
                 switch (await Services.Instance.UserClient().CreateUserAsync(model.UserName, model.FirstName, model.LastName, model.Password, model.Email))
@@ -47,10 +47,10 @@ namespace AbayMVC.Controllers
                         Warning("Username is already in use!");
                         return RedirectToAction("Register", "Account");
                     case -2:
-                        Warning("Password is to short!");
+                        Warning("Password is too short!");
                         return RedirectToAction("Register", "Account");
                     case -1:
-                        Warning("Username is to short!");
+                        Warning("Username is too short!");
                         return RedirectToAction("Register", "Account");
                     case 0:
                         Warning("Account couldn't be created!");

@@ -70,9 +70,8 @@ namespace Controller
                                     Timestamp = DateTime.Now,
                                     Winning = true
                                 };
-
-                                bidDb.UpdateBid(currentWinning, newWinning);
-                                return true;
+ 
+                                return bidDb.UpdateBid(currentWinning, newWinning);
                             }
                         }
                     }
