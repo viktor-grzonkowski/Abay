@@ -20,16 +20,33 @@ namespace AbayMVC.Controllers
         Services services = Services.Instance;
 
         [AllowAnonymous]
-        public async Task<ActionResult> Listing()
+        public async Task<ActionResult> Listing(FormCollection collection)
         {
-            string s = Request.QueryString["catId"];
-            int categoryId = -1; 
-            if (!string.IsNullOrEmpty(s))
-            {
-                categoryId = int.Parse(s);
-            }
+            string cat = Request.QueryString["catId"];
+            // Todo
+            //string cat2 = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["catId"];
+            string search = collection["search-text"];
+            int categoryId = -1;
 
+            if (!string.IsNullOrEmpty(cat) )
+            {
+                categoryId = int.Parse(cat);
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return View(await services.ItemClient().SearchItemsAsync(search, categoryId));
+                }
+                return View(await services.ItemClient().GetAllActiveItemsByCategoryAsync(categoryId));
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return View(await services.ItemClient().SearchItemsAsync(search, categoryId));
+                }
+            }
             return View(await services.ItemClient().GetAllActiveItemsByCategoryAsync(categoryId));
+
         }
 
         [AllowAnonymous]

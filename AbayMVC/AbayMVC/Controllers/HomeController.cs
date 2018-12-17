@@ -20,14 +20,14 @@ namespace AbayMVC.Controllers
         [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Message = "Application description page.";
+            ViewBag.Message = "Application description page";
 
             return View();
         }
         [AllowAnonymous]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact page.";
+            ViewBag.Message = "Contact page";
 
             return View();
         }

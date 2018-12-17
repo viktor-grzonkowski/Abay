@@ -40,12 +40,19 @@
                     {
                         <li>@Html.ActionLink("Sell", "Sell", "Item")</li>
                     }
-                    <li class="input-group" style="display: flex;padding: 16px 0 0 10px;">
-                        <input type="text" class="form-control" placeholder="Search for anything">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Search</button>
-                        </span>
-                    </li>
+
+
+                    @using (Html.BeginForm("Listing", "Item", FormMethod.Get))
+                    {
+                        <li class="input-group" style="display: flex;padding: 16px 0 0 10px;">
+
+                            <input type="text" class="form-control" name="search-text" placeholder="Search for anything" size="35">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Search</button>
+                            </span>
+
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

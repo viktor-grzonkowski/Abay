@@ -3,48 +3,107 @@
 @{
     ViewBag.Title = "Log in";
 }
+<div class="container">
+    <div class="row inner">
+        <div class="col-md-6">
+            <section id="loginForm">
+                <h2>@ViewBag.Title</h2>
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Account.Username, new { @class = "col-md-2 control-label" })
+                        <div class="">
+                            @Html.TextBoxFor(m => m.Account.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Account.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Account.Password, new { @class = "col-md-2 control-label" })
+                        <div class="">
+                            @Html.PasswordFor(m => m.Account.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Account.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-<div class="row inner">
-    <div class="col-md-8">
-        <h2>@ViewBag.Title.</h2>
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Account.Username, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Account.Username, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Account.Username, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-offset-2">
+                            <input type="submit" value="Log in" class="btn btn-default" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Account.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Account.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Account.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* TODO : Password forgot
                     <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
+                        @Html.ActionLink("Register as a new user", "Register")
+                    </p>
+
+
+                }
+            </section>
+        </div>
+        <div class="col-sm-6">
+            <h3>Just for demo purpose - our company would never expose userdata like that!</h3>
+            <table class="table">
+                <tr>
+                    <th>
+                        Account
+                    </th>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Admin
+                    </td>
+                    <td>
+                        a
+                    </td>
+                    <td>
+                        a
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        User
+                    </td>
+                    <td>
+                        VIP
+                    </td>
+                    <td>
+                        666666
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        User
+                    </td>
+                    <td>
+                        Marci
+                    </td>
+                    <td>
+                        666666
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        User
+                    </td>
+                    <td>
+                        Vithoh
+                    </td>
+                    <td>
+                        666666
+                    </td>
+                </tr>
+            </table>
+
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
