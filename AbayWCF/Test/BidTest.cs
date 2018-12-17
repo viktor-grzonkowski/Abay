@@ -84,6 +84,32 @@ namespace Test
             Assert.IsTrue(success, "Bid was not placed!");
         }
         [TestMethod]
+        public void Bid_OverHighestBid_ExpectedScenario()
+        {
+            //Arrange
+            testBidder = userCtrl.Login(testBidder.UserName, testBidder.Password);
+
+            double amount = testItem.InitialPrice + 1;
+            string token = testBidder.LoginToken.SecureToken;
+
+            //Making the first, only and highest bid for the testItem
+            bool success = bidCtrl.Bid(testItem.Id, amount, token);
+
+            Assert.IsTrue(success, "The first bid was not placed!");
+
+            //Refreshing information (winning bid) on the testItem
+            testItem = itemCtrl.GetItemById(testItem.Id);
+
+            //Bid under the highest bid
+            amount = testItem.WinningBid.Amount + 1;
+
+            //Act
+            success = bidCtrl.Bid(testItem.Id, amount, token);
+
+            //Assert
+            Assert.IsTrue(success, "Bid was not placed!");
+        }
+        [TestMethod]
         public void Bid_SellerBidderIsTheSame_ReturnsFalse()
         {
             //Arrange
