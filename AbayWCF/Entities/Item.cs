@@ -38,7 +38,7 @@ namespace Entities
             EndDate = DateTime.Now.AddDays(duration);
             ImagePath = imagePath;
         }
-
+        
         public int Id { get => _id; set => _id = value; }
         public string Name { get => _name; set => _name = value; }
         public string Description { get => _description; set => _description = value; }
@@ -63,7 +63,8 @@ namespace Entities
                 this._sellerUser.UserName.Equals(other._sellerUser.UserName) &&
                 this._startDate.Equals(other._startDate) &&
                 this._state == other._state);
-    }
+        }
+
         public override int GetHashCode()
         {
             return _category.GetHashCode() ^ _description.GetHashCode() ^ _endDate.GetHashCode() ^ _id.GetHashCode() ^

@@ -10,32 +10,17 @@ namespace DedicatedClient
     {
         private ItemServiceClient itemService;
         private BackgroundWorker updateWorker;
-        private bool isUpdating;
         private Item selectedItem;
-        private User user;
+        private UserServiceReference.User user;
         private BackgroundWorker searchWorker;
-        private bool isSearching;
         private string lastKeyword;
 
-        public MainWindow(DedicatedClient.UserServiceReference.User user)
+        public MainWindow(UserServiceReference.User user)
         {
             InitializeComponent();
 
             itemService = new ItemServiceClient("NetTcpBinding_IItemService");
-
-            this.user = new User() {
-                UserName = user.UserName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                Admin = user.Admin,
-                LoginToken = new Token() {
-                    UserName = user.LoginToken.UserName,
-                    CreateDate = user.LoginToken.CreateDate,
-                    SecureToken = user.LoginToken.SecureToken
-                }
-            };
+            this.user = user;
 
             updateWorker = new BackgroundWorker
             {
@@ -44,7 +29,6 @@ namespace DedicatedClient
             };
             updateWorker.DoWork += UpdateWorker_DoWork;
             updateWorker.RunWorkerCompleted += UpdateWorker_RunWorkerCompleted;
-            isUpdating = false;
             UpdateDataGrid();
 
             selectedItem = null;
@@ -56,15 +40,13 @@ namespace DedicatedClient
             };
             searchWorker.DoWork += SearchWorker_DoWork;
             searchWorker.RunWorkerCompleted += SearchWorker_RunWorkerCompleted;
-            isSearching = false;
             lastKeyword = "";
         }
    
         private void UpdateDataGrid()
         {
-            if (isUpdating) return;
+            if (updateWorker.IsBusy) return;
 
-            isUpdating = true;
             updateWorker.RunWorkerAsync();
         }
         private void UpdateWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -75,18 +57,15 @@ namespace DedicatedClient
         private void UpdateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             dgItems.DataContext = (ObservableCollection<Item>)e.Result;
-
-            isUpdating = false;
         }
 
         private void Search()
         {
-            if (isSearching) return;
+            if (searchWorker.IsBusy) return;
 
             string keyword = txtSearch.Text.Trim();
             if (keyword == lastKeyword) return;
 
-            isSearching = true;
             lastKeyword = keyword;
 
             searchWorker.RunWorkerAsync(keyword);
@@ -100,8 +79,6 @@ namespace DedicatedClient
         private void SearchWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             dgItems.DataContext = (ObservableCollection<Item>)e.Result;
-
-            isSearching = false;
 
             //check if there was another request submitted, while it was searching
             Search();

@@ -26,43 +26,71 @@ namespace Database
         {
             TransactionOptions options = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
 
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, options))
             {
                 using (SqlConnection connection = DBConnection.GetConnection())
                 {
                     try
                     {
-                        if (prevBid != null)
-                        {
-                            // Execute first command for updating the previous winning bid
-                            using (SqlCommand cmdUno = new SqlCommand("",connection))
+                        if (prevBid != null) {
+
+                            bool isEnough = false;
+
+                            using (SqlCommand check = new SqlCommand("", connection))
                             {
-                                cmdUno.CommandText = "UPDATE [Bid] " +
-                                                     "SET isWinning = @winning " +
-                                                     "WHERE itemId = @itemId";
-                                cmdUno.Parameters.AddWithValue("@itemId", prevBid.ItemId);
-                                cmdUno.Parameters.AddWithValue("@winning", prevBid.Winning);
-                                cmdUno.ExecuteNonQuery();
+                                check.CommandText = "SELECT " +
+                                                      "IIF( " +
+                                                        "amount >= @amount, " +
+                                                        "'false', " +
+                                                      "'true') AS 'isTrue' " +
+                                                    "FROM [Bid] " +
+                                                    "WHERE itemId = @itemId AND isWinning = 'True' ";
+
+                                check.Parameters.AddWithValue("@itemId", prevBid.ItemId);
+                                check.Parameters.AddWithValue("@amount", newBid.Amount);
+
+                                SqlDataReader reader = check.ExecuteReader();
+
+                                if (reader.HasRows)
+                                {
+                                    while (reader.Read())
+                                    {
+                                        isEnough = bool.Parse(reader["isTrue"].ToString());
+                                    }
+                                }
+                            }
+
+                            if (isEnough)
+                            {
+                                using (SqlCommand cmdUno = new SqlCommand("", connection))
+                                {
+                                    cmdUno.CommandText = "UPDATE [Bid] " +
+                                                         "SET isWinning = @winning " +
+                                                         "WHERE itemId = @itemId";
+                                    cmdUno.Parameters.AddWithValue("@itemId", prevBid.ItemId);
+                                    cmdUno.Parameters.AddWithValue("@winning", prevBid.Winning);
+                                    cmdUno.ExecuteNonQuery();
+                                }
+                            }
+                            else
+                            {
+                                return false;
                             }
                         }
 
-                        if (newBid != null)
+                        using (SqlCommand cmdDos = new SqlCommand("", connection))
                         {
-                            // Execute seccond command to insert the new winning bid
-                            using (SqlCommand cmdDos = new SqlCommand("", connection))
-                            {
-                                cmdDos.CommandText = "INSERT INTO [Bid] " +
-                                                     "(buyerName, itemId, amount, timestamp, isWinning) " +
-                                                     "VALUES " +
-                                                     "(@buyerName, @itemId, @amount, @timestamp, @winning)";
+                            cmdDos.CommandText = "INSERT INTO [Bid] " +
+                                                    "(buyerName, itemId, amount, timestamp, isWinning) " +
+                                                    "VALUES " +
+                                                    "(@buyerName, @itemId, @amount, @timestamp, @winning)";
 
-                                cmdDos.Parameters.AddWithValue("@buyerName", newBid.BuyerName);
-                                cmdDos.Parameters.AddWithValue("@itemId", newBid.ItemId);
-                                cmdDos.Parameters.AddWithValue("@amount", newBid.Amount);
-                                cmdDos.Parameters.AddWithValue("@timestamp", newBid.Timestamp);
-                                cmdDos.Parameters.AddWithValue("@winning", newBid.Winning);
-                                cmdDos.ExecuteNonQuery();
-                            }
+                            cmdDos.Parameters.AddWithValue("@buyerName", newBid.BuyerName);
+                            cmdDos.Parameters.AddWithValue("@itemId", newBid.ItemId);
+                            cmdDos.Parameters.AddWithValue("@amount", newBid.Amount);
+                            cmdDos.Parameters.AddWithValue("@timestamp", newBid.Timestamp);
+                            cmdDos.Parameters.AddWithValue("@winning", newBid.Winning);
+                            cmdDos.ExecuteNonQuery();
                         }
 
                         scope.Complete();
@@ -76,10 +104,6 @@ namespace Database
                         Debug.Write("#### ERROR FOR UpdateBid END ####");
 
                         return false;
-                    }
-                    finally
-                    {
-                        scope.Dispose();
                     }
                 }
             }

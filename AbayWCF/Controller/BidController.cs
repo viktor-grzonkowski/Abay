@@ -41,7 +41,7 @@ namespace Controller
                         // If there is no bid place the first one 
                         if (currentWinning == null)
                         {
-                            Bid newWinning = new Bid
+                            Bid firstBid = new Bid
                             {
                                 BuyerName = buyer.UserName,
                                 ItemId = item.Id,
@@ -50,7 +50,7 @@ namespace Controller
                                 Winning = true
                             };
                             // Insert the bid into the database
-                            return bidDb.UpdateBid(null, newWinning) ? true : false;
+                            return bidDb.UpdateBid(null, firstBid) ? true : false;
                         }
                         else
                         {

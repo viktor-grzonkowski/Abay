@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Entities;
 
 namespace Database
@@ -324,12 +321,13 @@ namespace Database
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [Item] " +
-                                          "SET name = @name, description = @description, categoryId = @categoryId " +
+                                          "SET name = @name, description = @description, categoryId = @categoryId, state = @state " +
                                           "WHERE id = @id";
                         cmd.Parameters.AddWithValue("@id", item.Id);
                         cmd.Parameters.AddWithValue("@name", item.Name);
                         cmd.Parameters.AddWithValue("@description", item.Description);
                         cmd.Parameters.AddWithValue("@categoryId", item.Category.Id);
+                        cmd.Parameters.AddWithValue("@state", item.State);
                         cmd.ExecuteScalar();
                         return true;
                     }

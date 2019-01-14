@@ -12,18 +12,18 @@ namespace ServiceLibrary
         BidController BidCtrl = new BidController();
         CategoryController CategoryCtrl = new CategoryController();
 
-        public int CreateItem(string name, string description, double initialPrice, int CategoryId, string token, int duration, string imagePath)
+        public int CreateItem(string name, string description, double initialPrice, int categoryId, string token, int duration, string imagePath)
         {
-            return ItemCtrl.CreateItem(name, description, initialPrice, CategoryId, token, duration, imagePath);
+            return ItemCtrl.CreateItem(name, description, initialPrice, categoryId, token, duration, imagePath);
         }
 
         public bool DeleteItem(int id, string token)
         {
             return ItemCtrl.DeleteItem(id, token);
         }
-        public bool UpdateItem(int itemId, string token, string name, string description, int catId)
+        public bool UpdateItem(int itemId, string token, string name, string description, int categoryId)
         {
-            return ItemCtrl.UpdateItem(itemId, token, name, description, catId);
+            return ItemCtrl.UpdateItem(itemId, token, name, description, categoryId);
         }
 
         public List<Item> SearchItems(string value, int categoryId)
