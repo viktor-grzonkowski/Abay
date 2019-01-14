@@ -31,6 +31,7 @@ namespace Database
         private static string BuildSecureToken(int length)
         {
             var buffer = new byte[length];
+            // cryptographically secure pseudorandom number generator(CSPRNG)
             using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
                 rngCryptoServiceProvider.GetNonZeroBytes(buffer);
@@ -55,6 +56,7 @@ namespace Database
         // Hash password + salt togehter 
         private static string HashPassword(string password, byte[] salt)
         {
+            // password-based key derivation PBKDF2
             byte[] hashedArray = new Rfc2898DeriveBytes(password, salt, 10000).GetBytes(36);
             return Convert.ToBase64String(hashedArray);
         }
