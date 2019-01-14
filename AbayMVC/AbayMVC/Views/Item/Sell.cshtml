@@ -9,6 +9,7 @@
 
     @using (Html.BeginForm("Sell", "Item", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
     {
+        @Html.AntiForgeryToken()
         <div class="container" style="background-color:#fff;padding-left: 25px;">
             <h3>@ViewBag.Message</h3>
             <br />
@@ -41,7 +42,7 @@
 
             <div class="form-inline">
                 <span class="required" id="field"><label>Photos</label></span>
-                <input type="file" name="file" id="file" accept=".jpg,.png"/>
+                <input type="file" name="file" id="file" accept=".jpg,.png" />
             </div>
 
 

@@ -20,7 +20,7 @@ namespace HostConsole
             sBidService.Open();
             Console.WriteLine("Bid service started.");
 
-            Console.WriteLine("Press any key to close the services");
+            Console.WriteLine("Press enter to close the services");
             Console.ReadLine();
 
             sUserLogin.Close();

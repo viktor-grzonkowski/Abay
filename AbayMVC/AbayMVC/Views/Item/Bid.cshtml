@@ -15,7 +15,7 @@
     //Pass some old data with view
     @Html.HiddenFor(model => Model.WebItem.ItemId)
     @Html.HiddenFor(model => Model.WebItem.BuyerName)
-
+    @Html.AntiForgeryToken()
 
     <div class="container" style="padding:0 0 60px;">
         <h2>@ViewBag.Title</h2>

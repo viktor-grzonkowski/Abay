@@ -69,6 +69,7 @@ namespace AbayMVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthAttribute(Roles = "User")]
         public async Task<ActionResult> Bid(BuyItemView viewCollection)
         {
@@ -136,6 +137,7 @@ namespace AbayMVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthAttribute(Roles = "User")]
         public ActionResult Sell(FormCollection collection, HttpPostedFileBase file)
         {
