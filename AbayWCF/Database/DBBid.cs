@@ -42,7 +42,7 @@ namespace Database
                                                       "IIF( " +
                                                         "amount >= @amount, " +
                                                         "'false', " +
-                                                      "'true') AS 'isTrue' " +
+                                                        "'true') AS 'isTrue' " +
                                                     "FROM [Bid] " +
                                                     "WHERE itemId = @itemId AND isWinning = 'True' ";
 
@@ -74,6 +74,7 @@ namespace Database
                             }
                             else
                             {
+                                scope.Complete();
                                 return false;
                             }
                         }
